@@ -1,0 +1,84 @@
+<!--PassBook Table-->
+<sb-card>
+    <div class="card-header">
+        <div class="row">
+            <div class="col" style="margin-top: 10px;">
+                <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Employee.Passbook.Title" | translate}}
+            </div>
+            <div class="col">
+                <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><span>{{"Employee.Passbook.Date" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Particulars" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Withdrawal" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Deposit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Balance" | translate}}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let country of countries | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
+                <th scope="row">{{ country.id }}</th>
+                <td>{{country.date}}</td>
+                <td>{{country.particulars}}</td>
+                <td>{{country.withdrawal}}</td>
+                <td>{{country.deposit}}</td>
+                <td>{{country.balance}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div>
+    </div>
+</sb-card>
+<!--Loan Table-->
+<sb-card>
+    <div class="card-header">
+        <div class="row">
+            <div class="col" style="margin-top: 10px;">
+                <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Employee.Loanbook.Title" | translate}}
+            </div>
+            <div class="col">
+                <input type="text" placeholder="Search.." [(ngModel)]="loanTerm"/>
+                <i class="fa fa-search"></i>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Debit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Deposit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Emi" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Balance" | translate}}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let country of loans | filter: loanTerm | paginate: { itemsPerPage:5, currentPage: p} ">
+                <th scope="row">{{ country.id }}</th>
+                <td>{{country.date}}</td>
+                <td>{{country.particulars}}</td>
+                <td>{{country.debit}}</td>
+                <td>{{country.deposit}}</td>
+                <td>{{country.emi}}</td>
+                <td>{{country.balance}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div>
+    </div>
+</sb-card>

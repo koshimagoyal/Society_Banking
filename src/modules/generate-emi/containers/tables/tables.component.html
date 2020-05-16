@@ -1,0 +1,50 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Tables.Generate' | translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;">
+                            <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Tables.Generate" | translate}}
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                            <i class="fa fa-search"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped" id="GenerateTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{"Accountant.Tables.EmployeeNo" | translate}}</th>
+                            <th scope="col"><span>{{"Accountant.Tables.EMI" | translate}}</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let country of countries | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
+                            <th scope="row">{{ country.id }}</th>
+                            <td>{{country.deposit}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col">
+                            <div class="pagination">
+                                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <button (click)="export()">{{"Accountant.Tables.Download" | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>

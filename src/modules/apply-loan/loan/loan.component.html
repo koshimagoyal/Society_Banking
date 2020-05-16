@@ -1,0 +1,42 @@
+<sb-layout-emp-dashboard>
+    <sb-dashboard-head title="{{'Employee.Pages.Apply'| translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Employee.Pages.Apply'| translate}}</div>
+                <div class="card-body">
+                    <table class="table table-striped" id="content">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeNo'| translate}}</td>
+                            <td>1234</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.LoanType'| translate}}</td>
+                            <td>
+                                <select class="custom-select">
+                                    <option>{{'Accountant.Tables.Personal'| translate}}</option>
+                                    <option>{{'Accountant.Tables.Emergency'| translate}}</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Loan'| translate}} (in INR)</td>
+                            <td><input type="number"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Duration'| translate}} (in Months)</td>
+                            <td><input type="number"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button style="float:right;">{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-emp-dashboard>

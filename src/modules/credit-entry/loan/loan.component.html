@@ -1,0 +1,50 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Pages.Credit'| translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Credit'| translate}}</div>
+                <div class="card-body">
+                    <form class="form-inline">
+                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
+                    </form>
+                    <table class="table table-striped" *ngIf="table" id="content">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeNo'| translate}}</td>
+                            <td>{{text}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.LoanType'| translate}}</td>
+                            <td>{{'Accountant.Tables.Emergency'| translate}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Interest'| translate}} (%pa)</td>
+                            <td>13</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Loan'| translate}} (in INR)</td>
+                            <td [textContent]="amt"></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Duration'| translate}} (in Months)</td>
+                            <td>10</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.CreditAmount'| translate}}</td>
+                            <td><input type="number" (focusout)="credit($event)"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button *ngIf="table">{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+

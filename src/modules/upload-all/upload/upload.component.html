@@ -1,0 +1,52 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Pages.Upload'| translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Upload'| translate}}</div>
+                <div class="card-body">
+                    <table class="table table-striped" id="content">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.Start'| translate}}</td>
+                            <td><input type="date" /></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.End'| translate}}</td>
+                            <td><input type="date" /></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Loan'| translate}}</td>
+                            <td><input type="number"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Dividend'| translate}}</td>
+                            <td><input type="number"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Expense'| translate}} (in INR)</td>
+                            <td><input type="number"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.CreditAmount'| translate}}</td>
+                            <td><input type="number" /></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.DebitAmount'| translate}}</td>
+                            <td><input type="number" /></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button>{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+
+
+

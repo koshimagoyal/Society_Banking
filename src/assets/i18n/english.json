@@ -1,0 +1,109 @@
+{
+    "Employee": {
+        "Cards": {
+            "Loan": "Total Loan",
+            "Debit": "Debit Amount",
+            "Deposit": "Amount Deposit",
+            "Credit": "Credit Amount"
+        },
+        "Pages": {
+            "Eligible": "Loan Eligibility Table",
+            "Calculator": "Loan EMI Calculator",
+            "Apply": "Apply Loan"
+        },
+        "Passbook": {
+            "Title": "Passbook",
+            "Date": "Date",
+            "Particulars": "Particulars",
+            "Deposit": "Deposit",
+            "Withdrawal": "Withdrawal",
+            "Balance": "Balance"
+        },
+        "LoanEligible": {
+            "Eligible": "Number of Eligible Loans",
+            "Amount": "Loan Amount",
+            "EligibleAmount": "Eligible Loan Amount"
+        },
+        "Loanbook": {
+            "Title": "Loan Table",
+            "Date": "Date",
+            "Particulars": "Particulars",
+            "Debit": "Debit",
+            "Deposit": "Deposit",
+            "Balance": "Balance",
+            "Emi": "EMI on Loan"
+        }
+    },
+    "Accountant": {
+        "Cards": {
+            "Loan": "Total Loan",
+            "Interest": "Total Interest",
+            "Amount": "Total Amount",
+            "People": "No of Loans Given to People"
+        },
+        "Pages": {
+            "Sheet": "Monthly Sheet",
+            "Generate": "EMI To Deduct",
+            "Entry": "Loan Entry",
+            "Foreclosure": "Loan Foreclosure",
+            "Credit": "Credit Entry",
+            "Debit": "Debit Entry",
+            "Deduction": "Expense Deduction",
+            "GenerateStatement": "Generate Employee Bank Statement",
+            "Calculate": "Calculate FY and Dividend",
+            "Closure": "Close Employee Account",
+            "Upload": "Upload All Historic Data"
+        },
+        "Credit": "Credit",
+        "Debit": "Debit",
+        "GetInfo": "Get Information",
+        "Tables": {
+            "EMI": "EMI",
+            "Generate": "EMI to Deduct",
+            "EmployeeNo": "Employee ID",
+            "EmployeeName": "Employee Name",
+            "Start": "Start Date",
+            "End": "End Date",
+            "Submit": "Submit",
+            "CloseAcc": "Close Account",
+            "Loan": "Loan Amount",
+            "Pay": "Pay Amount",
+            "Dividend": "Dividend Amount",
+            "Close": "Close",
+            "LoanType": "Loan Type",
+            "Personal": "Personal Loan",
+            "Emergency": "Emergency Loan",
+            "Interest": "Loan Interest",
+            "Duration": "Loan Duration",
+            "CreditAmount": "Specify Credit Amount",
+            "DebitAmount": "Specify Debit Amount",
+            "Profit": "Profitability",
+            "DividendShare": "Dividend Share",
+            "Download": "Download",
+            "Expense": "Expense From Corpus",
+            "Remark": "Remark",
+            "Saving": "Savings Interest"
+        }
+    },
+    "Common": {
+        "Cards": {
+            "Details": "View Details"
+        },
+        "Pagination": {
+            "2_pages": "2 items per page",
+            "4_pages": "4 items per page",
+            "6_pages": "6 items per page"
+        },
+        "User": {
+            "Settings": "Settings",
+            "Logout": "Logout",
+            "LoggedIn": "Logged In As"
+        },
+        "SideNav": {
+            "Heading1": "Core",
+            "Heading2": "Layouts"
+        },
+        "Title": "Dashboard",
+        "Select": "Select Your Language"
+    }
+}

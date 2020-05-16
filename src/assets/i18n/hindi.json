@@ -1,0 +1,109 @@
+{
+    "Employee": {
+        "Cards": {
+            "Loan": "कुल ऋण",
+            "Deposit": "जमा राशि",
+            "Debit": "निकाली गई राशि",
+            "Credit": "राशि क्रेडिट करें"
+        },
+        "Pages": {
+            "Eligible": "ऋण पात्रता",
+            "Calculator": "ऋण ईएमआई कैलकुलेटर",
+            "Apply": "ऋण लागू करें"
+        },
+        "Passbook": {
+            "Title": "खाते की पासबुक",
+            "Date": "तारीख",
+            "Particulars": "विवरण",
+            "Deposit": "जमा",
+            "Withdrawal": "नकद निकासी",
+            "Balance": "शेष"
+        },
+        "LoanEligible": {
+            "Eligible": "योग्य ऋणों की संख्या",
+            "Amount": "ऋण राशि",
+            "EligibleAmount": "योग्य ऋण राशि"
+        },
+        "Loanbook": {
+            "Title": "ऋण तालिका",
+            "Date": "तारीख",
+            "Particulars": "विवरण",
+            "Debit": "नामे",
+            "Deposit": "जमा",
+            "Balance": "शेष",
+            "Emi": "ऋण पर ईएमआई"
+        }
+    },
+    "Accountant": {
+        "Cards": {
+            "Loan": "कुल ऋण",
+            "Interest": "कुल ब्याज",
+            "Amount": "कुल रकम",
+            "People": "लोगों को दिए गए ऋणों की संख्या"
+        },
+        "Pages": {
+            "Sheet": "मासिक पत्र",
+            "Generate": "कटौती के लिए ई.एम.आई.",
+            "Entry": "ऋण प्रवेश",
+            "Foreclosure": "ऋण पुरोबंध",
+            "Credit": "जमा प्रवेश",
+            "Debit": "नामे प्रवेश",
+            "Deduction": "व्यय कटौती",
+            "GenerateStatement": "कर्मचारी बैंक स्टेटमेंट उत्पन्न करें",
+            "Calculate": "वित्त और लाभांश की गणना करें",
+            "Closure": "कर्मचारी खाता बंद करें",
+            "Upload": "सभी ऐतिहासिक डेटा अपलोड करें"
+        },
+        "Credit": "जमा",
+        "Debit": "नामे",
+        "GetInfo": "जानकारी प्राप्त करें",
+        "Tables": {
+            "EMI": "ईएमआई",
+            "Generate": "कटौती के लिए ईएमआई",
+            "EmployeeNo": "कर्मचारी संख्या",
+            "EmployeeName": "कर्मचारी का नाम",
+            "Start": "आरंभ की तिथि",
+            "End": "अंतिम तिथि",
+            "Submit": "भरें",
+            "CloseAcc": "खाता बंद करें",
+            "Loan": "ऋण राशि",
+            "Pay": "राशि का भुगतान करें",
+            "Dividend": "लाभांश राशि",
+            "Close": "बंद करे",
+            "LoanType": "ऋण प्रकार",
+            "Personal": "व्यक्तिगत ऋण",
+            "Emergency": "आपातकालीन ऋण",
+            "Interest": "ऋण का ब्याज",
+            "Duration": "ऋण की अवधि",
+            "CreditAmount": "जमा राशि निर्दिष्ट करें",
+            "DebitAmount": "नामे राशि निर्दिष्ट करें",
+            "Profit": "लाभप्रदता",
+            "DividendShare": "लाभांश शेयर",
+            "Download": "डाउनलोड",
+            "Expense": "कॉर्पस से व्यय",
+            "Remark": "टिप्पणी",
+            "Saving": "बचत ब्याज"
+        }
+    },
+    "Common": {
+        "Cards": {
+            "Details": "विवरण देखें"
+        },
+        "Pagination": {
+            "2_pages": "प्रति पृष्ठ 2 आइटम",
+            "4_pages": "प्रति पृष्ठ 4 आइटम",
+            "6_pages": "प्रति पृष्ठ 6 आइटम"
+        },
+        "User": {
+            "Settings": "समायोजन",
+            "Logout": "लॉग आउट",
+            "LoggedIn": "के रूप में लॉग इन किया"
+        },
+        "SideNav": {
+            "Heading1": "मूल",
+            "Heading2": "लेआउट"
+        },
+        "Title": "डैशबोर्ड",
+        "Select": "अपनी भाषा का चयन करें"
+    }
+}
