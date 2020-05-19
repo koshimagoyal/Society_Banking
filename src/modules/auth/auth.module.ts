@@ -5,8 +5,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 
 /* Modules */
-import { AppCommonModule } from '@common/app-common.module';
-import { NavigationModule } from '@modules/navigation/navigation.module';
+import { AppCommonModule } from '@app/app-common/app-common.module';
+import { NavigationModule } from '@app/navigation/navigation.module';
 
 /* Components */
 import * as authComponents from './components';

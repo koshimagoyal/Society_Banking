@@ -5,142 +5,95 @@ const routes: Routes = [
     {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/auth/login',
-    },
-    {
-        path: 'charts',
-        loadChildren: () =>
-            import('modules/charts/charts-routing.module').then(m => m.ChartsRoutingModule),
+        redirectTo: 'login',
     },
     {
         path: 'dashboard',
-        loadChildren: () =>
-            import('modules/dashboard/dashboard-routing.module').then(
-                m => m.DashboardRoutingModule
-            ),
+        loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
+    },
+    {
+        path: 'loan-entry',
+        loadChildren: () => import('./loan-entry/loan-entry.module').then(m => m.LoanEntryModule),
     },
     {
         path: 'emp-dashboard',
         loadChildren: () =>
-            import('modules/emp-dashboard/emp-dashboard-routing.module').then(
-                m => m.EmpDashboardRoutingModule
-            ),
-    },
-    {
-        path: 'auth',
-        loadChildren: () =>
-            import('modules/auth/auth-routing.module').then(m => m.AuthRoutingModule),
+            import('./emp-dashboard/emp-dashboard.module').then(m => m.EmpDashboardModule),
     },
     {
         path: 'loan-emi-calculator',
         loadChildren: () =>
-            import('modules/loan-emi-calculator/loan-emi-calculator-routing.module').then(
-                m => m.LoanEmiCalculatorRoutingModule
+            import('./loan-emi-calculator/loan-emi-calculator.module').then(
+                m => m.LoanEmiCalculatorModule
             ),
-    },
-    {
-        path: 'error',
-        loadChildren: () =>
-            import('modules/error/error-routing.module').then(m => m.ErrorRoutingModule),
     },
     {
         path: 'loan-eligibility-table',
         loadChildren: () =>
-            import('modules/loan-eligibility-table/loan-eligibility-table-routing.module').then(
-                m => m.LoanEligibilityTableRoutingModule
+            import('./loan-eligibility-table/loan-eligibility-table.module').then(
+                m => m.LoanEligibilityTableModule
             ),
     },
     {
-        path: 'tables',
-        loadChildren: () =>
-            import('modules/tables/tables-routing.module').then(m => m.TablesRoutingModule),
+        path: 'common',
+        loadChildren: () => import('./app-common/app-common.module').then(m => m.AppCommonModule),
     },
     {
-        path: 'version',
-        loadChildren: () =>
-            import('modules/utility/utility-routing.module').then(m => m.UtilityRoutingModule),
+        path: 'apply-loan',
+        loadChildren: () => import('./apply-loan/apply-loan.module').then(m => m.ApplyLoanModule),
     },
     {
-        path: 'generateStatement',
+        path: 'close-account',
         loadChildren: () =>
-            import('modules/generate-statement/generate-statement-routing.module').then(
-                m => m.GenerateStatementRoutingModule
-            ),
+            import('./close-account/close-account.module').then(m => m.CloseAccountModule),
     },
     {
-        path: 'closeAccount',
+        path: 'credit-entry',
         loadChildren: () =>
-            import('modules/close-account/close-account-routing.module').then(
-                m => m.CloseAccountRoutingModule
-            ),
+            import('./credit-entry/credit-entry.module').then(m => m.CreditEntryModule),
     },
     {
-        path: 'creditEntry',
+        path: 'debit-entry',
         loadChildren: () =>
-            import('modules/credit-entry/credit-entry-routing.module').then(
-                m => m.CreditEntryRoutingModule
-            ),
+            import('./debit-entry/debit-entry.module').then(m => m.DebitEntryModule),
     },
     {
-        path: 'debitEntry',
+        path: 'excel-table',
         loadChildren: () =>
-            import('modules/debit-entry/debit-entry-routing.module').then(
-                m => m.DebitEntryRoutingModule
-            ),
+            import('./excel-table/excel-table.module').then(m => m.ExcelTableModule),
     },
-    {
-        path: 'loanEntry',
-        loadChildren: () =>
-            import('modules/loan-entry/loan-entry-routing.module').then(
-                m => m.LoanEntryRoutingModule
-            ),
-    },
-    {
-        path: 'foreclosure',
-        loadChildren: () =>
-            import('modules/loan-foreclosure/loan-foreclosure-routing.module').then(
-                m => m.LoanForeclosureRoutingModule
-            ),
-    },
+    { path: 'login', loadChildren: () => import('./login/login.module').then(m => m.LoginModule) },
     {
         path: 'expense',
-        loadChildren: () =>
-            import('modules/expense/expense-routing.module').then(m => m.ExpenseRoutingModule),
+        loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule),
     },
     {
-        path: 'uploadAll',
+        path: 'fy-dividend-calculate',
         loadChildren: () =>
-            import('modules/upload-all/upload-all-routing.module').then(
-                m => m.UploadAllRoutingModule
+            import('./fy-dividend-calculate/fy-dividend-calculate.module').then(
+                m => m.FyDividendCalculateModule
             ),
     },
     {
-        path: 'FyDividend',
+        path: 'generate-emi',
         loadChildren: () =>
-            import('modules/fy-dividend-calculate/fy-dividend-calculate-routing.module').then(
-                m => m.FyDividendCalculateRoutingModule
+            import('./generate-emi/generate-emi.module').then(m => m.GenerateEmiModule),
+    },
+    {
+        path: 'generate-statement',
+        loadChildren: () =>
+            import('./generate-statement/generate-statement.module').then(
+                m => m.GenerateStatementModule
             ),
     },
     {
-        path: 'generateEMI',
+        path: 'loan-foreclosure',
         loadChildren: () =>
-            import('modules/generate-emi/generate-emi-routing.module').then(
-                m => m.GenerateEmiRoutingModule
-            ),
+            import('./loan-foreclosure/loan-foreclosure.module').then(m => m.LoanForeclosureModule),
     },
     {
-        path: 'applyLoan',
-        loadChildren: () =>
-            import('modules/apply-loan/apply-loan-routing.module').then(
-                m => m.ApplyLoanRoutingModule
-            ),
-    },
-    {
-        path: 'excelTable',
-        loadChildren: () =>
-            import('modules/excel-table/excel-table-routing.module').then(
-                m => m.ExcelTableRoutingModule
-            ),
+        path: 'upload-all',
+        loadChildren: () => import('./upload-all/upload-all.module').then(m => m.UploadAllModule),
     },
     {
         path: '**',
@@ -151,7 +104,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })],
+    imports: [RouterModule.forRoot(routes)],
     exports: [RouterModule],
 })
 export class AppRoutingModule {}

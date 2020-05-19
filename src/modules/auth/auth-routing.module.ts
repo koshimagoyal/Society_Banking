@@ -1,7 +1,7 @@
 /* tslint:disable: ordered-imports*/
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { SBRouteData } from '@modules/navigation/models';
+import { SBRouteData } from '@app/navigation/models';
 
 /* Module */
 import { AuthModule } from './auth.module';

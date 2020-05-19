@@ -1,10 +1,10 @@
 {
     "Employee": {
         "Cards": {
-            "Loan": "Total Loan",
-            "Debit": "Debit Amount",
-            "Deposit": "Amount Deposit",
-            "Credit": "Credit Amount"
+            "Loan": "Total Loan Taken",
+            "Debit": "Loan Pay Amount",
+            "Deposit": "Deposit Amount",
+            "Credit": "Loan Limit"
         },
         "Pages": {
             "Eligible": "Loan Eligibility Table",
@@ -21,25 +21,26 @@
         },
         "LoanEligible": {
             "Eligible": "Number of Eligible Loans",
-            "Amount": "Loan Amount",
+            "Amount": "Pending Loan Amount",
             "EligibleAmount": "Eligible Loan Amount"
         },
         "Loanbook": {
-            "Title": "Loan Table",
+            "Title": "Loan Book",
             "Date": "Date",
             "Particulars": "Particulars",
             "Debit": "Debit",
             "Deposit": "Deposit",
             "Balance": "Balance",
             "Emi": "EMI on Loan"
-        }
+        },
+        "Loan": "Loan Amount"
     },
     "Accountant": {
         "Cards": {
-            "Loan": "Total Loan",
-            "Interest": "Total Interest",
-            "Amount": "Total Amount",
-            "People": "No of Loans Given to People"
+            "Loan": "Total Loan Given",
+            "Interest": "Total Interest Received",
+            "Amount": "Total Amount Received",
+            "People": "Number of Loans Given"
         },
         "Pages": {
             "Sheet": "Monthly Sheet",
@@ -48,9 +49,9 @@
             "Foreclosure": "Loan Foreclosure",
             "Credit": "Credit Entry",
             "Debit": "Debit Entry",
-            "Deduction": "Expense Deduction",
+            "Deduction": "Expense Deduction from Corpus",
             "GenerateStatement": "Generate Employee Bank Statement",
-            "Calculate": "Calculate FY and Dividend",
+            "Calculate": "Calculate Financial Year End Dividend",
             "Closure": "Close Employee Account",
             "Upload": "Upload All Historic Data"
         },
@@ -68,7 +69,7 @@
             "CloseAcc": "Close Account",
             "Loan": "Loan Amount",
             "Pay": "Pay Amount",
-            "Dividend": "Dividend Amount",
+            "Dividend": "Total Dividend Amount",
             "Close": "Close",
             "LoanType": "Loan Type",
             "Personal": "Personal Loan",
@@ -78,11 +79,26 @@
             "CreditAmount": "Specify Credit Amount",
             "DebitAmount": "Specify Debit Amount",
             "Profit": "Profitability",
-            "DividendShare": "Dividend Share",
+            "DividendShare": "Divide the Dividend Amount",
             "Download": "Download",
-            "Expense": "Expense From Corpus",
-            "Remark": "Remark",
-            "Saving": "Savings Interest"
+            "Expense": "Corpus Fund",
+            "Remark": "Specify Purpose",
+            "Saving": "Savings Interest",
+            "Balance": "Balance",
+            "Bonus": "Bonus Share",
+            "GenerateLetter": "Generate Loan Closure Letter",
+            "Letter": "Loan Closure Letter Received by Employee",
+            "Settlement": "Full Final Settlement Done",
+            "Sheet1": "Deposits Received",
+            "Sheet2": "Loan EMIs Received",
+            "DepositsAccrued": "Employee Deposit Accrued",
+            "Corpus": "Total Corpus Fund",
+            "Eligible": "Eligible for Loan",
+            "Active": "Active Loan Amount",
+            "Amt": "Amount to be Paid",
+            "DateForeclosure": "Date of Foreclosure",
+            "Date": "Choose a date",
+            "Month": "Month and Year"
         }
     },
     "Common": {
