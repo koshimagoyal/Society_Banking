@@ -40,6 +40,7 @@ export const MY_FORMATS = {
     ],
 })
 export class GenerateEmiComponent implements OnInit {
+    p: any;
     countries = [
         {
             id: 1,

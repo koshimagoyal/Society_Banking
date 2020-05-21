@@ -46,6 +46,8 @@ export class ExcelTableComponent implements OnInit {
     data = [[,], [,]];
     emiData: AOA = [[,], [,]];
     term: any;
+    p: any;
+    page: any;
     searchTerm: any;
     show = false;
     emiTable = false;

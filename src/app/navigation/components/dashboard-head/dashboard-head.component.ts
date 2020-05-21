@@ -11,7 +11,7 @@ export class DashboardHeadComponent implements OnInit {
     @Input() title!: string;
     @Input() hideBreadcrumbs = false;
 
-    constructor(private translate: TranslateService) {
+    constructor(public translate: TranslateService) {
         this.translate.addLangs(['english', 'hindi']);
         this.translate.setDefaultLang('english');
         const browserLang = this.translate.currentLang;

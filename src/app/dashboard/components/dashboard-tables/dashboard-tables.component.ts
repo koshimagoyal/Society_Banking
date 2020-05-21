@@ -8,6 +8,7 @@ import { Observable } from 'rxjs';
     styleUrls: ['dashboard-tables.component.scss'],
 })
 export class DashboardTablesComponent implements OnInit {
+    p: any;
     constructor() {}
     ngOnInit(): void {}
 }

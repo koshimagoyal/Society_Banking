@@ -8,6 +8,7 @@ import { $ } from 'protractor';
     styleUrls: ['dashboard-tables.component.scss'],
 })
 export class DashboardTablesComponent implements OnInit {
+    p: any;
     countries = [
         {
             id: 1,
