@@ -10,14 +10,14 @@
     "docker:build": "node scripts/docker/docker-build.js",
     "docker:run": "node scripts/docker/docker-run.js",
     "e2e": "npm run ng -- e2e",
-    "generate:component": "./node_modules/.bin/ng generate @sbpro/ng:component",
-    "generate:directive": "./node_modules/.bin/ng generate @sbpro/ng:directive",
-    "generate:module": "./node_modules/.bin/ng generate @sbpro/ng:module",
-    "generate:service": "./node_modules/.bin/ng generate @sbpro/ng:service",
+    "generate:component": "ng generate @sbpro/ng:component",
+    "generate:directive": "ng generate @sbpro/ng:directive",
+    "generate:module": "ng generate @sbpro/ng:module",
+    "generate:service": "ng generate @sbpro/ng:service",
     "lint:fix": "npm run ng -- lint --fix",
     "lint": "npm run ng -- lint",
     "ng": "cross-env NODE_OPTIONS=--max_old_space_size=2048 ./node_modules/.bin/ng",
-    "serve": "./node_modules/.bin/static-server dist/sb-admin-angular",
+    "serve": "static-server dist/sb-admin-angular",
     "start": "node scripts/start.js",
     "test": "npm run ng -- test"
   },
@@ -63,7 +63,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "0.901.0",
-    "@angular/cli": "9.1.0",
+    "@angular/cli": "^9.1.6",
     "@angular/compiler-cli": "9.1.0",
     "@angular/language-service": "9.1.0",
     "@inip/static-server": "1.0.1",
@@ -97,5 +97,19 @@
     "tslint": "6.1.1",
     "tslint-plugin-prettier": "2.3.0",
     "typescript": "3.8.3"
-  }
+  },
+  "description": "SB Admin Angular is a free and open-sourced Bootstrap themed Angular 9 starter project.",
+  "main": "karma.conf.js",
+  "directories": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koshimagoyal/Society_Banking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/koshimagoyal/Society_Banking/issues"
+  },
+  "homepage": "https://github.com/koshimagoyal/Society_Banking#readme"
 }
