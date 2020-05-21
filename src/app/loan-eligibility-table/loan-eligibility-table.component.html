@@ -1,0 +1,61 @@
+<sb-layout-emp-dashboard>
+    <sb-dashboard-head title="{{'Employee.Pages.Eligible'|translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div>
+        <button type="button" class="btn bg-primary btn-style" [routerLink]="['/apply-loan']">{{'Employee.Pages.Apply'|translate}}</button>
+    </div>
+    <br/><br/><br/>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Employee.Pages.Eligible'|translate}}</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>{{'Employee.LoanEligible.Eligible'| translate}}</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Employee.LoanEligible.Amount'| translate}}</td>
+                            <td>3,56,789</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Employee.LoanEligible.EligibleAmount'| translate}}</td>
+                            <td>5,67,800</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+    <sb-card>
+        <div class="card-header bg-primary headers">
+            <div class="row">
+                <div class="col" style="margin-top: 10px;">
+                    <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} (2018)</h5>
+                </div>
+                <div class="col">
+                    <span class="float-right" style="margin: 10px;"><h5>2446780</h5></span>
+                </div>
+            </div>
+        </div>
+    </sb-card>
+    <sb-card>
+        <div class="card-header bg-primary headers">
+            <div class="row">
+                <div class="col" style="margin-top: 10px;">
+                    <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} (2012)</h5>
+                </div>
+                <div class="col">
+                    <span class="float-right" style="margin: 10px;"><h5>3456890</h5></span>
+                </div>
+            </div>
+        </div>
+    </sb-card>
+</sb-layout-emp-dashboard>
+

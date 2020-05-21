@@ -1,0 +1,42 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Pages.Calculate'| translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Calculate'| translate}}</div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.Saving'| translate}}</td>
+                            <td><input type="number" [disabled]="disable"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Bonus'| translate}}</td>
+                            <td><input type="number" [disabled]="disable"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Profit'| translate}}</td>
+                            <td>34500</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Dividend'| translate}}</td>
+                            <td><input type="number" [disabled]="disable"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.DividendShare'| translate}}</td>
+                            <td><input type="checkbox" [disabled]="disable" (change)="disableFields()"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+
+

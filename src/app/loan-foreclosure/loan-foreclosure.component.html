@@ -1,0 +1,52 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Pages.Foreclosure'| translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Foreclosure'| translate}}</div>
+                <div class="card-body">
+                    <form class="form-inline">
+                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
+                    </form>
+                    <table class="table table-striped" *ngIf="table" id="content">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeNo'| translate}}</td>
+                            <td *ngIf="!hide">{{text}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Active'| translate}}</td>
+                            <td *ngIf="!hide">300000</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Amt'| translate}}</td>
+                            <td *ngIf="!hide">3000</td>
+                        </tr>
+                        <tr>
+                            <td id="date">{{'Accountant.Tables.DateForeclosure'| translate}}</td>
+                            <td *ngIf="!hide">
+                                <mat-form-field>
+                                    <mat-label>{{'Accountant.Tables.Date'| translate}}</mat-label>
+                                    <input matInput [matDatepicker]="picker">
+                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Close'| translate}}</td>
+                            <td *ngIf="!hide"><input type="checkbox" (change)="close($event)"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+

@@ -1,0 +1,89 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Pages.Sheet' | translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col">
+            <sb-card>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;">
+                            <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Accountant.Tables.Sheet1" | translate}}
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder="Search.." [(ngModel)]="searchTerm"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <mat-form-field style="float: right;">
+                        <mat-label>{{'Accountant.Tables.Month'| translate}}</mat-label>
+                        <input matInput [matDatepicker]="dp" [formControl]="date">
+                        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+                        <mat-datepicker #dp
+                                        startView="multi-year"
+                                        (yearSelected)="chosenYearHandler($event)"
+                                        (monthSelected)="chosenMonthHandler($event, dp)"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker>
+                    </mat-form-field>
+                    <br/>
+                    <input type="file" (change)="onChange($event)" multiple="false"  placeholder="Upload file" accept=".xlsx" />
+                    <br/>
+                    <table class="table table-striped" *ngIf="show">
+                        <tbody>
+                        <tr *ngFor="let row of data | filter: searchTerm | paginate: { id: 'p1', itemsPerPage:5, currentPage: p}">
+                            <td *ngFor="let val of row">{{val}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination" *ngIf="show">
+                        <pagination-controls id="p1" (pageChange)="p=$event"></pagination-controls>
+                    </div>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col">
+            <sb-card>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;">
+                            <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Accountant.Tables.Sheet2" | translate}}
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <mat-form-field style="float: right;">
+                        <mat-label>{{'Accountant.Tables.Month'| translate}}</mat-label>
+                        <input matInput [matDatepicker]="ep" [formControl]="emiDate">
+                        <mat-datepicker-toggle matSuffix [for]="ep"></mat-datepicker-toggle>
+                        <mat-datepicker #ep
+                                        startView="multi-year"
+                                        (yearSelected)="chosenAnotherYearHandler($event)"
+                                        (monthSelected)="chosenAnotherMonthHandler($event, ep)"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker>
+                    </mat-form-field>
+                    <br/>
+                    <input type="file" (change)="onFileChange($event)" multiple="false"  placeholder="Upload file" accept=".xlsx" />
+                    <br/>
+                    <table class="table table-striped" *ngIf="emiTable">
+                        <tbody>
+                        <tr *ngFor="let row of emiData | filter: term | paginate: { id: 'p2',
+                                                      itemsPerPage: 5,
+                                                      currentPage: page }">
+                            <td *ngFor="let val of row">{{val}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination" *ngIf="emiTable">
+                        <pagination-controls id="p2" (pageChange)="page=$event"></pagination-controls>
+                    </div>
+                </div>
+            </sb-card>
+        </div>
+    </div>
+</sb-layout-dashboard>

@@ -1,0 +1,61 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Pages.Generate' | translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;">
+                            <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Pages.Generate" | translate}}
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <mat-form-field style="float: right;">
+                        <mat-label>{{'Accountant.Tables.Month'| translate}}</mat-label>
+                        <input matInput [matDatepicker]="ep" [formControl]="emiDate">
+                        <mat-datepicker-toggle matSuffix [for]="ep"></mat-datepicker-toggle>
+                        <mat-datepicker #ep
+                                        startView="multi-year"
+                                        (yearSelected)="chosenAnotherYearHandler($event)"
+                                        (monthSelected)="chosenAnotherMonthHandler($event, ep)"
+                                        panelClass="example-month-picker">
+                        </mat-datepicker>
+                    </mat-form-field>
+                    <table class="table table-striped" id="GenerateTable">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{"Accountant.Tables.EmployeeNo" | translate}}</th>
+                            <th scope="col"><span>{{"Accountant.Pages.Generate" | translate}}</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let country of countries | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
+                            <th scope="row">{{ country.id }}</th>
+                            <td>{{country.deposit}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="pagination">
+                                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                            </div>
+                        </div>
+                        <div class="col-6 ml-auto">
+                            <button (click)="export()">{{"Accountant.Tables.Download" | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+

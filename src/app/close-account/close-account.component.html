@@ -1,0 +1,56 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Tables.CloseAcc'|translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Tables.CloseAcc"| translate}}</div>
+                <div class="card-body">
+                    <form class="form-inline">
+                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <button (click)="showTable()">{{"Accountant.GetInfo"| translate}}</button>
+                    </form>
+                    <table class="table table-striped" *ngIf="table" id="content">
+                        <tbody>
+                        <tr>
+                            <td>{{"Accountant.Tables.EmployeeNo"| translate}}</td>
+                            <td *ngIf="!hide">{{text}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeName' | translate}}</td>
+                            <td *ngIf="!hide">{{name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Date' | translate}}</td>
+                            <td *ngIf="!hide"><input type="date" [(ngModel)]="date"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{"Accountant.Pages.Foreclosure"| translate}}</td>
+                            <td *ngIf="!hide">Done</td>
+                        </tr>
+                        <tr>
+                            <td>{{"Accountant.Tables.GenerateLetter"| translate}}</td>
+                            <td *ngIf="!hide"><input type="checkbox" (change)="openDialog()"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{"Accountant.Tables.Letter"| translate}}</td>
+                            <td *ngIf="!hide"><input type="checkbox" [disabled]="disable"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{"Accountant.Tables.Settlement"| translate}}</td>
+                            <td *ngIf="!hide"><input type="checkbox" [disabled]="disable"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{"Accountant.Tables.Close"| translate}}</td>
+                            <td *ngIf="!hide"><input type="checkbox" [disabled]="disable" (change)="close($event)"/></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>

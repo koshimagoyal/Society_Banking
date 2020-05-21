@@ -1,0 +1,45 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="{{'Accountant.Pages.GenerateStatement' | translate}}"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.GenerateStatement' | translate}}</div>
+                <div class="card-body">
+                    <form class="form-inline">
+                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <button (click)="showTable()">{{'Accountant.GetInfo' | translate}}</button>
+                    </form>
+                    <table class="table table-striped" *ngIf="table" id="content">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeNo' | translate}}</td>
+                            <td>{{text}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeName' | translate}}</td>
+                            <td>{{name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Start' | translate}}</td>
+                            <td><input type="date" [(ngModel)]="start"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.End' | translate}}</td>
+                            <td><input type="date" [(ngModel)]="end"/></td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Balance' | translate}}</td>
+                            <td>30000</td>
+                        </tr>
+                        </tbody>
+                        <button (click)="openDialog()">{{'Accountant.Pages.GenerateStatement' | translate}}</button>
+                    </table>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>

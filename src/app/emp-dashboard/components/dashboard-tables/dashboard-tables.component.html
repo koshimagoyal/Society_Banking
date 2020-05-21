@@ -1,0 +1,154 @@
+<br/>
+<!--PassBook Table-->
+<sb-card>
+    <div class="card-header">
+        <div class="row">
+            <div class="col" style="margin-top: 10px;">
+                <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Employee.Passbook.Title" | translate}}
+            </div>
+            <div class="col">
+                <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                <fa-icon class="fa-pull-right" [icon]='["fas", "search"]' style="margin: 10px;">
+                </fa-icon>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><span>{{"Employee.Passbook.Date" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Particulars" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Withdrawal" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Deposit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Passbook.Balance" | translate}}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let country of countries | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
+                <th scope="row">{{ country.id }}</th>
+                <td>{{country.date}}</td>
+                <td>{{country.particulars}}</td>
+                <td>{{country.withdrawal}}</td>
+                <td>{{country.deposit}}</td>
+                <td>{{country.balance}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div>
+    </div>
+</sb-card>
+<!--Loan Table-->
+<sb-card>
+    <div class="card-header bg-primary headers">
+        <div class="row">
+            <div class="col" style="margin-top: 10px;">
+                <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} (2018)</h5>
+            </div>
+            <div class="col">
+                <fa-icon class="fa-pull-right rotate" [ngClass]="{'clicked': show}" (click)="showTable()" [icon]='["fas","caret-right"]' style="margin-top: 10px;">
+                </fa-icon>&nbsp;
+                <span class="float-right" style="margin: 10px;"><h5>2446780</h5></span>
+            </div>
+        </div>
+    </div>
+    <div class="card-header" *ngIf="show">
+        <div class="row">
+            <div class="col" style="margin-top: 10px;">
+                <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Employee.Loanbook.Title" | translate}}
+            </div>
+            <div class="col">
+                <input type="text" placeholder="Search.." [(ngModel)]="loanTerm"/>
+                <fa-icon class="fa-pull-right" [icon]='["fas", "search"]' style="margin: 10px;">
+                </fa-icon>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="show">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Debit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Deposit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Emi" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Balance" | translate}}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let country of loans | filter: loanTerm | paginate: { itemsPerPage:5, currentPage: p} ">
+                <th scope="row">{{ country.id }}</th>
+                <td>{{country.date}}</td>
+                <td>{{country.particulars}}</td>
+                <td>{{country.debit}}</td>
+                <td>{{country.deposit}}</td>
+                <td>{{country.emi}}</td>
+                <td>{{country.balance}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div>
+    </div>
+</sb-card>
+<sb-card>
+    <div class="card-header bg-primary headers">
+        <div class="row">
+            <div class="col" style="margin-top: 10px;">
+                <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} (2012)</h5>
+            </div>
+            <div class="col">
+                <fa-icon class="fa-pull-right rotate" [ngClass]="{'clicked': opened}" (click)="showTable2()" [icon]='["fas","caret-right"]' style="margin-top: 10px;">
+                </fa-icon>&nbsp;
+                <span class="float-right" style="margin: 10px;"><h5>3456890</h5></span>
+            </div>
+        </div>
+    </div>
+    <div class="card-header" *ngIf="opened">
+        <div class="row">
+            <div class="col" style="margin-top: 10px;">
+                <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Employee.Loanbook.Title" | translate}}
+            </div>
+            <div class="col">
+                <input type="text" placeholder="Search.." [(ngModel)]="loanTerm"/>
+                <fa-icon class="fa-pull-right" [icon]='["fas", "search"]' style="margin: 10px;">
+                </fa-icon>
+            </div>
+        </div>
+    </div>
+    <div class="card-body" *ngIf="opened">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Debit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Deposit" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Emi" | translate}}</span></th>
+                <th scope="col"><span>{{"Employee.Loanbook.Balance" | translate}}</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let country of loans | filter: loanTerm | paginate: { itemsPerPage:5, currentPage: p} ">
+                <th scope="row">{{ country.id }}</th>
+                <td>{{country.date}}</td>
+                <td>{{country.particulars}}</td>
+                <td>{{country.debit}}</td>
+                <td>{{country.deposit}}</td>
+                <td>{{country.emi}}</td>
+                <td>{{country.balance}}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <pagination-controls (pageChange)="p=$event"></pagination-controls>
+        </div>
+    </div>
+</sb-card>
