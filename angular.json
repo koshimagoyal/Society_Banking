@@ -24,7 +24,7 @@
                         "tsConfig": "tsconfig.app.json",
                         "aot": false,
                         "assets": ["src/favicon.png", "src/assets"],
-                        "styles": ["src/styles/styles.scss"],
+                        "styles": ["src/styles/styles.scss","node_modules/sweetalert2/src/sweetalert2.scss"],
                         "stylePreprocessorOptions": {
                             "includePaths": ["src", "./node_modules"]
                         },

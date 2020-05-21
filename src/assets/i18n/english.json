@@ -44,7 +44,7 @@
         },
         "Pages": {
             "Sheet": "Monthly Sheet",
-            "Generate": "EMI To Deduct",
+            "Generate": "EMI To be Deduct",
             "Entry": "Loan Entry",
             "Foreclosure": "Loan Foreclosure",
             "Credit": "Credit Entry",
@@ -59,8 +59,6 @@
         "Debit": "Debit",
         "GetInfo": "Get Information",
         "Tables": {
-            "EMI": "EMI",
-            "Generate": "EMI to Deduct",
             "EmployeeNo": "Employee ID",
             "EmployeeName": "Employee Name",
             "Start": "Start Date",
