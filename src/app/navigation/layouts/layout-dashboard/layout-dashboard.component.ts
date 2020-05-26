@@ -9,8 +9,8 @@ import {
     OnInit,
 } from '@angular/core';
 import { NavigationService } from '@app/navigation/services';
+import { SessionStorageService } from 'ngx-webstorage';
 import { Subscription } from 'rxjs';
-import { UserService } from '@app/app-common/services';
 
 @Component({
     selector: 'sb-layout-dashboard',
@@ -25,19 +25,13 @@ export class LayoutDashboardComponent implements OnInit, OnDestroy {
     expanded = false;
     @HostBinding('class.sb-sidenav-toggled') sideNavHidden = false;
     subscription: Subscription = new Subscription();
-    //sideNavData: SideNavData;
-    //sideNavItems: any;
-    //sideNavSections: any;
     sidenavStyle = 'sb-sidenav-dark';
-    item: any;
+    user: any;
     constructor(
         public navigationService: NavigationService,
         private changeDetectorRef: ChangeDetectorRef,
-        public userService: UserService) {
-        //this.sideNavItems = this.sideNavData.sideNavItems;
-        //this.sideNavSections = this.sideNavData.sideNavSections;
-        //console.log(this.sideNavData.item);
-    }
+        public session: SessionStorageService
+    ) {}
     ngOnInit() {
         if (this.light) {
             this.sidenavStyle = 'sb-sidenav-light';
@@ -48,7 +42,7 @@ export class LayoutDashboardComponent implements OnInit, OnDestroy {
                 this.changeDetectorRef.markForCheck();
             })
         );
-        // this.sideNavData = new SideNavData(this.translate);
+        this.user = this.session.retrieve('user');
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();

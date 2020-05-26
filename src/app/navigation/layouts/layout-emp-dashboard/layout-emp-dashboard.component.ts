@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, HostBinding, Input, OnDestroy, OnInit } from '@angular/core';
 import { NavigationService } from '@app/navigation/services';
 import { Subscription } from 'rxjs';
-import { UserService } from '@app/app-common/services';
+import { UserService } from '@app/login/services';
 
 @Component({
     selector: 'sb-layout-emp-dashboard',

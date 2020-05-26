@@ -79,7 +79,7 @@
                 </div>
             <div class="sb-sidenav-footer">
             <div class="small">{{'Common.User.LoggedIn'|translate}}</div>
-                <span *ngIf="userService.user$ | async as user">{{user.firstName}} {{user.lastName}}</span>
+                <span>{{user.name}}</span>
             </div>
         </nav>
         </div>

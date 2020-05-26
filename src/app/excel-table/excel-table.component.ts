@@ -6,6 +6,7 @@ import {
 } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDatepicker } from '@angular/material/datepicker';
+import { TablesService } from '@app/excel-table/services';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import { default as _rollupMoment, Moment } from 'moment';
@@ -40,9 +41,8 @@ export const MY_FORMATS = {
         { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     ],
 })
-
 export class ExcelTableComponent implements OnInit {
-    constructor() {}
+    disable: any;
     data = [[,], [,]];
     emiData: AOA = [[,], [,]];
     term: any;
@@ -53,7 +53,19 @@ export class ExcelTableComponent implements OnInit {
     emiTable = false;
     date = new FormControl(moment());
     emiDate = new FormControl(moment());
-    ngOnInit() {}
+    disableData = [];
+    constructor(private tableService: TablesService) {}
+    ngOnInit() {
+        this.tableService.getData().subscribe(result => {
+            for (let i = 0; i < result.length; i++) {
+                // @ts-ignore
+                this.disableData.push(result[i].monthYear);
+            }
+        });
+        this.disable = (d: Moment): boolean => {
+            return !this.disableData.find(x => x === d.format('MM/YYYY'));
+        };
+    }
     onChange(evt: any) {
         /* wire up file reader */
         const target: DataTransfer = evt.target as DataTransfer;
@@ -69,11 +81,32 @@ export class ExcelTableComponent implements OnInit {
             const ws: XLSX.WorkSheet = wb.Sheets[wsname];
             /* save data */
             this.data = XLSX.utils.sheet_to_json(ws, { header: 1 });
-            // resolve(result);
             this.show = true;
             console.log(this.data);
         };
         reader.readAsBinaryString(target.files[0]);
+        console.log(target.files[0]);
+        const formData: FormData = new FormData();
+        formData.append('file', evt.target.files[0], evt.target.files[0].name);
+        formData.append('date', this.date.value.format('MM/YYYY'));
+        console.log(formData);
+        this.tableService.uploadFile(formData).subscribe(result => {
+            if (result) {
+                const send = {
+                    data: this.data,
+                    date: this.date.value.format('MM/YYYY'),
+                };
+                this.tableService.sendData(send).subscribe(res => {
+                    if (res) {
+                        // @ts-ignore
+                        this.disableData.push(send.date);
+                        this.disable = (d: Moment): boolean => {
+                            return !this.disableData.find(x => x === d.format('MM/YYYY'));
+                        };
+                    }
+                });
+            }
+        });
     }
 
     onFileChange(evt: any) {
@@ -95,6 +128,19 @@ export class ExcelTableComponent implements OnInit {
             console.log(this.emiData);
         };
         reader.readAsBinaryString(target.files[0]);
+        /*const formData: FormData = new FormData();
+        formData.append('file', evt.target.files[0], evt.target.files[0].name);
+        formData.append('date', this.emiDate.value.format('MM/YYYY'));
+        console.log(formData);
+        this.tableService.uploadFile(formData).subscribe(result => {
+            if (result) {
+                const send = {
+                    data: this.emiData,
+                    date: this.emiDate.value.format('MM/YYYY'),
+                };
+                this.tableService.sendLoanData(send).subscribe(res => console.log(res));
+            }
+        });*/
     }
 
     chosenYearHandler(normalizedYear: Moment) {

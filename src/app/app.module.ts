@@ -10,7 +10,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import * as authServices from '@app/login/services';
+import { NgxWebstorageModule } from 'ngx-webstorage';
 
 export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateHttpLoader {
     return new TranslateHttpLoader(new HttpClient(httpBackend));
@@ -27,6 +28,7 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
         HttpClientModule,
         NgxPaginationModule,
         Ng2SearchPipeModule,
+        NgxWebstorageModule.forRoot(),
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -36,7 +38,7 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
         }),
         BrowserAnimationsModule,
     ],
-    providers: [],
+    providers: [...authServices.services],
     bootstrap: [AppComponent],
     exports: [],
 })
