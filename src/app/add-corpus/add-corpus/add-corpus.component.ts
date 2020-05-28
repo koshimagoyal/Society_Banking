@@ -1,39 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { DebitEntryService } from '@app/debit-entry/services';
+import { AddCorpusService } from '@app/add-corpus/services';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
-    selector: 'sb-debit-entry',
-    templateUrl: './debit-entry.component.html',
-    styleUrls: ['./debit-entry.component.scss'],
+    selector: 'sb-add-corpus',
+    templateUrl: './add-corpus.component.html',
+    styleUrls: ['./add-corpus.component.scss'],
 })
-export class DebitEntryComponent implements OnInit {
-    text: any;
-    debitAmount: any;
+export class AddCorpusComponent implements OnInit {
+    creditAmount: any;
     purpose: any;
-    data: any;
-    name: any;
     date: any;
     balance = 0;
-    table = false;
-    constructor(private debitService: DebitEntryService) {}
+    constructor(private addService: AddCorpusService) {}
     send() {
-        const accountData = {
-            userId: this.text,
-            debit: this.debitAmount,
+        const data = {
+            credit: this.creditAmount,
             remark: this.purpose,
             date: this.date,
         };
-        this.debitService.sendData(accountData).subscribe(
+        this.addService.sendData(data).subscribe(
             result => {
                 Swal.fire({
                     text: 'Sent!',
                     icon: 'success',
                 }).then((isConfirm: any) => {
                     if (isConfirm) {
-                        // @ts-ignore
-                        this.table = false;
-                        this.text = null;
+                        this.balance += this.creditAmount;
+                        this.date = '';
+                        this.creditAmount = null;
+                        this.purpose = null;
                     }
                 });
             },
@@ -46,12 +43,11 @@ export class DebitEntryComponent implements OnInit {
             }
         );
     }
-    showTable() {
-        console.log(this.text);
-        this.debitService.getData(this.text).subscribe(
+    ngOnInit() {
+        this.addService.getData().subscribe(
             result => {
                 console.log(result);
-                if (result.nameData.length === 0) {
+                if (result.length === 0) {
                     Swal.fire({
                         title: 'Oops!',
                         text: 'This user does not exists!',
@@ -62,11 +58,11 @@ export class DebitEntryComponent implements OnInit {
                     // tslint:disable-next-line:prefer-for-of
                     for (let i = 0; i < result.balance.length; i++) {
                         this.balance =
-                            this.balance + result.balance[i].credit - result.balance[i].debit;
+                            this.balance +
+                            result.balance[i].creditAmount -
+                            result.balance[i].expenseDebitAmount;
                     }
                     console.log(this.balance);
-                    this.name = result.nameData[0].name;
-                    this.table = true;
                 }
             },
             error1 => {
@@ -79,15 +75,5 @@ export class DebitEntryComponent implements OnInit {
         );
         return this.balance;
     }
-    debit($event: any) {
-        console.log(this.balance);
-        if ($event.target.value > this.balance) {
-            Swal.fire({
-                title: 'Oops!',
-                text: 'Balance is less than debit amount',
-                icon: 'error',
-            });
-        }
-    }
-    ngOnInit(): void {}
+
 }

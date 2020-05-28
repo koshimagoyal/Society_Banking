@@ -9,7 +9,9 @@
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Debit'| translate}}</div>
                 <div class="card-body">
                     <form class="form-inline">
-                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <label>
+                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                        </label>
                         <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
@@ -19,12 +21,36 @@
                             <td>{{text}}</td>
                         </tr>
                         <tr>
+                            <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
+                            <td>{{name}}</td>
+                        </tr>
+                        <tr>
                             <td>{{'Accountant.Tables.Balance'| translate}}</td>
-                            <td [textContent]="amt"></td>
+                            <td>{{balance}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Date'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="date" name="date"/>
+                                </label>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.DebitAmount'| translate}}</td>
-                            <td><input type="number" (focusout)="debit($event)"/></td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="debitAmount" (focusout)="debit($event)" name="amount"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Remark'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="purpose" name="purpose"/>
+                                </label>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

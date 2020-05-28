@@ -1,12 +1,12 @@
 <sb-layout-dashboard>
-    <sb-dashboard-head title="{{'Accountant.Pages.Deduction'| translate}}"></sb-dashboard-head>
+    <sb-dashboard-head title="{{'Accountant.Pages.Addition'| translate}}"></sb-dashboard-head>
     <hr class="rounded">
     <br>
     <div class="row">
         <div class="col-xl-2 col-md-1"></div>
         <div class="col-xl-8 col-md-10">
             <sb-card>
-                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Deduction'| translate}}</div>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Addition'| translate}}</div>
                 <div class="card-body">
                     <table class="table table-striped" id="content">
                         <tbody>
@@ -23,10 +23,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>{{'Accountant.Tables.DebitAmount'| translate}}</td>
+                            <td>{{'Accountant.Tables.CreditAmount'| translate}}</td>
                             <td>
                                 <label>
-                                    <input type="number" [(ngModel)]="debitAmount" name="amount"/>
+                                    <input type="number" [(ngModel)]="creditAmount" name="amount"/>
                                 </label>
                             </td>
                         </tr>

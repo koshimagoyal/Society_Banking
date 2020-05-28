@@ -22,8 +22,8 @@ export class TablesService {
                 pass += str.charAt(char);
             }
             const passw = pass.slice(0, 3) + data[j][1] + pass.slice(3);
-            user.push([data[j][0], data[j][1], passw, 2]);
-            account.push([ddate, data[j][2], false, data[j][0]]);
+            user.push([data[j][0], data[j][1], passw, false, 2]);
+            account.push([ddate, data[j][2], data[j][0]]);
         }
         const send = {
             userData: user,
@@ -35,31 +35,29 @@ export class TablesService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        return this.httpService
-            .post<any>(url, send, { headers })
-            .pipe(catchError(this.errorHandler));
+        return this.httpService.post<any>(url, send, { headers });
     }
 
     sendLoanData(getData: any): Observable<any> {
         const data = getData.data;
         const ddate = getData.date;
         const url = 'http://localhost:8080/sendLoanData';
-        const user = [];
-        const account = [];
+        const loan = [];
+        const loanBook = [];
         for (let j = 1; j < data.length; j++) {
-            let pass = '';
-            const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789@#$';
-            for (let i = 1; i <= 8; i++) {
-                const char = Math.floor(Math.random() * str.length + 1);
-                pass += str.charAt(char);
+            let type;
+            if (data[j][3] === 'Personal' || data[j][3] === 'personal') {
+                type = 1;
+            } else {
+                type = 2;
             }
-            const passw = pass.slice(0, 3) + data[j][1] + pass.slice(3);
-            user.push([data[j][0], data[j][1], passw, 2]);
-            account.push([ddate, data[j][2], false, data[j][0]]);
+            loan.push([ddate, data[j][0], data[j][1], data[j][2], false, type]);
+            loanBook.push([ddate, data[j][4]]);
         }
         const send = {
-            userData: user,
-            accountData: account,
+            loanData: loan,
+            loanBookData: loanBook,
+            date: ddate,
         };
         console.log(send);
         const headers = new HttpHeaders();
@@ -67,7 +65,7 @@ export class TablesService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        return this.httpService.post<any>(url, send,{headers}).pipe(catchError(this.errorHandler));
+        return this.httpService.post<any>(url, send, { headers });
     }
 
     uploadFile(data: any): Observable<any> {
@@ -78,9 +76,7 @@ export class TablesService {
         headers.append('content-type', 'multipart/form-data');
         console.log(data);
         const url = 'http://localhost:8080/sendExcel';
-        return this.httpService
-            .post<any>(url, data, { headers })
-            .pipe(catchError(this.errorHandler));
+        return this.httpService.post<any>(url, data, { headers });
     }
 
     getData(): Observable<any> {
@@ -90,17 +86,7 @@ export class TablesService {
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
         const url = 'http://localhost:8080/monthYear';
-        return this.httpService.get(url, { headers }).pipe(catchError(this.errorHandler));
+        return this.httpService.get(url, { headers });
     }
 
-    errorHandler(error: any) {
-        let errorMessage = '';
-        if (error.error instanceof ErrorEvent) {
-            errorMessage = `Error: ${error.error.message}`;
-        } else {
-            errorMessage = `Error Code: ${error.status}\nMessage : ${error.message}`;
-        }
-        window.alert('Error Code: ' + error.status + '\nSheet Error');
-        return throwError(errorMessage);
-    }
 }

@@ -11,14 +11,18 @@
                             <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Accountant.Tables.Sheet1" | translate}}
                         </div>
                         <div class="col">
-                            <input type="text" placeholder="Search.." [(ngModel)]="searchTerm"/>
+                            <label>
+                                <input type="text" placeholder="Search.." [(ngModel)]="searchTerm"/>
+                            </label>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <mat-form-field style="float: right;">
                         <mat-label>{{'Accountant.Tables.Month'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="dp" [matDatepickerFilter]="disable" [formControl]="date">
+                        <label>
+                            <input matInput [readonly]="inputReadonly" [matDatepicker]="dp" [matDatepickerFilter]="disable" [formControl]="date">
+                        </label>
                         <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
                         <mat-datepicker #dp
                                         startView="multi-year"
@@ -51,14 +55,18 @@
                             <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Accountant.Tables.Sheet2" | translate}}
                         </div>
                         <div class="col">
-                            <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                            <label>
+                                <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                            </label>
                         </div>
                     </div>
                 </div>
                 <div class="card-body">
                     <mat-form-field style="float: right;">
                         <mat-label>{{'Accountant.Tables.Month'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="ep" [formControl]="emiDate">
+                        <label>
+                            <input matInput [readonly]="inputReadonly" [matDatepicker]="ep" [formControl]="emiDate" [matDatepickerFilter]="disableLoan">
+                        </label>
                         <mat-datepicker-toggle matSuffix [for]="ep"></mat-datepicker-toggle>
                         <mat-datepicker #ep
                                         startView="multi-year"

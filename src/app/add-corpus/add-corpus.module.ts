@@ -1,24 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import * as service from '@app/add-corpus/services';
 import { AppCommonModule } from '@app/app-common/app-common.module';
 import { NavigationModule } from '@app/navigation/navigation.module';
 import { TranslateModule } from '@ngx-translate/core';
 
-import { DebitEntryRoutingModule } from './debit-entry-routing.module';
-import { DebitEntryComponent } from './debit-entry.component';
-import * as service from './services';
+import { AddCorpusRoutingModule } from './add-corpus-routing.module';
+import { AddCorpusComponent } from './add-corpus/add-corpus.component';
 
 @NgModule({
-    declarations: [DebitEntryComponent],
+    declarations: [AddCorpusComponent],
     imports: [
         CommonModule,
-        DebitEntryRoutingModule,
+        AddCorpusRoutingModule,
         TranslateModule,
         FormsModule,
-        AppCommonModule,
         NavigationModule,
+        AppCommonModule,
     ],
     providers: [...service.services],
 })
-export class DebitEntryModule {}
+export class AddCorpusModule {}

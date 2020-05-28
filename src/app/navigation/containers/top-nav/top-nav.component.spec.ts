@@ -1,7 +1,7 @@
 import { Component, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationService } from '@modules/navigation/services';
+import { NavigationService } from '@app/navigation/services';
 import { NavigationServiceStub } from '@testing/stubs';
 
 import { TopNavComponent } from './top-nav.component';
@@ -12,8 +12,8 @@ import { TopNavComponent } from './top-nav.component';
     `,
 })
 class TestHostComponent {
-    // someInput = 1;
-    // someFunction(event: Event) {}
+    someInput = 1;
+    someFunction(event: Event) {}
 }
 
 describe('TopNavComponent', () => {

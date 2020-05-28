@@ -9,7 +9,9 @@
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Entry'| translate}}</div>
                 <div class="card-body">
                     <form class="form-inline">
-                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <label>
+                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                        </label>
                         <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
@@ -19,37 +21,62 @@
                             <td>{{text}}</td>
                         </tr>
                         <tr>
-                            <td>{{'Accountant.Tables.DepositsAccrued'| translate}}</td>
-                            <td>45673</td>
+                            <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
+                            <td>{{name}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Corpus'| translate}}</td>
-                            <td>2345654</td>
+                            <td>{{corpusData}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Eligible'| translate}}</td>
-                            <td>Yes</td>
+                            <td *ngIf="eligible; else not">Yes</td>
+                            <ng-template #not>
+                                <td>No</td>
+                            </ng-template>
                         </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.LoanType'| translate}}</td>
+                        <tr *ngIf="eligible">
+                            <td>{{'Accountant.Tables.Date'| translate}}</td>
                             <td>
-                                <select class="custom-select">
-                                    <option>{{'Accountant.Tables.Personal'| translate}}</option>
-                                    <option>{{'Accountant.Tables.Emergency'| translate}}</option>
-                                </select>
+                                <label>
+                                    <input type="date" [(ngModel)]="date" name="date"/>
+                                </label>
                             </td>
                         </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Interest'| translate}} (%pa)</td>
-                            <td><input type="number"/></td>
+                        <tr *ngIf="eligible">
+                            <td>{{'Accountant.Tables.LoanType'| translate}}</td>
+                            <td>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="type">
+                                        <option>{{'Accountant.Tables.Personal'| translate}}</option>
+                                        <option>{{'Accountant.Tables.Emergency'| translate}}</option>
+                                    </select>
+                                </label>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="eligible">
                             <td>{{'Accountant.Tables.Loan'| translate}} (in INR)</td>
-                            <td><input type="number"/></td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="loanAmount" name="amount"/>
+                                </label>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="eligible">
                             <td>{{'Accountant.Tables.Duration'| translate}} (in Months)</td>
-                            <td><input type="number"/></td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="duration" name="duration"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr *ngIf="!eligible">
+                            <td>Make Loan Entry</td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" (change)="focusoutHandler($event)" />
+                                </label>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

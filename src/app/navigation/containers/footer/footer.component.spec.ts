@@ -10,8 +10,8 @@ import { FooterComponent } from './footer.component';
     `,
 })
 class TestHostComponent {
-    // someInput = 1;
-    // someFunction(event: Event) {}
+    someInput = 1;
+    someFunction(event: Event) {}
 }
 
 describe('FooterComponent', () => {

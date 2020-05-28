@@ -1,10 +1,9 @@
 import { ChangeDetectorRef, Component, DebugElement, NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { NavigationService } from '@modules/navigation/services';
+import { LayoutDashboardComponent } from '@app/navigation/layouts';
+import { NavigationService } from '@app/navigation/services';
 import { NavigationServiceStub } from '@testing/stubs';
-
-import { LayoutDashboardComponent } from './layout-dashboard.component';
 
 @Component({
     template: `
@@ -15,8 +14,8 @@ import { LayoutDashboardComponent } from './layout-dashboard.component';
     `,
 })
 class TestHostComponent {
-    // someInput = 1;
-    // someFunction(event: Event) {}
+    someInput = 1;
+    someFunction(event: Event) {}
 }
 
 describe('LayoutDashboardComponent', () => {

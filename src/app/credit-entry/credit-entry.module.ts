@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { CreditEntryRoutingModule } from './credit-entry-routing.module';
 import { CreditEntryComponent } from './credit-entry.component';
+import * as service from './services';
 
 
 @NgModule({
@@ -19,5 +20,6 @@ import { CreditEntryComponent } from './credit-entry.component';
         AppCommonModule,
         NavigationModule,
     ],
+    providers: [...service.services],
 })
 export class CreditEntryModule {}

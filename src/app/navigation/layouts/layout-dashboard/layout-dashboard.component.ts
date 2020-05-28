@@ -3,7 +3,6 @@ import {
     ChangeDetectorRef,
     Component,
     HostBinding,
-    Injectable,
     Input,
     OnDestroy,
     OnInit,

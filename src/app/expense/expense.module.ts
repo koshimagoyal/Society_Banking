@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ExpenseRoutingModule } from './expense-routing.module';
 import { ExpenseComponent } from './expense.component';
+import * as service from './services';
 
 @NgModule({
     declarations: [ExpenseComponent],
@@ -18,5 +19,6 @@ import { ExpenseComponent } from './expense.component';
         TranslateModule,
         FormsModule,
     ],
+    providers: [...service.services],
 })
 export class ExpenseModule {}
