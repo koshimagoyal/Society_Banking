@@ -7,9 +7,11 @@
         <div class="col-xl-8 col-md-10">
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.GenerateStatement' | translate}}</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <form class="form-inline">
-                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <label>
+                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                        </label>
                         <button (click)="showTable()">{{'Accountant.GetInfo' | translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
@@ -23,16 +25,24 @@
                             <td>{{name}}</td>
                         </tr>
                         <tr>
+                            <td>{{'Accountant.Tables.Balance' | translate}}</td>
+                            <td>{{balance}}</td>
+                        </tr>
+                        <tr>
                             <td>{{'Accountant.Tables.Start' | translate}}</td>
-                            <td><input type="date" [(ngModel)]="start"/></td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="start" name="start"/>
+                                </label>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.End' | translate}}</td>
-                            <td><input type="date" [(ngModel)]="end"/></td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Balance' | translate}}</td>
-                            <td>30000</td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="end" name="end"/>
+                                </label>
+                            </td>
                         </tr>
                         </tbody>
                         <button (click)="openDialog()">{{'Accountant.Pages.GenerateStatement' | translate}}</button>

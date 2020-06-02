@@ -3,8 +3,128 @@
     </sb-dashboard-head>
     <hr class="rounded">
     <br>
-    <sb-dashboard-cards>
-    </sb-dashboard-cards>
-    <sb-dashboard-tables>
-    </sb-dashboard-tables>
+    <div class="row">
+        <div class="col-xl-3 col-md-6">
+            <sb-card-view-details link="" text="{{loanAmount}}" background="bg-primary">
+                <div class="card-body">
+                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "hockey-puck"]'></fa-icon>
+                    <p style="margin-top: 10px;">{{'Employee.Cards.Loan'| translate}}</p>
+                </div>
+            </sb-card-view-details>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <sb-card-view-details link="" text="{{emi}}" background="bg-warning">
+                <div class="card-body">
+                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "wallet"]'></fa-icon>
+                    <p style="margin-top: 10px;">{{'Employee.Cards.Deposit'| translate}}</p>
+                </div>
+            </sb-card-view-details>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <sb-card-view-details link="" text="{{amount}}" background="bg-success">
+                <div class="card-body">
+                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "coins"]'></fa-icon>
+                    <p style="margin-top: 10px;">{{'Employee.Cards.Debit'| translate}}</p>
+                </div>
+            </sb-card-view-details>
+        </div>
+        <div class="col-xl-3 col-md-6">
+            <sb-card-view-details link="" text="{{balance}}" background="bg-danger">
+                <div class="card-body">
+                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "money-check"]'></fa-icon>
+                    <p style="margin-top: 10px;">{{'Employee.Cards.Credit'| translate}}</p>
+                </div>
+            </sb-card-view-details>
+        </div>
+    </div>
+
+    <br/>
+    <!--PassBook Table-->
+    <sb-card>
+        <div class="card-header">
+            <div class="row">
+                <div class="col" style="margin-top: 10px;">
+                    <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Employee.Passbook.Title" | translate}}
+                </div>
+                <div class="col">
+                    <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                </div>
+            </div>
+        </div>
+        <ng-template #not>
+            <td>null</td>
+        </ng-template>
+        <div class="card-body table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col"><span>{{"Employee.Passbook.Date" | translate}}</span></th>
+                    <th scope="col"><span>{{"Employee.Passbook.Particulars" | translate}}</span></th>
+                    <th scope="col"><span>{{"Employee.Passbook.Deposit" | translate}}</span></th>
+                    <th scope="col"><span>{{"Employee.Passbook.Withdrawal" | translate}}</span></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let val of account | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
+                    <th scope="row" *ngIf="val.date; else not">{{ val.date }}</th>
+                    <td *ngIf="val.particulars; else not">{{val.particulars}}</td>
+                    <td *ngIf="val.credit; else not">{{val.credit}}</td>
+                    <td *ngIf="val.debit; else not">{{val.debit}}</td>
+                </tr>
+                </tbody>
+            </table>
+            <div class="pagination">
+                <pagination-controls (pageChange)="p=$event"></pagination-controls>
+            </div>
+        </div>
+    </sb-card>
+    <!--Loan Table-->
+    <ng-container *ngFor="let data of loans| filter: loanTerm | paginate: { itemsPerPage:5, currentPage: p}; let i = index">
+        <sb-card>
+            <div class="card-header bg-primary headers">
+                <div class="row">
+                    <div class="col" style="margin-top: 10px; color: white;">
+                        <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} ({{data.loanData.date}})</h5>
+                    </div>
+                    <div class="col" style="color: white;">
+                        <fa-icon class="fa-pull-right rotate" [ngClass]="{'clicked': show[i]}" (click)="showTable(i)" [icon]='["fas","caret-right"]' style="margin-top: 10px;">
+                        </fa-icon>&nbsp;
+                        <span class="float-right" style="margin: 10px;"><h5 *ngIf="data.loanData.loanAmount; else not">{{data.loanData.loanAmount}}</h5></span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header" *ngIf="show[i]  && data.loanBook">
+                <div class="row">
+                    <div class="col" style="margin-top: 10px;">
+                        <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Employee.Loanbook.Title" | translate}}
+                    </div>
+                    <div class="col">
+                        <input type="text" placeholder="Search.." [(ngModel)]="loanTerm[i]"/>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body table-responsive" *ngIf="show[i] && data.loanBook">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
+                        <th scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
+                        <th scope="col"><span>{{"Employee.Loanbook.Emi" | translate}}</span></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <th scope="row" *ngIf="data.loanBook.date; else not">{{data.loanBook.date}}</th>
+                        <td *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
+                        <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="pagination">
+                    <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                </div>
+            </div>
+        </sb-card>
+    </ng-container>
+
 </sb-layout-emp-dashboard>

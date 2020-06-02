@@ -39,7 +39,7 @@ export class LoanEntryComponent implements OnInit {
                 } else {
                     console.log(result);
                     // tslint:disable-next-line:prefer-for-of
-                    this.loanNo = result.loan.length;
+                    this.loanNo = result.loan[0].length;
                     console.log(this.loanNo);
                     this.name = result.nameData[0].name;
                     this.table = true;

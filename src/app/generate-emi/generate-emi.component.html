@@ -12,14 +12,16 @@
                             <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Pages.Generate" | translate}}
                         </div>
                         <div class="col">
-                            <input type="text" placeholder="Search.." [(ngModel)]="term"/>
+                                <input type="text" placeholder="Search.." [(ngModel)]="term"/>
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <mat-form-field style="float: right;">
                         <mat-label>{{'Accountant.Tables.Month'| translate}}</mat-label>
-                        <input matInput [matDatepicker]="ep" [formControl]="emiDate">
+                        <label>
+                            <input matInput [matDatepicker]="ep" [formControl]="emiDate">
+                        </label>
                         <mat-datepicker-toggle matSuffix [for]="ep"></mat-datepicker-toggle>
                         <mat-datepicker #ep
                                         startView="multi-year"
@@ -28,7 +30,10 @@
                                         panelClass="example-month-picker">
                         </mat-datepicker>
                     </mat-form-field>
-                    <table class="table table-striped" id="GenerateTable">
+                    <br>
+                    <br>
+                    <button (click)="showTable()" *ngIf="!show">{{"Accountant.Tables.Show" | translate}}</button>
+                    <table class="table table-striped" id="GenerateTable" *ngIf="show">
                         <thead>
                         <tr>
                             <th scope="col">{{"Accountant.Tables.EmployeeNo" | translate}}</th>
@@ -36,13 +41,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr *ngFor="let country of countries | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
-                            <th scope="row">{{ country.id }}</th>
-                            <td>{{country.deposit}}</td>
+                        <tr *ngFor="let val of data | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
+                            <td>{{ val.userId }}</td>
+                            <td>{{val.EMI}}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <div class="row">
+                    <div class="row" *ngIf="show">
                         <div class="col-6">
                             <div class="pagination">
                                 <pagination-controls (pageChange)="p=$event"></pagination-controls>

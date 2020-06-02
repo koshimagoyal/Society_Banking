@@ -4,11 +4,10 @@ import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
 @Component({
-  selector: 'sb-dialog',
-  templateUrl: './dialog.component.html',
+    selector: 'sb-dialog',
+    templateUrl: './dialog.component.html',
 })
 export class DialogComponent {
-    cancelButtonText = 'Cancel';
     id = '';
     name = '';
     date = '';
@@ -38,10 +37,9 @@ export class DialogComponent {
             const contentDataURL = canvas.toDataURL('jpeg', 0.95);
             const pdf = new jsPDF('p', 'mm', 'a4');
             const position = 0;
-            pdf.addImage(contentDataURL, 'JPEG', 0, position,imgWidth,imgHeight);
-            pdf.save('Letter of Closure.pdf');
+            pdf.addImage(contentDataURL, 'JPEG', 0, position, imgWidth, imgHeight);
+            pdf.save('Letter of Account Closure.pdf');
         });
         this.dialogRef.close(true);
     }
-
 }

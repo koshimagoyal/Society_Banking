@@ -1,22 +1,15 @@
-<!--mat-dialog-content>
-    <p>
-        {{message}}
-    </p>
-</mat-dialog-content>
-<mat-dialog-actions-- align="center">
-    <button mat-raised-button color="primary" (click)="onConfirmClick()" tabindex="1">{{confirmButtonText}}</button>
-    <button mat-raised-button mat-dialog-close tabindex="-1">{{cancelButtonText}}</button>
-</mat-dialog-actions-->
 <div id="data">
     <h2 mat-dialog-title>Bank Statement</h2>
     <mat-dialog-content class="mat-typography">
         <h3>Employee Id: {{id}}</h3>
         <h3>Employee Name: {{name}}</h3>
         <br>
-        <table class="table table-bordered">
+        <table class="table table-borderless">
             <thead>
-            <th>Particulars</th>
-            <th>Values</th>
+                <tr>
+                    <th>Particulars</th>
+                    <th>Value</th>
+                </tr>
             </thead>
             <tbody>
             <tr>
@@ -34,25 +27,53 @@
             </tbody>
         </table>
         <br>
-        <h3>Loan Account Details</h3>
+        <h1>Loan Account Details</h1>
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Year</th>
-                    <th>Amount</th>
+                    <th>Month and Year</th>
+                    <th>Loan Amount</th>
+                    <th>Loan Duration</th>
+                    <th>Loan Type</th>
+                    <th>Close Loan</th>
+                    <th>Date of Loan Closure</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody *ngFor="let data of loanData">
             <tr>
-                <td>2018</td>
-                <td>3082621</td>
+                <td *ngIf="data.loanData.date; else not">{{data.loanData.date}}</td>
+                <td *ngIf="data.loanData.loanAmount; else not">{{data.loanData.loanAmount}}</td>
+                <td *ngIf="data.loanData.loanDuration; else not">{{data.loanData.loanDuration}}</td>
+                <td *ngIf="data.loanData.loanType; else not">{{data.loanData.loanType}}</td>
+                <td *ngIf="data.loanData.closeLoan; else not">{{data.loanData.closeLoan}}</td>
+                <td *ngIf="data.loanData.dateOfClosure; else not">{{data.loanData.dateOfClosure}}</td>
             </tr>
             <tr>
-                <td>2012</td>
-                <td>23365363</td>
+                <td *ngIf="data.loanBook" align="center" colspan="6">
+                    <h3>Loan Book Details</h3>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Particulars</th>
+                            <th>EMI</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td *ngIf="data.loanBook.date; else not">{{data.loanBook.date}}</td>
+                            <td *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
+                            <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
             </tr>
             </tbody>
         </table>
+        <ng-template #not>
+            <td>null</td>
+        </ng-template>
         <br>
         <h3>Operating Account Details</h3>
         <table class="table table-bordered">
@@ -65,23 +86,11 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>03-04-2012</td>
-                    <td>Self</td>
-                    <td>3000</td>
-                    <td>0</td>
-                </tr>
-                <tr>
-                    <td>03-06-2013</td>
-                    <td>ABC Company</td>
-                    <td>0</td>
-                    <td>4563</td>
-                </tr>
-                <tr>
-                    <td>23-08-2013</td>
-                    <td>Self</td>
-                    <td>0</td>
-                    <td>500</td>
+                <tr *ngFor="let val of accountData">
+                    <td *ngIf="val.date; else not">{{val.date}}</td>
+                    <td *ngIf="val.particulars; else not">{{val.particulars}}</td>
+                    <td *ngIf="val.credit; else not">{{val.credit}}</td>
+                    <td *ngIf="val.debit; else not">{{val.debit}}</td>
                 </tr>
             </tbody>
         </table>

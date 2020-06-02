@@ -7,44 +7,69 @@
         <div class="col-xl-8 col-md-10">
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Tables.CloseAcc"| translate}}</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <form class="form-inline">
-                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <label>
+                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                        </label>
                         <button (click)="showTable()">{{"Accountant.GetInfo"| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
                         <tbody>
                         <tr>
                             <td>{{"Accountant.Tables.EmployeeNo"| translate}}</td>
-                            <td *ngIf="!hide">{{text}}</td>
+                            <td>{{text}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.EmployeeName' | translate}}</td>
-                            <td *ngIf="!hide">{{name}}</td>
+                            <td>{{name}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Date' | translate}}</td>
-                            <td *ngIf="!hide"><input type="date" [(ngModel)]="date"/></td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="date" name="date" />
+                                </label>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{"Accountant.Pages.Foreclosure"| translate}}</td>
-                            <td *ngIf="!hide">Done</td>
+                            <td *ngIf="loanClose; else not">{{"Accountant.Tables.Closed" | translate}}</td>
+                            <ng-template #not>
+                                <td>{{"Accountant.Tables.Not" | translate}}</td>
+                            </ng-template>
                         </tr>
-                        <tr>
+                        <tr *ngIf="hide">
                             <td>{{"Accountant.Tables.GenerateLetter"| translate}}</td>
-                            <td *ngIf="!hide"><input type="checkbox" (change)="openDialog()"/></td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" (change)="openDialog($event)"/>
+                                </label>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="hide">
                             <td>{{"Accountant.Tables.Letter"| translate}}</td>
-                            <td *ngIf="!hide"><input type="checkbox" [disabled]="disable"/></td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" [disabled]="disable"/>
+                                </label>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="hide">
                             <td>{{"Accountant.Tables.Settlement"| translate}}</td>
-                            <td *ngIf="!hide"><input type="checkbox" [disabled]="disable"/></td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" [disabled]="disable"/>
+                                </label>
+                            </td>
                         </tr>
-                        <tr>
+                        <tr *ngIf="hide">
                             <td>{{"Accountant.Tables.Close"| translate}}</td>
-                            <td *ngIf="!hide"><input type="checkbox" [disabled]="disable" (change)="close($event)"/></td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" [disabled]="disable" (change)="close()"/>
+                                </label>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

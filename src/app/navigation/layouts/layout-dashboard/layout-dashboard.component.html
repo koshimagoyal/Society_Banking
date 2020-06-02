@@ -25,6 +25,11 @@
                                 </a>
                             </div>
                             <div>
+                                <a class="nav-link" [routerLink]="['/add-corpus']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
+                                    {{'Accountant.Pages.Addition'| translate}}
+                                </a>
+                            </div>
+                            <div>
                                 <a class="nav-link" [routerLink]="['/generate-emi']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Generate'| translate}}
                                 </a>
@@ -69,11 +74,11 @@
                                     {{'Accountant.Pages.Closure'| translate}}
                                 </a>
                             </div>
-                            <div>
+                            <!--div>
                                 <a class="nav-link" [routerLink]="['/upload-all']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Upload'| translate}}
                                 </a>
-                            </div>
+                            </div-->
                         </div>
                     </div>
                 </div>

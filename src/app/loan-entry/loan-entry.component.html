@@ -7,7 +7,7 @@
         <div class="col-xl-8 col-md-10">
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Entry'| translate}}</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <form class="form-inline">
                         <label>
                             <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
@@ -30,9 +30,9 @@
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Eligible'| translate}}</td>
-                            <td *ngIf="eligible; else not">Yes</td>
+                            <td *ngIf="eligible; else not">{{"Accountant.Tables.Yes" | translate}}</td>
                             <ng-template #not>
-                                <td>No</td>
+                                <td>{{"Accountant.Tables.No" | translate}}</td>
                             </ng-template>
                         </tr>
                         <tr *ngIf="eligible">
@@ -71,7 +71,7 @@
                             </td>
                         </tr>
                         <tr *ngIf="!eligible">
-                            <td>Make Loan Entry</td>
+                            <td>{{'Accountant.Tables.Make'| translate}}</td>
                             <td>
                                 <label>
                                     <input type="checkbox" (change)="focusoutHandler($event)" />

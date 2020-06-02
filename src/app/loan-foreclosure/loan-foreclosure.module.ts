@@ -9,11 +9,14 @@ import { AppCommonModule } from '@app/app-common/app-common.module';
 import { NavigationModule } from '@app/navigation/navigation.module';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { DialogComponent } from './dialog/dialog.component';
 import { LoanForeclosureRoutingModule } from './loan-foreclosure-routing.module';
 import { LoanForeclosureComponent } from './loan-foreclosure.component';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
-    declarations: [LoanForeclosureComponent],
+    declarations: [LoanForeclosureComponent, DialogComponent],
     imports: [
         CommonModule,
         LoanForeclosureRoutingModule,
@@ -25,6 +28,10 @@ import { LoanForeclosureComponent } from './loan-foreclosure.component';
         MatDatepickerModule,
         MatNativeDateModule,
         MatMomentDateModule,
+        MatDialogModule,
+        MatButtonModule,
     ],
+    exports: [DialogComponent],
+    entryComponents: [DialogComponent],
 })
 export class LoanForeclosureModule {}

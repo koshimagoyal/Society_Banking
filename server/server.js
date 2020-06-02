@@ -89,11 +89,6 @@ app.post('/login', (req, res) => {
                 failed: 'Unauthorized Access'
             });
         }
-        if (result.length === 0) {
-            res.status(401).json({
-                failed: 'Unauthorized Access'
-            });
-        }
         console.log(result);
         res.status(200).json(result);
     });
@@ -108,7 +103,7 @@ app.post('/sendExcel',(req,res)=>{
         console.log(req.body.date);
         //console.log(err);
         let file = fs.readFileSync(req.file.path);
-        const query = 'insert into monthlysheet (monthYear,sheetName,sheet) values (?,?,?);';
+        const query = 'insert into monthlysheet (dateOfSheet,sheetName,sheet) values (?,?,?);';
         con.query(query, [req.body.date,req.file.originalname,file], function(err, result) {
             if (err) {
                 console.log(err);
@@ -126,28 +121,65 @@ app.post('/sendExcel',(req,res)=>{
 //send excel data to server
 app.post('/sendData',(req,res)=>{
     console.log(req.body);
-    let query = 'insert into user (userId, name, password, closeAccount, roleId) values ?;';
-    con.query(query, [req.body.userData], function(err, result) {
-        if (err) {
-            console.log(err);
-            res.status(401).json({
-                failed: 'Unauthorized Access'
-            });
-        }else{
-            query = 'insert into account (date, credit, userId) values ?;';
-            con.query(query, [req.body.accountData], function(err, result) {
-                if (err) {
-                    console.log(err);
-                    res.status(401).json({
-                        failed: 'Unauthorized Access'
-                    });
-                }else{
-                    console.log(result);
-                    res.send(true);
-                }
-            });
-        }
-    });
+    for(let i=0;i<req.body.userData.length;i++){
+        //console.log(req.body.userData[i][0]);
+        let query = 'select name from user where userId = ?;';
+        con.query(query, [req.body.userData[i][0]], function(err, result) {
+           if(err){
+               console.log(err);
+               res.status(401).json({
+                  failed: 'Unauthorized Access'
+               });
+           } else{
+               if(result.length === 0){
+                   query = 'insert into user (userId, name, password, closeAccount, roleId) values ?;';
+                   con.query(query, [req.body.userData], function(err, resultData) {
+                       if (err) {
+                           console.log(err);
+                           res.status(401).json({
+                               failed: 'Unauthorized Access'
+                           });
+                       }else{
+                           query = 'insert into userDetails (userId) values ?;';
+                           con.query(query,[req.body.userData[0]],function(err, ress) {
+                               if(err){
+                                   console.log(err);                                   res.status(401).json({
+                                       failed: 'Unauthorized Access'
+                                   });
+                               }else{
+                                   query = 'insert into account (date, credit, userId) values ?;';
+                                   con.query(query, [req.body.accountData], function(err, data) {
+                                       if (err) {
+                                           console.log(err);
+                                           res.status(401).json({
+                                               failed: 'Unauthorized Access'
+                                           });
+                                       }
+                                   });
+                               }
+                           });
+                       }
+                   });
+               }else{
+                   result.forEach(data=>{
+                       if(data.name === req.body.userData[i][1]){
+                           query = 'insert into account (date, credit, userId) values ?;';
+                           con.query(query, [req.body.accountData], function(err, resultData) {
+                               if (err) {
+                                   console.log(err);
+                                   res.status(401).json({
+                                       failed: 'Unauthorized Access'
+                                   });
+                               }
+                           });
+                       }
+                   });
+               }
+           }
+        });
+    }
+    res.send(true);
+
 });
 
 //send excel loan data to server
@@ -179,7 +211,7 @@ app.post('/sendLoanData',(req,res)=>{
                         }
                     });
                 }
-                query = 'insert into loanBook (date,credit,loanId) values ?;';
+                query = 'insert into loanBook (date,EMI,loanId) values ?;';
                 con.query(query, [req.body.loanBookData],function(err,result) {
                     if (err) {
                         console.log(err);
@@ -196,9 +228,26 @@ app.post('/sendLoanData',(req,res)=>{
     });
 });
 
+//send excel loan eligible data to server
+app.post('/sendEligibleData',(req,res)=>{
+    console.log(req.body);
+    let query = 'insert into loanEligibility (userId, eligibleAmount, eligibleLoans) values ?;';
+    con.query(query, [req.body.data], function(err, result) {
+        if (err) {
+            console.log(err);
+            res.status(401).json({
+                failed: 'Unauthorized Access'
+            });
+        }else{
+            console.log(result);
+            res.send(true);
+        }
+    });
+});
+
 //fetch all dates from the monthlysheet
 app.get('/monthYear',(req,res)=>{
-    const query = 'select monthYear, sheetName from monthlysheet;';
+    const query = 'select DATE_FORMAT(dateOfSheet,\'%d-%m-%Y\') as date, sheetName from monthlysheet;';
     con.query(query, function(err, result) {
         if (err) {
             console.log(err);
@@ -208,6 +257,180 @@ app.get('/monthYear',(req,res)=>{
         }else{
             console.log(result);
             res.status(202).send(result);
+        }
+    });
+});
+
+//fetch user account-loan details
+app.post('/getAllUserData',(req,res)=>{
+    console.log(req.body);
+    let query = 'select DATE_FORMAT(date,\'%Y-%m-%d\') as date, particulars, credit, debit from account where userId = ? and (date between ? and  ?);';
+    con.query(query,[req.body.userId,req.body.start,req.body.end],function(err,data) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        } else {
+            query = 'select loanId, dateOfClosure, DATE_FORMAT(date,\'%Y-%m-%d\') as date, loanAmount, loanDuration, loanType, closeLoan from loan inner join loanEntry on(loan.loanEntryId=loanEntry.id) where userId = ? and (date between ? and  ?);';
+            con.query(query,[req.body.userId,req.body.start,req.body.end],function(err,resdata) {
+                if(err){
+                    res.status(400).json({
+                        failed: 'Unauthorized Access'
+                    });
+                } else {
+                    let loanBook=[];
+                    let i = resdata.length;
+                    resdata.forEach(ddata=>{
+                        query = 'select DATE_FORMAT(date,\'%Y-%m-%d\') as date, particulars, EMI from loanBook where loanId = ? and date = ?';
+                        con.query(query,[ddata.loanId,ddata.date],function(err,loanData) {
+                            if(err){
+                                res.status(400).json({
+                                    failed: 'Unauthorized Access'
+                                });
+                            } else {
+                                if(loanData.length===0){
+                                    loanBook.push({
+                                        loanData: ddata
+                                    });
+                                }
+                                else{
+                                    loanData.forEach(ress=>{
+                                        loanBook.push({
+                                            loanData: ddata,
+                                            loanBook: ress,
+                                        });
+                                    });
+                                }
+                            }
+                            i--;
+                            if(i===0){
+                                res.status(200).json({
+                                    accountData: data,
+                                    loanData: loanBook,
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    });
+});
+
+//fetch user account-loan details
+app.post('/getUserAllData',(req,res)=>{
+    console.log(req.body);
+    let query = 'select DATE_FORMAT(date,\'%Y-%m-%d\') as date, particulars, credit, debit from account where userId = ?;';
+    con.query(query,[req.body.userId],function(err,data) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        } else {
+            query = 'select loanId, dateOfClosure, DATE_FORMAT(date,\'%Y-%m-%d\') as date, loanAmount, loanDuration, loanType, closeLoan from loan inner join loanEntry on(loan.loanEntryId=loanEntry.id) where userId = ?;';
+            con.query(query,[req.body.userId],function(err,resdata) {
+                if(err){
+                    res.status(400).json({
+                        failed: 'Unauthorized Access'
+                    });
+                } else {
+                    let loanBook=[];
+                    let i = resdata.length;
+                    resdata.forEach(ddata=>{
+                        query = 'select DATE_FORMAT(date,\'%Y-%m-%d\') as date, particulars, EMI from loanBook where loanId = ? and date = ?';
+                        con.query(query,[ddata.loanId,ddata.date],function(err,loanData) {
+                            if(err){
+                                res.status(400).json({
+                                    failed: 'Unauthorized Access'
+                                });
+                            } else {
+                                if(loanData.length===0){
+                                    loanBook.push({
+                                        loanData: ddata
+                                    });
+                                }
+                                else{
+                                    loanData.forEach(ress=>{
+                                        loanBook.push({
+                                            loanData: ddata,
+                                            loanBook: ress,
+                                        });
+                                    });
+                                }
+                            }
+                            i--;
+                            if(i===0){
+                                res.status(200).json({
+                                    accountData: data,
+                                    loanData: loanBook,
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    });
+});
+
+//fetch all details
+app.get('/getAllData',(req,res)=>{
+    let query = 'select loanId, date, loanAmount, loanDuration, interest from loan inner join loanEntry on(loan.loanEntryId=loanEntry.id);';
+    con.query(query,function(err,resdata) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        } else {
+            let loanBook=[];
+            let i = resdata.length;
+            resdata.forEach(ddata=>{
+                query = 'select EMI from loanBook where loanId = ? and date = ?';
+                con.query(query,[ddata.loanId,ddata.date],function(err,loanData) {
+                    if(err){
+                        res.status(400).json({
+                            failed: 'Unauthorized Access'
+                        });
+                    } else {
+                        if(loanData.length===0){
+                            loanBook.push({
+                                loanData: ddata
+                            });
+                        }
+                        else{
+                            loanData.forEach(ress=>{
+                                loanBook.push({
+                                    loanData: ddata,
+                                    loanBook: ress,
+                                });
+                            });
+                        }
+                    }
+                    i--;
+                    if(i===0){
+                        res.status(200).json({
+                            loan: loanBook
+                        });
+                    }
+                });
+            });
+        }
+    });
+});
+
+//fetch loan details
+app.post('/generateEMI',(req,res)=>{
+    console.log(req.body);
+    let query = 'select loanAmount, loanDuration, interest, userId from loan inner join loanEntry on(loan.loanEntryId=loanEntry.id) where MONTH(date)=? and YEAR(date)=?;';
+    con.query(query,[req.body.month,req.body.year],function(err,resdata) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        } else {
+            res.status(200).json({
+                loanData: resdata,
+            });
         }
     });
 });
@@ -239,6 +462,33 @@ app.post('/getAccountData',(req,res)=>{
    });
 });
 
+//fetch loan entry details
+app.post('/getLoanEntryData',(req,res)=>{
+    console.log(req.body);
+    let query = 'select name from user where userId = ? and closeAccount = false;';
+    con.query(query,[req.body.userId],function(err,result) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        }else{
+            query = 'select loanId from loan where userId = ?';
+            con.query(query,[req.body.userId],function(err,resdata) {
+                if(err){
+                    res.status(400).json({
+                        failed: 'Unauthorized Access'
+                    });
+                } else {
+                    res.status(200).json({
+                        nameData: result,
+                        loan: resdata,
+                    });
+                }
+            });
+        }
+    });
+});
+
 //fetch user loan details
 app.post('/getLoanData',(req,res)=>{
     console.log(req.body);
@@ -249,16 +499,72 @@ app.post('/getLoanData',(req,res)=>{
                 failed: 'Unauthorized Access'
             });
         }else{
-            query = 'select loanId from loan where userId = ?';
-            con.query(query,[req.body.userId],function(err,data) {
+            query = 'select loanId, dateOfClosure, date, loanAmount, loanDuration, loanType, closeLoan from loan inner join loanEntry on(loan.loanEntryId=loanEntry.id) where userId = ? and date = ?';
+            con.query(query,[req.body.userId,req.body.date],function(err,resdata) {
+                if(err){
+                    res.status(400).json({
+                        failed: 'Unauthorized Access'
+                    });
+                } else {
+                    let loanBook=[];
+                    let i = resdata.length;
+                    resdata.forEach(ddata=>{
+                        query = 'select date, particulars, EMI from loanBook where loanId = ? and date = ?';
+                        con.query(query,[ddata.loanId,ddata.date],function(err,loanData) {
+                            if(err){
+                                res.status(400).json({
+                                    failed: 'Unauthorized Access'
+                                });
+                            } else {
+                                if(loanData.length===0){
+                                    loanBook.push({
+                                        loanData: ddata
+                                    });
+                                }
+                                else{
+                                    loanData.forEach(ress=>{
+                                        loanBook.push({
+                                            loanData: ddata,
+                                            loanBook: ress,
+                                        });
+                                    });
+                                }
+                            }
+                            i--;
+                            if(i===0){
+                                res.status(200).json({
+                                    nameData: result,
+                                    loanData: loanBook,
+                                });
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    });
+});
+
+//fetch user loan eligibility details
+app.post('/getEligibleData',(req,res)=>{
+    console.log(req.body);
+    let query = 'select eligibleAmount, eligibleLoans from loaneligibility where userId = ?';
+    con.query(query,[req.body.userId],function(err,result) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        }else{
+            query = 'select DATE_FORMAT(date,\'%Y-%m-%d\') as date, loanAmount from loan where userId = ?';
+            con.query(query,[req.body.userId],function(err,resdata) {
                 if(err){
                     res.status(400).json({
                         failed: 'Unauthorized Access'
                     });
                 } else {
                     res.status(200).json({
-                        nameData: result,
-                        loan: data,
+                        eligibleData: result,
+                        loanData: resdata,
                     });
                 }
             });
@@ -288,6 +594,40 @@ app.post('/sendCredit',(req,res)=>{
     console.log(req.body);
     const query = 'insert into account (date,credit,particulars,userId) values (?,?,?,?); ';
     con.query(query,[req.body.date,req.body.credit,req.body.remark,req.body.userId],function(err,result) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        }else{
+            res.status(200).json({
+                data: result
+            });
+        }
+    });
+});
+
+//close loan
+app.post('/closeLoan',(req,res)=>{
+    console.log(req.body);
+    const query = 'update loan set dateOfClosure = ?, closeLoan = ? where userId = ?;';
+    con.query(query,[req.body.date,req.body.close,req.body.userId],function(err,result) {
+        if(err){
+            res.status(400).json({
+                failed: 'Unauthorized Access'
+            });
+        }else{
+            res.status(200).json({
+                data: result
+            });
+        }
+    });
+});
+
+//close account
+app.post('/closeAccount',(req,res)=>{
+    console.log(req.body);
+    const query = 'update user set closeDate = ?, closeAccount = ? where userId = ?;';
+    con.query(query,[req.body.date,req.body.close,req.body.userId],function(err,result) {
         if(err){
             res.status(400).json({
                 failed: 'Unauthorized Access'

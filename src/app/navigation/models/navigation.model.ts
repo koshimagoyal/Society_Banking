@@ -18,18 +18,3 @@ export interface SideNavSection {
     text?: string;
     items: string[];
 }
-export interface EmpSideNavItems {
-    [index: string]: EmpSideNavItem;
-}
-
-export interface EmpSideNavItem {
-    icon?: string;
-    text: string;
-    link?: string;
-    submenu?: EmpSideNavItem[];
-}
-
-export interface EmpSideNavSection {
-    text?: string;
-    items: string[];
-}

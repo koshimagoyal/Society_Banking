@@ -17,7 +17,7 @@ class TestHostComponent {
     // someFunction(event: Event) {}
 }
 
-describe('TopNavUserComponent', () => {
+describe('TopNavUserrComponent', () => {
     let fixture: ComponentFixture<TestHostComponent>;
     let hostComponent: TestHostComponent;
     let hostComponentDE: DebugElement;
@@ -48,6 +48,6 @@ describe('TopNavUserComponent', () => {
     });
 
     it('should display the component', () => {
-        expect(hostComponentNE.querySelector('sbpro-top-nav-user')).toEqual(jasmine.anything());
+        expect(hostComponentNE.querySelector('sbpro-top-nav-userr-user-user')).toEqual(jasmine.anything());
     });
 });

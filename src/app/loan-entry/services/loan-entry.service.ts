@@ -10,7 +10,7 @@ export class LoanEntryService {
 
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://localhost:8080/getLoanData';
+        const url = 'http://localhost:8080/getLoanEntryData';
         const data = {
             userId: text,
         }

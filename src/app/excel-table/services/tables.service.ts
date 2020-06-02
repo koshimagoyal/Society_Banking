@@ -21,7 +21,7 @@ export class TablesService {
                 const char = Math.floor(Math.random() * str.length + 1);
                 pass += str.charAt(char);
             }
-            const passw = pass.slice(0, 3) + data[j][1] + pass.slice(3);
+            const passw = pass.slice(0, 3) + data[j][1].slice(0, 2) + pass.slice(3);
             user.push([data[j][0], data[j][1], passw, false, 2]);
             account.push([ddate, data[j][2], data[j][0]]);
         }
@@ -60,6 +60,24 @@ export class TablesService {
             date: ddate,
         };
         console.log(send);
+        const headers = new HttpHeaders();
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
+        headers.append('Accept', 'application/json');
+        headers.append('content-type', 'application/json');
+        return this.httpService.post<any>(url, send, { headers });
+    }
+
+    sendEliData(getData: any): Observable<any> {
+        const data = getData.data;
+        const eli = [];
+        const url = 'http://localhost:8080/sendEligibleData';
+        for (let j = 1; j < data.length; j++) {
+            eli.push([data[j][0], data[j][1], data[j][2]]);
+        }
+        const send = {
+            data: eli,
+        };
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');

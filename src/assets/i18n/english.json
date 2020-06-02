@@ -3,8 +3,8 @@
         "Cards": {
             "Loan": "Total Loan Taken",
             "Debit": "Loan Pay Amount",
-            "Deposit": "Deposit Amount",
-            "Credit": "Loan Limit"
+            "Deposit": "EMI Deposited",
+            "Credit": "Account Balance"
         },
         "Pages": {
             "Eligible": "Loan Eligibility Table",
@@ -21,7 +21,7 @@
         },
         "LoanEligible": {
             "Eligible": "Number of Eligible Loans",
-            "Amount": "Pending Loan Amount",
+            "Amount": "Pending Eligible Loan Amount",
             "EligibleAmount": "Eligible Loan Amount"
         },
         "Loanbook": {
@@ -39,10 +39,11 @@
         "Cards": {
             "Loan": "Total Loan Given",
             "Interest": "Total Interest Received",
-            "Amount": "Total Amount Received",
+            "Amount": "Total Principle Received",
             "People": "Number of Loans Given"
         },
         "Pages": {
+            "Addition": "Add/Update Corpus Fund",
             "Sheet": "Monthly Sheet",
             "Generate": "EMI To be Deduct",
             "Entry": "Loan Entry",
@@ -59,6 +60,12 @@
         "Debit": "Debit",
         "GetInfo": "Get Information",
         "Tables": {
+            "Yes": "Yes",
+            "No": "No",
+            "Show": "Show Data",
+            "Closed": "Closed",
+            "Not": "Not Closed",
+            "Make": "Make Loan Entry",
             "EmployeeNo": "Employee ID",
             "EmployeeName": "Employee Name",
             "Start": "Start Date",
@@ -84,11 +91,12 @@
             "Saving": "Savings Interest",
             "Balance": "Balance",
             "Bonus": "Bonus Share",
-            "GenerateLetter": "Generate Loan Closure Letter",
-            "Letter": "Loan Closure Letter Received by Employee",
+            "GenerateLetter": "Generate Account Closure Letter",
+            "Letter": "Account Closure Letter Received by Employee",
             "Settlement": "Full Final Settlement Done",
             "Sheet1": "Deposits Received",
             "Sheet2": "Loan EMIs Received",
+            "Sheet3": "Loan Eligibility",
             "DepositsAccrued": "Employee Deposit Accrued",
             "Corpus": "Total Corpus Fund",
             "Eligible": "Eligible for Loan",

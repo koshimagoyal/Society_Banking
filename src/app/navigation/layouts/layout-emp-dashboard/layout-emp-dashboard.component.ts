@@ -8,8 +8,8 @@ import {
     OnInit,
 } from '@angular/core';
 import { NavigationService } from '@app/navigation/services';
+import { SessionStorageService } from 'ngx-webstorage';
 import { Subscription } from 'rxjs';
-import { UserService } from '@app/login/services';
 
 @Component({
     selector: 'sb-layout-emp-dashboard',
@@ -25,10 +25,11 @@ export class LayoutEmpDashboardComponent implements OnInit, OnDestroy {
     @HostBinding('class.sb-sidenav-toggled') sideNavHidden = false;
     subscription: Subscription = new Subscription();
     sidenavStyle = 'sb-sidenav-dark';
+    user: any;
     constructor(
         public navigationService: NavigationService,
         private changeDetectorRef: ChangeDetectorRef,
-        public userService: UserService
+        public session: SessionStorageService
     ) {}
     ngOnInit() {
         if (this.light) {
@@ -40,6 +41,7 @@ export class LayoutEmpDashboardComponent implements OnInit, OnDestroy {
                 this.changeDetectorRef.markForCheck();
             })
         );
+        this.user = this.session.retrieve('user');
     }
     ngOnDestroy() {
         this.subscription.unsubscribe();

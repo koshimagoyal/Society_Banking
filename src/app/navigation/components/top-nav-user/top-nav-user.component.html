@@ -1,7 +1,7 @@
 <div class="row">
     <div>
         <label class="hoverable" for="fileInput">
-            <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'"/>
+            <img [src]="url ? url : 'https://www.w3schools.com/howto/img_avatar.png'" alt=""/>
             <div class="hover-text">Choose file</div>
             <div class="background"></div>
         </label>
@@ -14,9 +14,9 @@
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownUser">
                 <h6 class="dropdown-header">
                     <div class="dropdown-user-details">
-                        <div class="dropdown-user-details-name">User Id - {{ user.id }}</div>
-                        <div class="dropdown-user-details-name">Name - {{ user.name }}</div>
-                        <div class="dropdown-user-details-email">Company - {{ user.company }}</div>
+                        <div class="dropdown-user-details-name" *ngIf="user.id">User Id - {{ user.id }}</div>
+                        <div class="dropdown-user-details-name" *ngIf="user.name">Name - {{ user.name }}</div>
+                        <div class="dropdown-user-details-email" *ngIf="user.company">Company - {{ user.company }}</div>
                     </div>
                 </h6>
                 <!--div class="dropdown-divider"></div>

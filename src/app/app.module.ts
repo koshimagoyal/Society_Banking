@@ -33,13 +33,12 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
             loader: {
                 provide: TranslateLoader,
                 deps: [HttpBackend],
-                useFactory: translateHttpLoaderFactory
+                useFactory: translateHttpLoaderFactory,
             },
         }),
         BrowserAnimationsModule,
     ],
     providers: [...authServices.services],
     bootstrap: [AppComponent],
-    exports: [],
 })
 export class AppModule {}

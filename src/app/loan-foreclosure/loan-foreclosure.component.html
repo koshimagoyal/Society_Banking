@@ -7,39 +7,57 @@
         <div class="col-xl-8 col-md-10">
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Foreclosure'| translate}}</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <form class="form-inline">
-                        <input type="text" placeholder="Enter Employee No" (focusout) = "focusoutHandler($event)"/>
+                        <label>
+                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                        </label>
+                        <label>
+                            <input type="date" placeholder="Enter Loan Date" [(ngModel)]="loanDate" name="loanDate"/>
+                        </label>
                         <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
                         <tbody>
                         <tr>
                             <td>{{'Accountant.Tables.EmployeeNo'| translate}}</td>
-                            <td *ngIf="!hide">{{text}}</td>
+                            <td>{{text}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
+                            <td>{{name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.LoanType'| translate}}</td>
+                            <td>{{loanType}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Active'| translate}}</td>
-                            <td *ngIf="!hide">300000</td>
+                            <td>{{loanAmount}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.LoanDate'| translate}}</td>
+                            <td>{{loanDate}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Amt'| translate}}</td>
-                            <td *ngIf="!hide">3000</td>
+                            <td>{{payAmount}}</td>
                         </tr>
                         <tr>
-                            <td id="date">{{'Accountant.Tables.DateForeclosure'| translate}}</td>
-                            <td *ngIf="!hide">
-                                <mat-form-field>
-                                    <mat-label>{{'Accountant.Tables.Date'| translate}}</mat-label>
-                                    <input matInput [matDatepicker]="picker">
-                                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                                    <mat-datepicker #picker></mat-datepicker>
-                                </mat-form-field>
+                            <td>{{'Accountant.Tables.DateForeclosure'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="date" name="date"/>
+                                </label>
                             </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Close'| translate}}</td>
-                            <td *ngIf="!hide"><input type="checkbox" (change)="close($event)"/></td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" (change)="close()"/>
+                                </label>
+                            </td>
                         </tr>
                         </tbody>
                     </table>

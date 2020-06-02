@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { ApplyLoanRoutingModule } from './apply-loan-routing.module';
 import { ApplyLoanComponent } from './apply-loan.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [ApplyLoanComponent],
@@ -15,6 +16,7 @@ import { ApplyLoanComponent } from './apply-loan.component';
         NavigationModule,
         TranslateModule,
         AppCommonModule,
+        FormsModule,
     ],
 })
 export class ApplyLoanModule {}

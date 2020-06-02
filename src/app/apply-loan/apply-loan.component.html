@@ -7,17 +7,29 @@
         <div class="col-xl-8 col-md-10">
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Employee.Pages.Apply'| translate}}</div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-striped" id="content">
                         <tbody>
                         <tr>
                             <td>{{'Accountant.Tables.EmployeeNo'| translate}}</td>
-                            <td>1234</td>
+                            <td>{{text}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
+                            <td>{{name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Date'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="date" name="date"/>
+                                </label>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.LoanType'| translate}}</td>
                             <td>
-                                <select class="custom-select">
+                                <select class="custom-select" [(ngModel)]="type">
                                     <option>{{'Accountant.Tables.Personal'| translate}}</option>
                                     <option>{{'Accountant.Tables.Emergency'| translate}}</option>
                                 </select>
@@ -25,11 +37,19 @@
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Loan'| translate}} (in INR)</td>
-                            <td><input type="number"/></td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="loanAmount" name="amount"/>
+                                </label>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Duration'| translate}} (in Months)</td>
-                            <td><input type="number"/></td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="duration" name="duration"/>
+                                </label>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -39,4 +59,5 @@
         </div>
         <div class="col-xl-2 col-md-1"></div>
     </div>
+
 </sb-layout-emp-dashboard>

@@ -23,4 +23,5 @@ import * as navigationServices from './services';
         ...appCommonLayouts.layouts,
     ],
 })
+// @ts-ignore
 export class NavigationModule {}
