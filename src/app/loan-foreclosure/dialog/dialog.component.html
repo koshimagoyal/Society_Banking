@@ -1,0 +1,24 @@
+<div id="data">
+    <h2 mat-dialog-title>Letter for Loan Closure</h2>
+    <mat-dialog-content class="mat-typography">
+        <h3>Date: {{date}}</h3>
+        <br/>
+        <h3>ABC Company</h3>
+        <h3>Nariman Point</h3>
+        <h3>Mumbai</h3>
+        <br/>
+        <h3>Dear {{name}}</h3>
+        <h3>We would like to notify that all the dues of {{name}} having Employee Id as {{id}} has been cleared and the loan has been closed.</h3>
+        <br/>
+        <h3>Thanking You</h3>
+        <br>
+        <h3>Yours faithfully</h3>
+        <h3>Amita Gupta</h3>
+        <h3>Manager</h3>
+    </mat-dialog-content>
+</div>
+<mat-dialog-actions align="end">
+    <button class="btn-danger" mat-button mat-dialog-close>Cancel</button>
+    <button class="btn-success" mat-button (click)="onConfirmClick()" cdkFocusInitial>Print</button>
+</mat-dialog-actions>
+
