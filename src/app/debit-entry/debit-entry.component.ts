@@ -11,6 +11,8 @@ export class DebitEntryComponent implements OnInit {
     text: any;
     debitAmount: any;
     purpose: any;
+    mode: any;
+    type: any;
     data: any;
     name: any;
     date: any;

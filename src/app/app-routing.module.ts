@@ -8,6 +8,18 @@ const routes: Routes = [
         redirectTo: 'login',
     },
     {
+        path: 'cash-cheque',
+        loadChildren: () =>
+            import('./miscellaneous-page/miscellaneous-page.module').then(
+                m => m.MiscellaneousPageModule
+            ),
+    },
+    {
+        path: 'bank-account',
+        loadChildren: () =>
+            import('./bank-account/bank-account.module').then(m => m.BankAccountModule),
+    },
+    {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     },

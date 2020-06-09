@@ -13,7 +13,7 @@ export class DialogComponent {
     name = '';
     start = '';
     end = '';
-    balance = '';
+    balance = 0;
     accountData = [];
     loanData = [];
     constructor(

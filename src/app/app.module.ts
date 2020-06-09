@@ -40,5 +40,6 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
     ],
     providers: [...authServices.services],
     bootstrap: [AppComponent],
+    exports: [],
 })
 export class AppModule {}

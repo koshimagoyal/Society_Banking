@@ -33,15 +33,15 @@
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Active'| translate}}</td>
-                            <td>{{loanAmount}}</td>
+                            <td>{{loanAmount| indianCurrency}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.LoanDate'| translate}}</td>
-                            <td>{{loanDate}}</td>
+                            <td>{{loanDate| date:'dd-MM-yyyy'}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Amt'| translate}}</td>
-                            <td>{{payAmount}}</td>
+                            <td>{{payAmount| indianCurrency}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.DateForeclosure'| translate}}</td>

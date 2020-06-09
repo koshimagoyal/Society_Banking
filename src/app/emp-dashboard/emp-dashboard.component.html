@@ -5,7 +5,7 @@
     <br>
     <div class="row">
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details link="" text="{{loanAmount}}" background="bg-primary">
+            <sb-card-view-details link="" text="{{loanAmount| indianCurrency}}" background="bg-primary">
                 <div class="card-body">
                     <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "hockey-puck"]'></fa-icon>
                     <p style="margin-top: 10px;">{{'Employee.Cards.Loan'| translate}}</p>
@@ -13,7 +13,7 @@
             </sb-card-view-details>
         </div>
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details link="" text="{{emi}}" background="bg-warning">
+            <sb-card-view-details link="" text="{{emi| indianCurrency}}" background="bg-warning">
                 <div class="card-body">
                     <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "wallet"]'></fa-icon>
                     <p style="margin-top: 10px;">{{'Employee.Cards.Deposit'| translate}}</p>
@@ -21,7 +21,7 @@
             </sb-card-view-details>
         </div>
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details link="" text="{{amount}}" background="bg-success">
+            <sb-card-view-details link="" text="{{loanAmount| indianCurrency}}" background="bg-success">
                 <div class="card-body">
                     <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "coins"]'></fa-icon>
                     <p style="margin-top: 10px;">{{'Employee.Cards.Debit'| translate}}</p>
@@ -29,7 +29,7 @@
             </sb-card-view-details>
         </div>
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details link="" text="{{balance}}" background="bg-danger">
+            <sb-card-view-details link="" text="{{balance| indianCurrency}}" background="bg-danger">
                 <div class="card-body">
                     <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "money-check"]'></fa-icon>
                     <p style="margin-top: 10px;">{{'Employee.Cards.Credit'| translate}}</p>
@@ -58,18 +58,18 @@
             <table class="table table-striped">
                 <thead>
                 <tr>
-                    <th scope="col"><span>{{"Employee.Passbook.Date" | translate}}</span></th>
-                    <th scope="col"><span>{{"Employee.Passbook.Particulars" | translate}}</span></th>
+                    <th style="width: 16.66%;" scope="col"><span>{{"Employee.Passbook.Date" | translate}}</span></th>
+                    <th style="width: 60%;" scope="col"><span>{{"Employee.Passbook.Particulars" | translate}}</span></th>
                     <th scope="col"><span>{{"Employee.Passbook.Deposit" | translate}}</span></th>
                     <th scope="col"><span>{{"Employee.Passbook.Withdrawal" | translate}}</span></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let val of account | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
-                    <th scope="row" *ngIf="val.date; else not">{{ val.date }}</th>
+                    <th scope="row" *ngIf="val.date; else not">{{ val.date| date:'dd-MM-yyyy' }}</th>
                     <td *ngIf="val.particulars; else not">{{val.particulars}}</td>
-                    <td *ngIf="val.credit; else not">{{val.credit}}</td>
-                    <td *ngIf="val.debit; else not">{{val.debit}}</td>
+                    <td class="table-success" *ngIf="val.credit; else not">{{val.credit| indianCurrency}}</td>
+                    <td class="table-danger" *ngIf="val.debit; else not">{{val.debit| indianCurrency}}</td>
                 </tr>
                 </tbody>
             </table>
@@ -84,12 +84,12 @@
             <div class="card-header bg-primary headers">
                 <div class="row">
                     <div class="col" style="margin-top: 10px; color: white;">
-                        <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} ({{data.loanData.date}})</h5>
+                        <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} ({{data.loanData.date| date:'dd-MM-yyyy'}})</h5>
                     </div>
                     <div class="col" style="color: white;">
                         <fa-icon class="fa-pull-right rotate" [ngClass]="{'clicked': show[i]}" (click)="showTable(i)" [icon]='["fas","caret-right"]' style="margin-top: 10px;">
                         </fa-icon>&nbsp;
-                        <span class="float-right" style="margin: 10px;"><h5 *ngIf="data.loanData.loanAmount; else not">{{data.loanData.loanAmount}}</h5></span>
+                        <span class="float-right" style="margin: 10px;"><h5 *ngIf="data.loanData.loanAmount; else not">{{data.loanData.loanAmount| indianCurrency}}</h5></span>
                     </div>
                 </div>
             </div>
@@ -99,7 +99,7 @@
                         <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Employee.Loanbook.Title" | translate}}
                     </div>
                     <div class="col">
-                        <input type="text" placeholder="Search.." [(ngModel)]="loanTerm[i]"/>
+                        <input type="text" placeholder="Search.." [(ngModel)]="loanTerm"/>
                     </div>
                 </div>
             </div>
@@ -107,16 +107,16 @@
                 <table class="table table-striped">
                     <thead>
                     <tr>
-                        <th scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
-                        <th scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
+                        <th style="width: 16.66%;" scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
+                        <th style="width: 60%;" scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
                         <th scope="col"><span>{{"Employee.Loanbook.Emi" | translate}}</span></th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <th scope="row" *ngIf="data.loanBook.date; else not">{{data.loanBook.date}}</th>
+                        <th scope="row" *ngIf="data.loanBook.date; else not">{{data.loanBook.date| date:'dd-MM-yyyy'}}</th>
                         <td *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
-                        <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI}}</td>
+                        <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI| indianCurrency}}</td>
                     </tr>
                     </tbody>
                 </table>

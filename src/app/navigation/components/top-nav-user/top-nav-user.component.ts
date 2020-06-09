@@ -1,6 +1,8 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { SessionStorageService } from 'ngx-webstorage';
+import { NavigationService } from '@app/navigation/services';
+import { exitCodeFromResult } from '@angular/compiler-cli';
 
 @Component({
     selector: 'sb-top-nav-user',
@@ -11,18 +13,16 @@ import { SessionStorageService } from 'ngx-webstorage';
 export class TopNavUserComponent implements OnInit {
     url: string | ArrayBuffer | null = '';
     user: any;
-    constructor(public session: SessionStorageService, public translate: TranslateService) {}
-    onSelectFile(event: any) {
-        if (event.target.files && event.target.files[0]) {
-            const reader = new FileReader();
-
-            reader.readAsDataURL(event.target.files[0]); // read file as data url
-
-            reader.onload = data => {
-                // called once readAsDataURL is completed
-                if (data.target != null) this.url = data.target.result;
-            };
-        }
+    constructor(
+        public session: SessionStorageService,
+        public translate: TranslateService,
+        public naviService: NavigationService
+    ) {}
+    async onSelectFile(event: any) {
+        this.url = await this.naviService.fileUpload(event).then(result => {
+            return result;
+        });
+        console.log(this.url);
     }
     ngOnInit() {
         this.user = this.session.retrieve('user');

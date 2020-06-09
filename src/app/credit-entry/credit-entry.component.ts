@@ -10,6 +10,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class CreditEntryComponent implements OnInit {
     text: any;
+    type: any;
     table = false;
     creditAmount: any;
     purpose: any;

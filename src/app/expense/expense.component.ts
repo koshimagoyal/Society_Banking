@@ -9,6 +9,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class ExpenseComponent implements OnInit {
     debitAmount: any;
+    cash = true;
+    cheque = false;
     purpose: any;
     date: any;
     balance = 0;
@@ -73,5 +75,13 @@ export class ExpenseComponent implements OnInit {
             }
         );
         return this.balance;
+    }
+    showCash(){
+        this.cash = true;
+        this.cheque = false;
+    }
+    showCheque() {
+        this.cheque = true;
+        this.cash = false;
     }
 }

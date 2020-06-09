@@ -13,8 +13,15 @@ export class LoanEntryService {
         const url = 'http://localhost:8080/getLoanEntryData';
         const data = {
             userId: text,
-        }
+        };
         return this.http.post<any>(url, data);
+    }
+    getAllData(text: any): Observable<any> {
+        const data = {
+            userId: text,
+        };
+        const url = 'http://localhost:8080/getUserAllData';
+        return this.http.post(url, data);
     }
     sendData(data: any): Observable<any> {
         console.log(data);

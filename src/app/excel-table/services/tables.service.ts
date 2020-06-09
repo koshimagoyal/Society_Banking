@@ -23,7 +23,7 @@ export class TablesService {
             }
             const passw = pass.slice(0, 3) + data[j][1].slice(0, 2) + pass.slice(3);
             user.push([data[j][0], data[j][1], passw, false, 2]);
-            account.push([ddate, data[j][2], data[j][0]]);
+            account.push([ddate, data[j][2], data[j][0], 'Salary Credited']);
         }
         const send = {
             userData: user,
@@ -52,7 +52,7 @@ export class TablesService {
                 type = 2;
             }
             loan.push([ddate, data[j][0], data[j][1], data[j][2], false, type]);
-            loanBook.push([ddate, data[j][4]]);
+            loanBook.push([ddate, data[j][4], 'Debited from Salary']);
         }
         const send = {
             loanData: loan,

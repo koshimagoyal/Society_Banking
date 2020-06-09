@@ -74,6 +74,16 @@
                                     {{'Accountant.Pages.Closure'| translate}}
                                 </a>
                             </div>
+                            <div>
+                                <a class="nav-link" [routerLink]="['/bank-account']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
+                                    {{'Accountant.Pages.Create'| translate}}
+                                </a>
+                            </div>
+                            <div>
+                                <a class="nav-link" [routerLink]="['/cash-cheque']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
+                                    Cash-Cheque Transfer
+                                </a>
+                            </div>
                             <!--div>
                                 <a class="nav-link" [routerLink]="['/upload-all']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Upload'| translate}}

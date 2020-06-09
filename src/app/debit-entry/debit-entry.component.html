@@ -26,7 +26,7 @@
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Balance'| translate}}</td>
-                            <td>{{balance}}</td>
+                            <td>{{balance| indianCurrency}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Date'| translate}}</td>
@@ -41,6 +41,42 @@
                             <td>
                                 <label>
                                     <input type="number" [(ngModel)]="debitAmount" (focusout)="debit($event)" name="amount"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Mode' | translate}}</td>
+                            <td>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="type">
+                                        <option>{{'Accountant.Tables.Cash' | translate}}</option>
+                                        <option>{{'Accountant.Tables.Cheque' | translate}}</option>
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr *ngIf="type == 'Cheque'">
+                            <td>{{'Accountant.Tables.BankName' | translate}}</td>
+                            <td>
+                                <select class="custom-select">
+                                    <option>ABC</option>
+                                    <option>ABC@3</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr *ngIf="type == 'Cheque'">
+                            <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr *ngIf="type == 'Cheque'">
+                            <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text"/>
                                 </label>
                             </td>
                         </tr>

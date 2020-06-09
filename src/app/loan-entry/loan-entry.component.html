@@ -26,16 +26,17 @@
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Corpus'| translate}}</td>
-                            <td>{{corpusData}}</td>
+                            <td>{{corpusData| indianCurrency}}</td>
                         </tr>
                         <tr>
-                            <td>{{'Accountant.Tables.Eligible'| translate}}</td>
-                            <td *ngIf="eligible; else not">{{"Accountant.Tables.Yes" | translate}}</td>
-                            <ng-template #not>
-                                <td>{{"Accountant.Tables.No" | translate}}</td>
-                            </ng-template>
+                            <td>{{'Accountant.Tables.PreviousLoans'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" (change)="focusoutHandler($event)" />
+                                </label>
+                            </td>
                         </tr>
-                        <tr *ngIf="eligible">
+                        <tr>
                             <td>{{'Accountant.Tables.Date'| translate}}</td>
                             <td>
                                 <label>
@@ -43,7 +44,7 @@
                                 </label>
                             </td>
                         </tr>
-                        <tr *ngIf="eligible">
+                        <tr>
                             <td>{{'Accountant.Tables.LoanType'| translate}}</td>
                             <td>
                                 <label>
@@ -54,7 +55,7 @@
                                 </label>
                             </td>
                         </tr>
-                        <tr *ngIf="eligible">
+                        <tr>
                             <td>{{'Accountant.Tables.Loan'| translate}} (in INR)</td>
                             <td>
                                 <label>
@@ -62,19 +63,11 @@
                                 </label>
                             </td>
                         </tr>
-                        <tr *ngIf="eligible">
+                        <tr>
                             <td>{{'Accountant.Tables.Duration'| translate}} (in Months)</td>
                             <td>
                                 <label>
                                     <input type="number" [(ngModel)]="duration" name="duration"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr *ngIf="!eligible">
-                            <td>{{'Accountant.Tables.Make'| translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="checkbox" (change)="focusoutHandler($event)" />
                                 </label>
                             </td>
                         </tr>
@@ -85,5 +78,55 @@
             </sb-card>
         </div>
         <div class="col-xl-2 col-md-1"></div>
+    </div>
+    <div *ngIf="show">
+        <ng-container *ngFor="let data of loans| filter: loanTerm[i] | paginate: { itemsPerPage:5, currentPage: p}; let i = index">
+            <sb-card>
+                <div class="card-header bg-primary headers">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px; color: white;">
+                            <h5><fa-icon class="mr-1" [icon]='["fas", "rupee-sign"]'></fa-icon>&nbsp;{{'Employee.Loan'| translate}} ({{data.loanData.date| date:'dd-MM-yyyy'}})</h5>
+                        </div>
+                        <div class="col" style="color: white;">
+                            <span class="float-right" style="margin: 10px;"><h5 *ngIf="data.loanData.loanAmount; else not">{{data.loanData.loanAmount| indianCurrency}}</h5></span>
+                        </div>
+                    </div>
+                </div>
+                <ng-template #not>
+                    <td>null</td>
+                </ng-template>
+                <div class="card-header" *ngIf="data.loanBook">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;">
+                            <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Employee.Loanbook.Title" | translate}}
+                        </div>
+                        <div class="col">
+                            <input type="text" placeholder="Search.." [(ngModel)]="loanTerm[i]"/>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive" *ngIf="data.loanBook">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
+                            <th scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
+                            <th scope="col"><span>{{"Employee.Loanbook.Emi" | translate}}</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row" *ngIf="data.loanBook.date; else not">{{data.loanBook.date| date:'dd-MM-yyyy'}}</th>
+                            <td class="col-5" *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
+                            <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI| indianCurrency}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <pagination-controls (pageChange)="p=$event"></pagination-controls>
+                    </div>
+                </div>
+            </sb-card>
+        </ng-container>
     </div>
 </sb-layout-dashboard>

@@ -18,7 +18,7 @@
                 </div>
                 <div class="card-body table-responsive">
                     <mat-form-field style="float: right;">
-                        <mat-label>{{'Accountant.Tables.Month'| translate}}</mat-label>
+                        <mat-label>{{'Accountant.Tables.Date'| translate}}</mat-label>
                         <label>
                             <input matInput [matDatepicker]="ep" [formControl]="emiDate">
                         </label>
@@ -43,7 +43,7 @@
                         <tbody>
                         <tr *ngFor="let val of data | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
                             <td>{{ val.userId }}</td>
-                            <td>{{val.EMI}}</td>
+                            <td>{{val.EMI| indianCurrency}}</td>
                         </tr>
                         </tbody>
                     </table>

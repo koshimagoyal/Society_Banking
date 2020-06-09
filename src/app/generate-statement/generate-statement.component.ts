@@ -87,8 +87,8 @@ export class GenerateStatementComponent implements OnInit {
                             accountData: this.accountData,
                             loanData: this.loanData,
                         },
-                        height: '700px',
-                        width: '650px',
+                        height: '600px',
+                        width: '800px',
                     });
                     dialogRef.afterClosed().subscribe(res => {
                         if (res) {

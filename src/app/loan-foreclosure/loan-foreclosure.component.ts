@@ -36,11 +36,17 @@ export class LoanForeclosureComponent implements OnInit {
                         text: 'This user does not exists!',
                         icon: 'error',
                     });
+                } else if (!result.loanData || result.loanData.length === 0) {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'No loan exists!',
+                        icon: 'error',
+                    });
                 } else {
                     console.log(result);
                     this.loanAmount = result.loanData[0].loanData.loanAmount;
                     this.payAmount = this.loanAmount;
-                    if(result.loanData[0].loanBook){
+                    if (result.loanData[0].loanBook) {
                         // tslint:disable-next-line:prefer-for-of
                         for (let i = 0; i < result.loanData[0].loanBook.length; i++) {
                             const amount =
@@ -70,8 +76,8 @@ export class LoanForeclosureComponent implements OnInit {
                 name: this.name,
                 date: this.date,
             },
-            height: '650px',
-            width: '600px',
+            height: '600px',
+            width: '700px',
         });
 
         dialogRef.afterClosed().subscribe(result => {

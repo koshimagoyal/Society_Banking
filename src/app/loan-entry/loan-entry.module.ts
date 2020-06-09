@@ -8,6 +8,8 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { LoanEntryRoutingModule } from './loan-entry-routing.module';
 import { LoanEntryComponent } from './loan-entry.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 @NgModule({
     declarations: [LoanEntryComponent],
@@ -18,6 +20,8 @@ import { LoanEntryComponent } from './loan-entry.component';
         FormsModule,
         AppCommonModule,
         NavigationModule,
+        NgxPaginationModule,
+        Ng2SearchPipeModule,
     ],
     providers: [...service.services],
 })

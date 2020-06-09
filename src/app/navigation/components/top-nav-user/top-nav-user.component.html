@@ -5,12 +5,12 @@
             <div class="hover-text">Choose file</div>
             <div class="background"></div>
         </label>
-        <input id="fileInput" type='file' (change)="onSelectFile($event)">
     </div>
     <div style="margin-top: 20px">
         <li class="nav-item dropdown dropdown-user no-caret" ngbDropdown placement="bottom-right" display="dynamic">
             <a class="nav-link dropdown-toggle" id="userDropdown" ngbDropdownToggle data-cy="userMenu" role="button" aria-haspopup="true" aria-expanded="false">
             </a>
+            <input id="fileInput" type='file' (change)="onSelectFile($event)">
             <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownUser">
                 <h6 class="dropdown-header">
                     <div class="dropdown-user-details">

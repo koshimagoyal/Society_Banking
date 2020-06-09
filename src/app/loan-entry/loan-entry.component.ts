@@ -20,7 +20,10 @@ export class LoanEntryComponent implements OnInit {
     date: any;
     corpusData = 0;
     loanNo = 0;
-    eligible = true;
+    show = false;
+    loans: any;
+    p: any;
+    loanTerm: any;
     constructor(
         private loanService: LoanEntryService,
         private expenseService: ExpenseCorpusService
@@ -43,7 +46,6 @@ export class LoanEntryComponent implements OnInit {
                     console.log(this.loanNo);
                     this.name = result.nameData[0].name;
                     this.table = true;
-                    this.eligible = this.loanNo < 3;
                 }
             },
             error1 => {
@@ -54,13 +56,28 @@ export class LoanEntryComponent implements OnInit {
                 });
             }
         );
-        return this.eligible;
     }
     focusoutHandler($event: any) {
-        if ($event.target.value) {
-            this.eligible = true;
+        if ($event.target.checked) {
+            this.loanService.getAllData(this.text).subscribe(
+                result => {
+                    if (result) {
+                        console.log(result);
+                        this.loanTerm = [result.loanData.length];
+                        this.loans = result.loanData;
+                        this.show = true;
+                    }
+                },
+                error1 => {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Try again!',
+                        icon: 'error',
+                    });
+                }
+            );
         } else {
-            this.eligible = false;
+            this.show = false;
         }
     }
     send() {

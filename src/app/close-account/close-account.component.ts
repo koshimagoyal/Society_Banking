@@ -38,7 +38,7 @@ export class CloseAccountComponent implements OnInit {
                 } else {
                     console.log(result);
                     this.name = result.nameData[0].name;
-                    this.loanClose = result.loan[0].closeLoan;
+                    this.loanClose = !result.loanData[0].closeLoan;
                     this.hide = this.loanClose;
                     this.table = true;
                 }
@@ -90,7 +90,7 @@ export class CloseAccountComponent implements OnInit {
                     name: this.name,
                     date: this.date,
                 },
-                height: '700px',
+                height: '600px',
                 width: '700px',
             });
 
