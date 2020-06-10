@@ -1,0 +1,161 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="Cash-Cheque Transfer"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col">
+            <button class="btn-primary" (click)="showSearch()">{{'Accountant.Tables.SearchCheque'| translate}}</button>
+        </div>
+        <div class="col">
+            <button class="btn-primary" (click)="showCash()">{{'Accountant.Tables.TransferCash'| translate}}</button>
+        </div>
+        <div class="col">
+            <button class="btn-primary" (click)="showCheque()">{{'Accountant.Tables.TransferBank'| translate}}</button>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row" *ngIf="search">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Tables.SearchCheque'| translate}}</div>
+                <div class="card-body table-responsive">
+                    <form class="form-inline">
+                        <label>
+                            <input type="text" placeholder="Enter Cheque Number"/>
+                        </label>
+                        <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
+                    </form>
+                    <table class="table table-striped" *ngIf="table" id="contennnt">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.Date'| translate}}</td>
+                            <td>22-02-2020</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.AmountReceived'| translate}}</td>
+                            <td>23,45,67</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.BankName'| translate}}</td>
+                            <td>ABC</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeNo'| translate}}</td>
+                            <td>23456</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
+                            <td>Rajat</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button *ngIf="table">{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+    <div class="row" *ngIf="cash">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Tables.TransferCash'| translate}}</div>
+                <div class="card-body table-responsive">
+                    <table class="table table-striped" id="contennt">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.Date'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Amount'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="number"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.BankName'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text"/>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button>{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+    <div class="row" *ngIf="cheque">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Tables.TransferBank'| translate}}</div>
+                <div class="card-body table-responsive">
+                    <table class="table table-striped" id="contentt">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.Date'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Amount'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="number"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.BankName' | translate}}</td>
+                            <td>
+                                <select class="custom-select">
+                                    <option>ABC</option>
+                                    <option>ABC@3</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text"/>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button>{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+
+
+

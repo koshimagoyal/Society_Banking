@@ -1,0 +1,79 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="Bank Account"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header">
+                    <div class="row">
+                        <div class="col" style="margin-top: 10px;">
+                            <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Create' | translate}}
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body table-responsive">
+                    <table class="table table-striped">
+                        <tbody>
+                        <tr>
+                            <td>{{'Accountant.Tables.BankName' | translate}}</td>
+                            <td>
+                                <select class="custom-select">
+                                    <option>ABC</option>
+                                    <option>ABC@3</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Address' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.AccountNo' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Type of Account</td>
+                            <td>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="type">
+                                        <option>Saving Account</option>
+                                        <option>Current Account</option>
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Nickname</td>
+                            <td>
+                                <label>
+                                    <input type="text" maxlength="12"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Code' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text" />
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+
