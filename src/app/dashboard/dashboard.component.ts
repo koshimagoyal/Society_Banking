@@ -25,19 +25,21 @@ export class DashboardComponent implements OnInit {
                     this.noOfLoans = result.loan.length;
                     // tslint:disable-next-line:prefer-for-of
                     for (let i = 0; i < result.loan.length; i++) {
-                        let principle = result.loan[i].loanData.loanAmount;
+                        const principle = result.loan[i].loanData.loanAmount;
                         this.loanAmount += principle;
                         const r = result.loan[i].loanData.interest / 100;
                         if (result.loan[i].loanBook) {
-                            const emi = result.loan[i].loanBook.EMI;
-                            const amt = emi * r;
-                            principle -= amt;
-                            this.interestAmount += emi - amt;
+                            // tslint:disable-next-line:prefer-for-of
+                            for (let j = 0; j < result.loan[i].loanBook.length; j++) {
+                                const emi = result.loan[i].loanBook[j].credit;
+                                const amt = emi * r;
+                                this.principleAmount += amt;
+                                this.interestAmount += emi - amt;
+                            }
                         }
-                        this.principleAmount += principle;
                     }
-                    this.amount = (Math.round(this.principleAmount * 100) / 100).toFixed(2);
-                    this.interest = (Math.round(this.interestAmount * 100) / 100).toFixed(2);
+                    this.amount = (Math.round(this.principleAmount * 100) / 100).toFixed(0);
+                    this.interest = (Math.round(this.interestAmount * 100) / 100).toFixed(0);
                 }
             },
             error1 => {

@@ -37,9 +37,9 @@
     },
     "Accountant": {
         "Cards": {
-            "Loan": "Total Loan Given",
-            "Interest": "Total Interest Received",
-            "Amount": "Total Principle Received",
+            "Loan": "Total Loan Amount Given",
+            "Interest": "Total Interest Recovered",
+            "Amount": "Total Principle Recovered",
             "People": "Number of Loans Given"
         },
         "Pages": {
@@ -55,12 +55,16 @@
             "GenerateStatement": "Generate Employee Bank Statement",
             "Calculate": "Calculate Financial Year End Dividend",
             "Closure": "Close Employee Account",
-            "Upload": "Upload All Historic Data"
+            "Upload": "Perform One Time Activity"
         },
-        "Credit": "Credit",
+        "Title": "Accountant's Dashboard",
         "Debit": "Debit",
         "GetInfo": "Get Information",
         "Tables": {
+            "ShowDate": "Date",
+            "Purpose": "Purpose",
+            "LoanDate": "Loan Date",
+            "Deposit": "Employee Deposit",
             "SearchCheque": "Search by Cheque Number",
             "TransferCash": "Transfer Cash to Bank",
             "TransferBank": "Withdraw Cash from Bank",

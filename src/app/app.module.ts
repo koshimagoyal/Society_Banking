@@ -17,9 +17,6 @@ export function translateHttpLoaderFactory(httpBackend: HttpBackend): TranslateH
     return new TranslateHttpLoader(new HttpClient(httpBackend));
 }
 
-
-
-
 @NgModule({
     declarations: [AppComponent],
     imports: [

@@ -11,23 +11,21 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class LoanEntryComponent implements OnInit {
     text: any;
+    depositData = 23478;
     table = false;
     loanAmount: any;
     duration: any;
     type: any;
     data: any;
     name: any;
+    interest: any;
     date: any;
     corpusData = 0;
-    loanNo = 0;
     show = false;
     loans: any;
     p: any;
     loanTerm: any;
-    constructor(
-        private loanService: LoanEntryService,
-        private expenseService: ExpenseCorpusService
-    ) {}
+    constructor(private loanService: LoanEntryService) {}
     showTable() {
         console.log(this.text);
         this.loanService.getData(this.text).subscribe(
@@ -41,9 +39,6 @@ export class LoanEntryComponent implements OnInit {
                     });
                 } else {
                     console.log(result);
-                    // tslint:disable-next-line:prefer-for-of
-                    this.loanNo = result.loan[0].length;
-                    console.log(this.loanNo);
                     this.name = result.nameData[0].name;
                     this.table = true;
                 }
@@ -63,9 +58,17 @@ export class LoanEntryComponent implements OnInit {
                 result => {
                     if (result) {
                         console.log(result);
-                        this.loanTerm = [result.loanData.length];
-                        this.loans = result.loanData;
-                        this.show = true;
+                        if (result.length === 0) {
+                            Swal.fire({
+                                title: 'Oops!',
+                                text: 'No Previous Loan Exists!',
+                                icon: 'error',
+                            });
+                        } else {
+                            this.loanTerm = [result.loanData.length];
+                            this.loans = result.loanData;
+                            this.show = true;
+                        }
                     }
                 },
                 error1 => {
@@ -81,19 +84,14 @@ export class LoanEntryComponent implements OnInit {
         }
     }
     send() {
-        let loanType;
-        if (this.type === 'Personal Loan') {
-            loanType = 1;
-        } else {
-            loanType = 2;
-        }
         this.data = {
             userId: this.text,
             loanAmount: this.loanAmount,
             loanDuration: this.duration,
             date: this.date,
+            loanType: this.type,
+            interest: this.interest,
             closeLoan: false,
-            type: loanType,
         };
         this.loanService.sendData(this.data).subscribe(
             result => {
@@ -109,6 +107,8 @@ export class LoanEntryComponent implements OnInit {
                         this.loanAmount = null;
                         this.type = null;
                         this.duration = null;
+                        this.interest = null;
+                        this.show = false;
                     }
                 });
             },
@@ -122,15 +122,13 @@ export class LoanEntryComponent implements OnInit {
         );
     }
     ngOnInit() {
-        this.expenseService.getData().subscribe(
+        this.loanService.getCorpusData().subscribe(
             result => {
                 console.log(result);
                 // tslint:disable-next-line:prefer-for-of
                 for (let i = 0; i < result.balance.length; i++) {
                     this.corpusData =
-                        this.corpusData +
-                        result.balance[i].creditAmount -
-                        result.balance[i].expenseDebitAmount;
+                        this.corpusData + result.balance[i].credit - result.balance[i].debit;
                 }
                 console.log(this.corpusData);
             },

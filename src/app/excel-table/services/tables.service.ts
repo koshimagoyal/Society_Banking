@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, of, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class TablesService {
@@ -11,22 +10,19 @@ export class TablesService {
         console.log(getData);
         const data = getData.data;
         const ddate = getData.date;
-        const url = 'http://localhost:8080/sendData';
-        const user = [];
+        const url = 'http://localhost:8080/sendDepositData';
         const account = [];
         for (let j = 1; j < data.length; j++) {
-            let pass = '';
-            const str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz0123456789@#$';
-            for (let i = 1; i <= 8; i++) {
-                const char = Math.floor(Math.random() * str.length + 1);
-                pass += str.charAt(char);
-            }
-            const passw = pass.slice(0, 3) + data[j][1].slice(0, 2) + pass.slice(3);
-            user.push([data[j][0], data[j][1], passw, false, 2]);
-            account.push([ddate, data[j][2], data[j][0], 'Salary Credited']);
+            account.push([
+                ddate,
+                data[j][0],
+                data[j][1],
+                'Deposit deducted from salary of ' + ddate,
+                'Cash',
+                'Operational',
+            ]);
         }
         const send = {
-            userData: user,
             accountData: account,
         };
         console.log(send);
@@ -45,39 +41,20 @@ export class TablesService {
         const loan = [];
         const loanBook = [];
         for (let j = 1; j < data.length; j++) {
-            let type;
-            if (data[j][3] === 'Personal' || data[j][3] === 'personal') {
-                type = 1;
-            } else {
-                type = 2;
-            }
-            loan.push([ddate, data[j][0], data[j][1], data[j][2], false, type]);
-            loanBook.push([ddate, data[j][4], 'Debited from Salary']);
+            loan.push([data[j][0], data[j][1], data[j][2], data[j][3]]);
+            loanBook.push([
+                ddate,
+                data[j][4],
+                'EMI debited from Salary of ' + ddate,
+                'Cash',
+                'EMI',
+            ]);
         }
         const send = {
             loanData: loan,
             loanBookData: loanBook,
-            date: ddate,
         };
         console.log(send);
-        const headers = new HttpHeaders();
-        headers.append('Access-Control-Allow-Origin', '*');
-        headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
-        headers.append('Accept', 'application/json');
-        headers.append('content-type', 'application/json');
-        return this.httpService.post<any>(url, send, { headers });
-    }
-
-    sendEliData(getData: any): Observable<any> {
-        const data = getData.data;
-        const eli = [];
-        const url = 'http://localhost:8080/sendEligibleData';
-        for (let j = 1; j < data.length; j++) {
-            eli.push([data[j][0], data[j][1], data[j][2]]);
-        }
-        const send = {
-            data: eli,
-        };
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -107,4 +84,26 @@ export class TablesService {
         return this.httpService.get(url, { headers });
     }
 
+    getEmiData(): Observable<any> {
+        const headers = new HttpHeaders();
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
+        headers.append('Accept', 'application/json');
+        headers.append('content-type', 'application/json');
+        const url = 'http://localhost:8080/getLoanEmiData';
+        return this.httpService.get(url, { headers });
+    }
+
+    closeLoan(data: any): Observable<any> {
+        const headers = new HttpHeaders();
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
+        headers.append('Accept', 'application/json');
+        headers.append('content-type', 'application/json');
+        const url = 'http://localhost:8080/sendLoanAutoCloseData';
+        const closeData = {
+            closeData: data,
+        };
+        return this.httpService.post(url, closeData, { headers });
+    }
 }

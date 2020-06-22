@@ -12,7 +12,7 @@ export class DashboardService {
         const data = {
             userId: text,
         };
-        const url = 'http://localhost:8080/getUserAllData';
+        const url = 'http://localhost:8080/get/userData';
         return this.httpService.post(url, data);
     }
 }

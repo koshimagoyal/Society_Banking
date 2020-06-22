@@ -37,12 +37,18 @@
                         <thead>
                         <tr>
                             <th scope="col">{{"Accountant.Tables.EmployeeNo" | translate}}</th>
+                            <th scope="col">Loan Amount</th>
+                            <th scope="col">Loan Duration</th>
+                            <th scope="col">Loan Type</th>
                             <th scope="col"><span>{{"Accountant.Pages.Generate" | translate}}</span></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr *ngFor="let val of data | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
                             <td>{{ val.userId }}</td>
+                            <td>{{ val.loanAmount| indianCurrency}}</td>
+                            <td>{{val.loanDuration}}</td>
+                            <td>{{ val.loanType}}</td>
                             <td>{{val.EMI| indianCurrency}}</td>
                         </tr>
                         </tbody>

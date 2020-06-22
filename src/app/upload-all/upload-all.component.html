@@ -3,6 +3,192 @@
     <hr class="rounded">
     <br>
     <div class="row">
+        <div class="col-sm-1"></div>
+        <div class="col">
+            <button class="btn-primary" (click)="showEmployeeAccountInfo()">Create Employee Account</button>
+        </div>
+        <div class="col">
+            <button class="btn-primary" (click)="showReportInfo()">Generate Reports</button>
+        </div>
+        <div class="col-sm-1"></div>
+    </div>
+    <br>
+    <br>
+    <div class="row" *ngIf="employeeAccount">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Create Employee Account</div>
+                <div class="card-body">
+                    <table class="table table-striped table-responsive">
+                        <tbody>
+                        <tr>
+                            <td>Employee Id</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="employeeId" name="employeeId" required />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Employee Name</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="employeeName" name="employeeName" required />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Father's Name</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="fatherName" name="fatherName" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Permanent Address</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="permAddress" name="permAddress" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Is Current Address same as Permanent Address</td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" (click)="sameAddress($event)" [(ngModel)]="check" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Current Address</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="currAddress" value="{{currAddress}}" name="currAddress" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email Id</td>
+                            <td>
+                                <label>
+                                    <input type="email" [(ngModel)]="email" name="email" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="mobileNo" name="mobileNo" maxlength="10" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Alternative Mobile Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="altMobileNo" name="altMobileNo" maxlength="10" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Landline Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="landlineNo" name="landlineNo" maxlength="10" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PAN</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="pan" name="pan" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Aadhar Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="aadharNo" name="aadharNo" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date of Enrollment</td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="enrollDate" name="enrollDate"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Membership Fee</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="amount" name="amount"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Mode' | translate}}</td>
+                            <td>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="type">
+                                        <option>{{'Accountant.Tables.Cash' | translate}}</option>
+                                        <option>{{'Accountant.Tables.Cheque' | translate}}</option>
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr *ngIf="type == 'Cheque'">
+                            <td>{{'Accountant.Tables.BankName' | translate}}</td>
+                            <td>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="bankName">
+                                        <option>ABC</option>
+                                        <option>ABC@3</option>
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr *ngIf="type == 'Cheque'">
+                            <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="chequeDate" name="chequeDate"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr *ngIf="type == 'Cheque'">
+                            <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="chequeNo" name="chequeNo"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Remark'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="purpose" name="purpose"/>
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button (click)="send()">{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+    <div class="row" *ngIf="report">
         <div class="col-xl-2 col-md-1"></div>
         <div class="col-xl-8 col-md-10">
             <sb-card>
@@ -12,35 +198,39 @@
                         <tbody>
                         <tr>
                             <td>{{'Accountant.Tables.Start'| translate}}</td>
-                            <td><input type="date" /></td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="startDate" name="startDate"/>
+                                </label>
+                            </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.End'| translate}}</td>
-                            <td><input type="date" /></td>
+                            <td>
+                                <label>
+                                    <input type="date" [(ngModel)]="endDate" name="endDate"/>
+                                </label>
+                            </td>
                         </tr>
                         <tr>
-                            <td>{{'Accountant.Tables.Loan'| translate}}</td>
-                            <td><input type="number"/></td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Dividend'| translate}}</td>
-                            <td><input type="number"/></td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Expense'| translate}} (in INR)</td>
-                            <td><input type="number"/></td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.CreditAmount'| translate}}</td>
-                            <td><input type="number" /></td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.DebitAmount'| translate}}</td>
-                            <td><input type="number" /></td>
+                            <td>Select Category</td>
+                            <td>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="category">
+                                        <option>Loan Disbursal Records</option>
+                                        <option>Credit Transactions</option>
+                                        <option>Debit Transactions</option>
+                                        <option>Expense Deductions</option>
+                                        <option>Credit+Debit+Expense Transactions</option>
+                                        <option>All Cash Transactions</option>
+                                        <option>All Cheque Transactions</option>
+                                    </select>
+                                </label>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
-                    <button (click)="send()">{{'Accountant.Tables.Submit'| translate}}</button>
+                    <button (click)="openDialog()">{{'Accountant.Tables.Submit'| translate}}</button>
                 </div>
             </sb-card>
         </div>

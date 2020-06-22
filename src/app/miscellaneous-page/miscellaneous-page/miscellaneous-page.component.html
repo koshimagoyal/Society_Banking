@@ -24,35 +24,42 @@
                 <div class="card-body table-responsive">
                     <form class="form-inline">
                         <label>
-                            <input type="text" placeholder="Enter Cheque Number"/>
+                            <input type="text" placeholder="Enter Cheque Number" [(ngModel)]="chequeNo" name="chequeNo"/>
                         </label>
                         <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="contennnt">
                         <tbody>
                         <tr>
-                            <td>{{'Accountant.Tables.Date'| translate}}</td>
-                            <td>22-02-2020</td>
+                            <td>{{'Accountant.Tables.ShowDate'| translate}}</td>
+                            <td>{{date| date:'dd-MM-yyyy'}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.AmountReceived'| translate}}</td>
-                            <td>23,45,67</td>
+                            <td>{{amount| indianCurrency}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.ChequeDate'| translate}}</td>
+                            <td>{{chequeDate| date:'dd-MM-yyyy'}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.BankName'| translate}}</td>
-                            <td>ABC</td>
+                            <td>{{bankName}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.EmployeeNo'| translate}}</td>
-                            <td>23456</td>
+                            <td>{{employeeId}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
-                            <td>Rajat</td>
+                            <td>{{employeeName}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Purpose'| translate}}</td>
+                            <td>{{purpose}}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <button *ngIf="table">{{'Accountant.Tables.Submit'| translate}}</button>
                 </div>
             </sb-card>
         </div>
@@ -70,7 +77,7 @@
                             <td>{{'Accountant.Tables.Date'| translate}}</td>
                             <td>
                                 <label>
-                                    <input type="date"/>
+                                    <input type="date" [(ngModel)]="date" name="date"/>
                                 </label>
                             </td>
                         </tr>
@@ -78,21 +85,24 @@
                             <td>{{'Accountant.Tables.Amount'| translate}}</td>
                             <td>
                                 <label>
-                                    <input type="number"/>
+                                    <input type="number" [(ngModel)]="amount" name="amount"/>
                                 </label>
                             </td>
                         </tr>
                         <tr>
-                            <td>{{'Accountant.Tables.BankName'| translate}}</td>
+                            <td>{{'Accountant.Tables.BankName' | translate}}</td>
                             <td>
                                 <label>
-                                    <input type="text"/>
+                                    <select class="custom-select" [(ngModel)]="bankName">
+                                        <option>ABC</option>
+                                        <option>ABC@3</option>
+                                    </select>
                                 </label>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                    <button>{{'Accountant.Tables.Submit'| translate}}</button>
+                    <button (click)="send()">{{'Accountant.Tables.Submit'| translate}}</button>
                 </div>
             </sb-card>
         </div>
@@ -110,7 +120,7 @@
                             <td>{{'Accountant.Tables.Date'| translate}}</td>
                             <td>
                                 <label>
-                                    <input type="date"/>
+                                    <input type="date" [(ngModel)]="date" name="date"/>
                                 </label>
                             </td>
                         </tr>
@@ -118,24 +128,26 @@
                             <td>{{'Accountant.Tables.Amount'| translate}}</td>
                             <td>
                                 <label>
-                                    <input type="number"/>
+                                    <input type="number" [(ngModel)]="amount" name="amount"/>
                                 </label>
                             </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.BankName' | translate}}</td>
                             <td>
-                                <select class="custom-select">
-                                    <option>ABC</option>
-                                    <option>ABC@3</option>
-                                </select>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="bankName">
+                                        <option>ABC</option>
+                                        <option>ABC@3</option>
+                                    </select>
+                                </label>
                             </td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
                             <td>
                                 <label>
-                                    <input type="date"/>
+                                    <input type="date" [(ngModel)]="chequeDate" name="chequeDate"/>
                                 </label>
                             </td>
                         </tr>
@@ -143,13 +155,13 @@
                             <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
                             <td>
                                 <label>
-                                    <input type="text"/>
+                                    <input type="text" [(ngModel)]="chequeNo" name="chequeNo"/>
                                 </label>
                             </td>
                         </tr>
                         </tbody>
                     </table>
-                    <button>{{'Accountant.Tables.Submit'| translate}}</button>
+                    <button (click)="send()">{{'Accountant.Tables.Submit'| translate}}</button>
                 </div>
             </sb-card>
         </div>

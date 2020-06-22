@@ -12,6 +12,8 @@ export class DialogComponent {
     id = '';
     name = '';
     date = '';
+    amount = '';
+    loanDate = '';
     constructor(
         @Inject(MAT_DIALOG_DATA) private data: any,
         private dialogRef: MatDialogRef<DialogComponent>
@@ -20,6 +22,8 @@ export class DialogComponent {
             this.id = data.id || this.id;
             this.name = data.name || this.name;
             this.date = data.date || this.date;
+            this.amount = data.amount || this.amount;
+            this.loanDate = data.loandate || this.loanDate;
         }
         this.dialogRef.updateSize('300vw', '300vw');
     }

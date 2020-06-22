@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -14,7 +14,7 @@ export class DashboardService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://localhost:8080/getAllData';
+        const url = 'http://localhost:8080/getAllLoanData';
         return this.httpService.get(url, { headers });
     }
 }

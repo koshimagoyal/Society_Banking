@@ -29,6 +29,10 @@
                             <td>{{corpusData| indianCurrency}}</td>
                         </tr>
                         <tr>
+                            <td>{{'Accountant.Tables.Deposit'| translate}}</td>
+                            <td>{{depositData| indianCurrency}}</td>
+                        </tr>
+                        <tr>
                             <td>{{'Accountant.Tables.PreviousLoans'| translate}}</td>
                             <td>
                                 <label>
@@ -52,6 +56,14 @@
                                         <option>{{'Accountant.Tables.Personal'| translate}}</option>
                                         <option>{{'Accountant.Tables.Emergency'| translate}}</option>
                                     </select>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Interest'| translate}}</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="interest" name="interest" />
                                 </label>
                             </td>
                         </tr>
@@ -80,7 +92,7 @@
         <div class="col-xl-2 col-md-1"></div>
     </div>
     <div *ngIf="show">
-        <ng-container *ngFor="let data of loans| filter: loanTerm[i] | paginate: { itemsPerPage:5, currentPage: p}; let i = index">
+        <ng-container *ngFor="let data of loans | paginate: { itemsPerPage:5, currentPage: p}; let i = index">
             <sb-card>
                 <div class="card-header bg-primary headers">
                     <div class="row">
@@ -100,24 +112,21 @@
                         <div class="col" style="margin-top: 10px;">
                             <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Employee.Loanbook.Title" | translate}}
                         </div>
-                        <div class="col">
-                            <input type="text" placeholder="Search.." [(ngModel)]="loanTerm[i]"/>
-                        </div>
                     </div>
                 </div>
                 <div class="card-body table-responsive" *ngIf="data.loanBook">
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
-                            <th scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
+                            <th style="width: 16.66%;" scope="col"><span>{{"Employee.Loanbook.Date" | translate}}</span></th>
+                            <th style="width: 60%;" scope="col"><span>{{"Employee.Loanbook.Particulars" | translate}}</span></th>
                             <th scope="col"><span>{{"Employee.Loanbook.Emi" | translate}}</span></th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
                             <th scope="row" *ngIf="data.loanBook.date; else not">{{data.loanBook.date| date:'dd-MM-yyyy'}}</th>
-                            <td class="col-5" *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
+                            <td *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
                             <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI| indianCurrency}}</td>
                         </tr>
                         </tbody>

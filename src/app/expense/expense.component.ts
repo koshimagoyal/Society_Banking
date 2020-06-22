@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ExpenseCorpusService } from '@app/expense/services';
+import { SessionStorageService } from 'ngx-webstorage';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+
 @Component({
     selector: 'sb-expense',
     templateUrl: './expense.component.html',
@@ -13,15 +15,34 @@ export class ExpenseComponent implements OnInit {
     cheque = false;
     purpose: any;
     date: any;
+    bankName: any;
+    chequeNo: any;
+    chequeDate: any;
+    type: any;
     balance = 0;
-    constructor(private expenseService: ExpenseCorpusService) {}
+    userId: any;
+    constructor(
+        private expenseService: ExpenseCorpusService,
+        public session: SessionStorageService
+    ) {}
     send() {
-        const data = {
+        if (this.cash) {
+            this.type = 'Cash';
+        } else {
+            this.type = 'Cheque';
+        }
+        const accountData = {
             debit: this.debitAmount,
-            remark: this.purpose,
+            particulars: this.purpose,
+            mode: this.type,
+            type: 'Expense',
             date: this.date,
+            bankName: this.bankName,
+            chequeNo: this.chequeNo,
+            chequeDate: this.chequeDate,
+            userId: this.userId,
         };
-        this.expenseService.sendData(data).subscribe(
+        this.expenseService.sendData(accountData).subscribe(
             result => {
                 Swal.fire({
                     text: 'Sent!',
@@ -32,6 +53,9 @@ export class ExpenseComponent implements OnInit {
                         this.date = '';
                         this.debitAmount = null;
                         this.purpose = null;
+                        this.bankName = null;
+                        this.chequeNo = null;
+                        this.chequeDate = null;
                     }
                 });
             },
@@ -45,38 +69,10 @@ export class ExpenseComponent implements OnInit {
         );
     }
     ngOnInit() {
-        this.expenseService.getData().subscribe(
-            result => {
-                console.log(result);
-                if (result.length === 0) {
-                    Swal.fire({
-                        title: 'Oops!',
-                        text: 'No entry till now!',
-                        icon: 'error',
-                    });
-                } else {
-                    console.log(result);
-                    // tslint:disable-next-line:prefer-for-of
-                    for (let i = 0; i < result.balance.length; i++) {
-                        this.balance =
-                            this.balance +
-                            result.balance[i].creditAmount -
-                            result.balance[i].expenseDebitAmount;
-                    }
-                    console.log(this.balance);
-                }
-            },
-            error1 => {
-                Swal.fire({
-                    title: 'Oops!',
-                    text: 'Try again!',
-                    icon: 'error',
-                });
-            }
-        );
-        return this.balance;
+        const user = this.session.retrieve('user');
+        this.userId = user.id;
     }
-    showCash(){
+    showCash() {
         this.cash = true;
         this.cheque = false;
     }

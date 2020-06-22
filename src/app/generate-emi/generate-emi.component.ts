@@ -13,7 +13,6 @@ import { default as _rollupMoment, Moment } from 'moment';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 import * as XLSX from 'xlsx';
-type AOA = any[][];
 const moment = _rollupMoment || _moment;
 
 export const MY_FORMATS = {
@@ -72,7 +71,13 @@ export class GenerateEmiComponent implements OnInit {
                             // @ts-ignore
                             userId: result.loanData[i].userId,
                             // @ts-ignore
-                            EMI: (Math.round(emi * 100) / 100).toFixed(2),
+                            loanAmount: result.loanData[i].loanAmount,
+                            // @ts-ignore
+                            loanDuration: result.loanData[i].loanDuration,
+                            // @ts-ignore
+                            loanType: result.loanData[i].loanType,
+                            // @ts-ignore
+                            EMI: (Math.round(emi * 100) / 100).toFixed(0),
                         });
                     }
                     this.show = true;
@@ -94,25 +99,37 @@ export class GenerateEmiComponent implements OnInit {
         /* generate worksheet */
         // @ts-ignore
         const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.data, {
-            header: ['userId', 'EMI'],
+            header: ['userId', 'loanAmount', 'loanDuration', 'loanType', 'EMI'],
             skipHeader: true,
             // @ts-ignore
             origin: 'A4',
         });
         XLSX.utils.sheet_add_json(
             ws,
-            [{ 'Month and Year': 'Month and Year - ' + this.emiDate.value.format('MM-YYYY') }],
+            [{ 'Month and Year': 'Month and Year', 'Date': this.emiDate.value.format('MM-YYYY') }],
             {
-                header: ['Month and Year'],
+                header: ['Month and Year', 'Date'],
                 skipHeader: true,
                 origin: 'A1',
             }
         );
-        XLSX.utils.sheet_add_json(ws, [{ h1: 'Employee Id', h2: 'EMI to be deducted' }], {
-            header: ['h1', 'h2'],
-            skipHeader: true,
-            origin: 'A3',
-        });
+        XLSX.utils.sheet_add_json(
+            ws,
+            [
+                {
+                    h1: 'Employee Id',
+                    h2: 'Loan Amount (in INR)',
+                    h3: 'Loan Duration (in Months)',
+                    h4: 'Loan Type',
+                    h5: 'EMI to be deducted(in INR)',
+                },
+            ],
+            {
+                header: ['h1', 'h2', 'h3', 'h4', 'h5'],
+                skipHeader: true,
+                origin: 'A3',
+            }
+        );
         /* generate workbook and add the worksheet */
         const wb: XLSX.WorkBook = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');

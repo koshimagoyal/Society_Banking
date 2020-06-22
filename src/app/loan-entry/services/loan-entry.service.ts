@@ -10,17 +10,21 @@ export class LoanEntryService {
 
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://localhost:8080/getLoanEntryData';
+        const url = 'http://localhost:8080/getUserData';
         const data = {
             userId: text,
         };
         return this.http.post<any>(url, data);
     }
+    getCorpusData(): Observable<any> {
+        const url = 'http://localhost:8080/getCorpusData';
+        return this.http.get<any>(url);
+    }
     getAllData(text: any): Observable<any> {
         const data = {
             userId: text,
         };
-        const url = 'http://localhost:8080/getUserAllData';
+        const url = 'http://localhost:8080/getUserLoanData';
         return this.http.post(url, data);
     }
     sendData(data: any): Observable<any> {

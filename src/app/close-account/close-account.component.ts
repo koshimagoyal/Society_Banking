@@ -14,7 +14,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 export class CloseAccountComponent implements OnInit {
     text: any;
     table = false;
-    loanClose: any;
+    loanClose = false;
     hide = false;
     disable = true;
     name: any;
@@ -38,7 +38,7 @@ export class CloseAccountComponent implements OnInit {
                 } else {
                     console.log(result);
                     this.name = result.nameData[0].name;
-                    this.loanClose = !result.loanData[0].closeLoan;
+                    this.loanClose = result.loanData.length === 0;
                     this.hide = this.loanClose;
                     this.table = true;
                 }

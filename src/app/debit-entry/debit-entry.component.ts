@@ -11,9 +11,11 @@ export class DebitEntryComponent implements OnInit {
     text: any;
     debitAmount: any;
     purpose: any;
-    mode: any;
     type: any;
     data: any;
+    bankName: any;
+    chequeNo: any;
+    chequeDate: any;
     name: any;
     date: any;
     balance = 0;
@@ -23,8 +25,13 @@ export class DebitEntryComponent implements OnInit {
         const accountData = {
             userId: this.text,
             debit: this.debitAmount,
-            remark: this.purpose,
+            particulars: this.purpose,
+            mode: this.type,
+            type: 'Operational',
             date: this.date,
+            chequeDate: this.chequeDate,
+            chequeNo: this.chequeNo,
+            bankName: this.bankName,
         };
         this.debitService.sendData(accountData).subscribe(
             result => {
@@ -36,6 +43,14 @@ export class DebitEntryComponent implements OnInit {
                         // @ts-ignore
                         this.table = false;
                         this.text = null;
+                        this.debitAmount = null;
+                        this.purpose = null;
+                        this.date = null;
+                        this.chequeDate = null;
+                        this.chequeNo = null;
+                        this.bankName = null;
+                        this.balance = 0;
+                        this.type = null;
                     }
                 });
             },

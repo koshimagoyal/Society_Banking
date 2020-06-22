@@ -11,9 +11,9 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class LoanEligibilityTableComponent implements OnInit {
     text: any;
-    eligibleAmount: any;
-    eligibleLoan: any;
-    eligibleLeftAmount: any;
+    eligibleAmount=1123456;
+    eligibleLoan=46788;
+    eligibleLeftAmount=34667;
     eligible = true;
     loanData = [];
     constructor(public session: SessionStorageService, private loanService: LoanEligibleService) {}
@@ -31,7 +31,7 @@ export class LoanEligibilityTableComponent implements OnInit {
                         icon: 'error',
                     });
                 } else {
-                    console.log(result);
+                   /* console.log(result);
                     console.log(result.body);
                     console.log(result.loanData);
                     this.eligibleAmount = result.eligibleData[0].eligibleAmount;
@@ -44,8 +44,10 @@ export class LoanEligibilityTableComponent implements OnInit {
                         amount += result.loanData[i].loanAmount;
                     }
                     this.eligibleLeftAmount = this.eligibleLoan - amount;
-                    if (this.eligibleLeftAmount < 0) this.eligibleLeftAmount = 0;
+                    if (this.eligibleLeftAmount < 0) this.eligibleLeftAmount = 0;*/
+                   console.log(result);
                     this.loanData = result.loanData;
+                    console.log(this.loanData);
                 }
             },
             error1 => {

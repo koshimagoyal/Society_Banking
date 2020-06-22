@@ -12,7 +12,7 @@
                                 <a class="nav-link" [routerLink]="['/dashboard']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     <div class="sb-nav-link-icon">
                                         <fa-icon [icon]='["fas", "tachometer-alt"]'></fa-icon>
-                                    </div>{{'Common.Title'| translate}}
+                                    </div>{{'Accountant.Title'| translate}}
                                 </a>
                             </div>
                         </div>
@@ -24,11 +24,11 @@
                                     {{'Accountant.Pages.Sheet'| translate}}
                                 </a>
                             </div>
-                            <div>
+                            <!--div>
                                 <a class="nav-link" [routerLink]="['/add-corpus']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Addition'| translate}}
                                 </a>
-                            </div>
+                            </div-->
                             <div>
                                 <a class="nav-link" [routerLink]="['/generate-emi']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Generate'| translate}}
@@ -64,31 +64,31 @@
                                     {{'Accountant.Pages.GenerateStatement'| translate}}
                                 </a>
                             </div>
-                            <div>
+                            <!--div>
                                 <a class="nav-link" [routerLink]="['/fy-dividend-calculate']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Calculate'| translate}}
                                 </a>
-                            </div>
+                            </div-->
                             <div>
                                 <a class="nav-link" [routerLink]="['/close-account']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Closure'| translate}}
                                 </a>
                             </div>
-                            <div>
+                            <!--div>
                                 <a class="nav-link" [routerLink]="['/bank-account']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Create'| translate}}
                                 </a>
-                            </div>
+                            </div-->
                             <div>
                                 <a class="nav-link" [routerLink]="['/cash-cheque']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     Cash-Cheque Transfer
                                 </a>
                             </div>
-                            <!--div>
+                            <div>
                                 <a class="nav-link" [routerLink]="['/upload-all']" (click)="expanded = !expanded" [ngClass]="{active: isActive, collapsed: !expanded}">
                                     {{'Accountant.Pages.Upload'| translate}}
                                 </a>
-                            </div-->
+                            </div>
                         </div>
                     </div>
                 </div>

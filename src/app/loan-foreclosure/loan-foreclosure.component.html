@@ -12,9 +12,9 @@
                         <label>
                             <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
                         </label>
-                        <label>
+                        <!--label>
                             <input type="date" placeholder="Enter Loan Date" [(ngModel)]="loanDate" name="loanDate"/>
-                        </label>
+                        </label-->
                         <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
@@ -27,35 +27,27 @@
                             <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
                             <td>{{name}}</td>
                         </tr>
-                        <tr>
+                        <!--tr>
                             <td>{{'Accountant.Tables.LoanType'| translate}}</td>
                             <td>{{loanType}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Active'| translate}}</td>
                             <td>{{loanAmount| indianCurrency}}</td>
-                        </tr>
-                        <tr>
+                        </tr-->
+                        <!--tr>
                             <td>{{'Accountant.Tables.LoanDate'| translate}}</td>
                             <td>{{loanDate| date:'dd-MM-yyyy'}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Amt'| translate}}</td>
                             <td>{{payAmount| indianCurrency}}</td>
-                        </tr>
+                        </tr-->
                         <tr>
                             <td>{{'Accountant.Tables.DateForeclosure'| translate}}</td>
                             <td>
                                 <label>
                                     <input type="date" [(ngModel)]="date" name="date"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Close'| translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="checkbox" (change)="close()"/>
                                 </label>
                             </td>
                         </tr>
@@ -65,6 +57,94 @@
             </sb-card>
         </div>
         <div class="col-xl-2 col-md-1"></div>
+    </div>
+    <div *ngIf="table">
+        <sb-card>
+            <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Loan Details</div>
+            <div class="card-body table-responsive">
+                <table class="table table-striped" *ngIf="table">
+                    <thead>
+                        <tr>
+                            <td>Loan Date</td>
+                            <td>Loan Amount</td>
+                            <td>Loan Duration</td>
+                            <td>Loan Type</td>
+                            <td>Principle Outstanding</td>
+                            <td>Close Loan</td>
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let loan of loanData; let i=index;">
+                        <tr>
+                            <td>{{loan.date| date:'dd-MM-yyyy'}}</td>
+                            <td>{{loan.amount| indianCurrency}}</td>
+                            <td>{{loan.duration}}</td>
+                            <td>{{loan.type}}</td>
+                            <td>{{loan.pending| indianCurrency}}</td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" (click)="pay(i)"/>
+                                </label>
+                            </td>
+                        </tr>
+                        <tr *ngIf="payMode[i]" align="center">
+                            <td colspan="6">
+                                <table class="table">
+                                    <tbody>
+                                    <tr>
+                                        <td>{{'Accountant.Tables.Mode' | translate}}</td>
+                                        <td>
+                                            <label>
+                                                <select class="custom-select" [(ngModel)]="type[i]">
+                                                    <option>{{'Accountant.Tables.Cash' | translate}}</option>
+                                                    <option>{{'Accountant.Tables.Cheque' | translate}}</option>
+                                                </select>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="type == 'Cheque'">
+                                        <td>{{'Accountant.Tables.BankName' | translate}}</td>
+                                        <td>
+                                            <label>
+                                                <select class="custom-select" [(ngModel)]="bankName[i]">
+                                                    <option>ABC</option>
+                                                    <option>ABC@3</option>
+                                                </select>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="type == 'Cheque'">
+                                        <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
+                                        <td>
+                                            <label>
+                                                <input type="date" [(ngModel)]="chequeDate[i]" name="chequeDate"/>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="type == 'Cheque'">
+                                        <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
+                                        <td>
+                                            <label>
+                                                <input type="text" [(ngModel)]="chequeNo[i]" name="chequeNo"/>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{'Accountant.Tables.Remark'| translate}}</td>
+                                        <td>
+                                            <label>
+                                                <input type="text" [(ngModel)]="purpose[i]" name="purpose"/>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <button (click)="close(loan.loanId, loan.amount, loan.date, type[i], bankName[i],chequeDate[i],chequeNo[i],purpose[i],loan.pending)">{{'Accountant.Tables.Submit'| translate}}</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </sb-card>
     </div>
 </sb-layout-dashboard>
 

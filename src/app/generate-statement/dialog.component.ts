@@ -49,4 +49,9 @@ export class DialogComponent {
         });
         this.dialogRef.close(true);
     }
+    isDate(d: any) {
+        const result = Date.parse(d);
+        if (!result) return false;
+        else return true;
+    }
 }

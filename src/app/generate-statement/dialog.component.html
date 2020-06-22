@@ -33,16 +33,42 @@
             <tr>
                 <th style="width: 16.66%;">Date</th>
                 <th style="width: 60%;">Particulars</th>
+                <th>Mode</th>
                 <th>Deposit</th>
                 <th>Withdrawal</th>
             </tr>
             </thead>
-            <tbody>
-            <tr *ngFor="let val of accountData">
-                <td *ngIf="val.date; else not">{{val.date| date:'dd-MM-yyyy'}}</td>
-                <td *ngIf="val.particulars; else not">{{val.particulars}}</td>
-                <td class="table-success" *ngIf="val.credit; else not">{{val.credit| indianCurrency}}</td>
-                <td class="table-danger" *ngIf="val.debit; else not">{{val.debit| indianCurrency}}</td>
+            <tbody *ngFor="let val of accountData">
+            <tr>
+                <td *ngIf="isDate(val.account.date); else notDate">{{val.account.date| date:'dd-MM-yyyy'}}</td>
+                <ng-template #notDate>
+                    <td>{{val.account.date}}</td>
+                </ng-template>
+                <td *ngIf="val.account.particulars; else not">{{val.account.particulars}}</td>
+                <td *ngIf="val.account.mode; else not">{{val.account.mode}}</td>
+                <td class="table-success" *ngIf="val.account.credit; else not">{{val.account.credit| indianCurrency}}</td>
+                <td class="table-danger" *ngIf="val.account.debit; else not">{{val.account.debit| indianCurrency}}</td>
+            </tr>
+            <tr>
+                <td *ngIf="val.cheque" align="center" colspan="5">
+                    <h3 style="font-weight: bold">Cheque Details</h3>
+                    <table style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th style="width: 16.66%;">Cheque Date</th>
+                            <th style="width: 60%;">Bank Name</th>
+                            <th>Cheque Number</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td *ngIf="val.cheque[0].chequeDate; else not">{{val.cheque[0].chequeDate| date:'dd-MM-yyyy'}}</td>
+                            <td class="col-5" *ngIf="val.cheque[0].bankName; else not">{{val.cheque[0].bankName}}</td>
+                            <td *ngIf="val.cheque[0].chequeNo; else not">{{val.cheque[0].chequeNo}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
             </tr>
             </tbody>
         </table>
@@ -56,20 +82,25 @@
                     <th>Loan Duration</th>
                     <th>Loan Type</th>
                     <th>Close Loan</th>
+                    <th>Closure Status</th>
                     <th>Date of Loan Closure</th>
                 </tr>
             </thead>
             <tbody *ngFor="let data of loanData;">
             <tr>
-                <td *ngIf="data.loanData.date; else not">{{data.loanData.date| date:'dd-MM-yyyy'}}</td>
+                <td *ngIf="isDate(data.loanData.date); else notDate">{{data.loanData.date| date:'dd-MM-yyyy'}}</td>
+                <ng-template #notDate>
+                    <td>{{data.loanData.date}}</td>
+                </ng-template>
                 <td *ngIf="data.loanData.loanAmount; else not">{{data.loanData.loanAmount| indianCurrency}}</td>
                 <td *ngIf="data.loanData.loanDuration; else not">{{data.loanData.loanDuration}}</td>
                 <td *ngIf="data.loanData.loanType; else not">{{data.loanData.loanType}}</td>
                 <td *ngIf="data.loanData.closeLoan; else not">{{data.loanData.closeLoan}}</td>
+                <td *ngIf="data.loanData.closeStatus; else not">{{data.loanData.closeStatus}}</td>
                 <td *ngIf="data.loanData.dateOfClosure; else not">{{data.loanData.dateOfClosure| date:'dd-MM-yyyy'}}</td>
             </tr>
             <tr>
-                <td *ngIf="data.loanBook" align="center" colspan="6">
+                <td *ngIf="data.loanBook" align="center" colspan="7">
                     <h3 style="font-weight: bold">EMI Details</h3>
                     <table style="width: 100%;">
                         <thead>
@@ -80,10 +111,13 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td *ngIf="data.loanBook.date; else not">{{data.loanBook.date| date:'dd-MM-yyyy'}}</td>
-                            <td class="col-5" *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
-                            <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI| indianCurrency}}</td>
+                        <tr *ngFor="let value of data.loanBook">
+                            <td *ngIf="isDate(value.date); else notDate">{{value.date}}</td>
+                            <ng-template #notDate>
+                                <td>{{value.date}}</td>
+                            </ng-template>
+                            <td class="col-5" *ngIf="value.particulars; else not">{{value.particulars}}</td>
+                            <td *ngIf="value.credit; else not">{{value.credit| indianCurrency}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -92,7 +126,7 @@
             </tbody>
         </table>
         <ng-template #not>
-            <td>null</td>
+            <td>-</td>
         </ng-template>
     </mat-dialog-content>
 </div>

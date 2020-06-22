@@ -1,0 +1,128 @@
+<sb-layout-dashboard>
+    <sb-dashboard-head title="Update Profile"></sb-dashboard-head>
+    <hr class="rounded">
+    <br>
+    <div class="row">
+        <div class="col-xl-2 col-md-1"></div>
+        <div class="col-xl-8 col-md-10">
+            <sb-card>
+                <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Update Profile</div>
+                <div class="card-body">
+                    <table class="table table-striped table-responsive">
+                        <tbody>
+                        <tr>
+                            <td>Profile Image</td>
+                            <td>
+                                <img [src]="url" height="200"> <br/>
+                                <input type='file' (change)="onSelectFile($event)">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Employee Id</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="employeeId" name="employeeId" required />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Employee Name</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="employeeName" name="employeeName" required />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Father's Name</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="fatherName" name="fatherName" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Permanent Address</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="permAddress" name="permAddress" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Is Current Address same as Permanent Address</td>
+                            <td>
+                                <label>
+                                    <input type="checkbox" (click)="sameAddress($event)" [(ngModel)]="check" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Current Address</td>
+                            <td>
+                                <label>
+                                    <input type="text" [(ngModel)]="currAddress" value="{{currAddress}}" name="currAddress" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Email Id</td>
+                            <td>
+                                <label>
+                                    <input type="email" [(ngModel)]="email" name="email" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="mobileNo" name="mobileNo" maxlength="10" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Alternative Mobile Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="altMobileNo" name="altMobileNo" maxlength="10" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Landline Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="landlineNo" name="landlineNo" maxlength="10" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>PAN</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="pan" name="pan" />
+                                </label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Aadhar Number</td>
+                            <td>
+                                <label>
+                                    <input type="number" [(ngModel)]="aadharNo" name="aadharNo" />
+                                </label>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <button (click)="send()">{{'Accountant.Tables.Submit'| translate}}</button>
+                </div>
+            </sb-card>
+        </div>
+        <div class="col-xl-2 col-md-1"></div>
+    </div>
+</sb-layout-dashboard>
+
+
+
+

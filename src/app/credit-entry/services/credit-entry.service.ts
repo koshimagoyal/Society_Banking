@@ -10,15 +10,15 @@ export class CreditEntryService {
 
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://localhost:8080/getAccountData';
+        const url = 'http://localhost:8080/getOperationalAccountData';
         const data = {
             userId: text,
-        }
+        };
         return this.http.post<any>(url, data);
     }
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/sendCredit';
+        const url = 'http://localhost:8080/sendCreditEntry';
         return this.http.post<any>(url, data);
     }
 }

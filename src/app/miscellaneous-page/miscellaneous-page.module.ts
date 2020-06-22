@@ -1,16 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { AppCommonModule } from '@app/app-common/app-common.module';
+import * as service from '@app/miscellaneous-page/services';
+import { NavigationModule } from '@app/navigation/navigation.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MiscellaneousPageRoutingModule } from './miscellaneous-page-routing.module';
 import { MiscellaneousPageComponent } from './miscellaneous-page/miscellaneous-page.component';
-import { NavigationModule } from '@app/navigation/navigation.module';
-import { AppCommonModule } from '@app/app-common/app-common.module';
-import { TranslateModule } from '@ngx-translate/core';
-import { FormsModule } from '@angular/forms';
-
 
 @NgModule({
-  declarations: [MiscellaneousPageComponent],
+    declarations: [MiscellaneousPageComponent],
     imports: [
         CommonModule,
         MiscellaneousPageRoutingModule,
@@ -19,5 +19,6 @@ import { FormsModule } from '@angular/forms';
         TranslateModule,
         FormsModule,
     ],
+    providers: [...service.services],
 })
-export class MiscellaneousPageModule { }
+export class MiscellaneousPageModule {}

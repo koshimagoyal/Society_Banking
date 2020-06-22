@@ -58,17 +58,19 @@
                         <tr *ngIf="type == 'Cheque'">
                             <td>{{'Accountant.Tables.BankName' | translate}}</td>
                             <td>
-                                <select class="custom-select">
-                                    <option>ABC</option>
-                                    <option>ABC@3</option>
-                                </select>
+                                <label>
+                                    <select class="custom-select" [(ngModel)]="bankName">
+                                        <option>ABC</option>
+                                        <option>ABC@3</option>
+                                    </select>
+                                </label>
                             </td>
                         </tr>
                         <tr *ngIf="type == 'Cheque'">
                             <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
                             <td>
                                 <label>
-                                    <input type="date"/>
+                                    <input type="date" [(ngModel)]="chequeDate" name="chequeDate"/>
                                 </label>
                             </td>
                         </tr>
@@ -76,7 +78,7 @@
                             <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
                             <td>
                                 <label>
-                                    <input type="text"/>
+                                    <input type="text" [(ngModel)]="chequeNo" name="chequeNo"/>
                                 </label>
                             </td>
                         </tr>

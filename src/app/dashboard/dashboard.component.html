@@ -1,22 +1,22 @@
 <sb-layout-dashboard>
-    <sb-dashboard-head title="{{'Common.Title'|translate}}">
+    <sb-dashboard-head title="{{'Accountant.Title'|translate}}">
     </sb-dashboard-head>
     <hr class="rounded">
     <br>
     <div class="row">
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details text="{{loanAmount| indianCurrency}}" background="bg-primary">
+            <sb-card-view-details text="{{noOfLoans| indianCurrency}}" background="bg-danger">
                 <div class="card-body">
-                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "rupee-sign"]'></fa-icon>
-                    <p style="margin-top: 10px;">{{'Accountant.Cards.Loan'| translate}}</p>
+                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "money-check"]'></fa-icon>
+                    <p style="margin-top: 10px;">{{'Accountant.Cards.People'| translate}}</p>
                 </div>
             </sb-card-view-details>
         </div>
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details  text="{{interest| indianCurrency}}" background="bg-warning">
+            <sb-card-view-details text="{{loanAmount| indianCurrency}}" background="bg-primary">
                 <div class="card-body">
-                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "hand-holding-usd"]'></fa-icon>
-                    <p style="margin-top: 10px;">{{'Accountant.Cards.Interest'| translate}}</p>
+                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "rupee-sign"]'></fa-icon>
+                    <p style="margin-top: 10px;">{{'Accountant.Cards.Loan'| translate}}</p>
                 </div>
             </sb-card-view-details>
         </div>
@@ -29,10 +29,10 @@
             </sb-card-view-details>
         </div>
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details text="{{noOfLoans| indianCurrency}}" background="bg-danger">
+            <sb-card-view-details  text="{{interest| indianCurrency}}" background="bg-warning">
                 <div class="card-body">
-                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "money-check"]'></fa-icon>
-                    <p style="margin-top: 10px;">{{'Accountant.Cards.People'| translate}}</p>
+                    <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "hand-holding-usd"]'></fa-icon>
+                    <p style="margin-top: 10px;">{{'Accountant.Cards.Interest'| translate}}</p>
                 </div>
             </sb-card-view-details>
         </div>

@@ -14,6 +14,9 @@ export class CreditEntryComponent implements OnInit {
     table = false;
     creditAmount: any;
     purpose: any;
+    bankName: any;
+    chequeDate: any;
+    chequeNo: any;
     data: any;
     name: any;
     date: any;
@@ -56,8 +59,13 @@ export class CreditEntryComponent implements OnInit {
         const accountData = {
             userId: this.text,
             credit: this.creditAmount,
-            remark: this.purpose,
+            particulars: this.purpose,
+            mode: this.type,
+            type: 'Operational',
             date: this.date,
+            bankName: this.bankName,
+            chequeDate: this.chequeDate,
+            chequeNo: this.chequeNo,
         };
         this.creditService.sendData(accountData).subscribe(
             result => {
@@ -69,6 +77,14 @@ export class CreditEntryComponent implements OnInit {
                         // @ts-ignore
                         this.table = false;
                         this.text = null;
+                        this.creditAmount = null;
+                        this.purpose = null;
+                        this.date = null;
+                        this.balance = 0;
+                        this.chequeNo = null;
+                        this.chequeDate = null;
+                        this.bankName = null;
+                        this.type = null;
                     }
                 });
             },

@@ -7,6 +7,7 @@ import { SessionStorageService } from 'ngx-webstorage';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 import { AuthService } from './services';
+import { NavigationService } from '@app/navigation/services';
 
 @Component({
     selector: 'sb-login',
@@ -21,7 +22,8 @@ export class LoginComponent implements OnInit {
         public router: Router,
         public authService: AuthService,
         public fb: FormBuilder,
-        public session: SessionStorageService
+        public session: SessionStorageService,
+        public navService: NavigationService
     ) {
         this.form = this.fb.group({
             userId: [],
@@ -43,21 +45,29 @@ export class LoginComponent implements OnInit {
         } else {
             this.authService.getLoginAuth$(this.userLogin).subscribe((data: any) => {
                 console.log(data);
-                const user = {
-                    id: data[0].userId,
-                    name: data[0].name,
-                    company: data[0].companyName,
-                    address: data[0].address,
-                };
-                this.session.store('user', user);
-                if (data[0].role === 'employee') {
-                    this.router.navigateByUrl('/emp-dashboard');
-                } else if (data[0].role === 'admin') {
-                    this.router.navigateByUrl('/dashboard');
+                if (data.length === 0) {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Data does not exists!',
+                        icon: 'error',
+                    });
                 } else {
-                    this.router.navigateByUrl('/error/error-401');
+                    const user = {
+                        id: data[0].userId,
+                        name: data[0].name,
+                        email: data[0].email,
+                        address: data[0].currentAddress,
+                        role: data[0].roleId,
+                    };
+                    this.session.store('user', user);
+                    if (data[0].role === 'employee') {
+                        this.router.navigateByUrl('/emp-dashboard');
+                    } else if (data[0].role === 'admin') {
+                        this.router.navigateByUrl('/dashboard');
+                    } else {
+                        this.router.navigateByUrl('/error/error-401');
+                    }
                 }
-
             });
         }
     }

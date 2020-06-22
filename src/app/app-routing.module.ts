@@ -8,6 +8,15 @@ const routes: Routes = [
         redirectTo: 'login',
     },
     {
+        path: 'profile',
+        loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
+    },
+    {
+        path: 'emp-profile',
+        loadChildren: () =>
+            import('./emp-profile/emp-profile.module').then(m => m.EmpProfileModule),
+    },
+    {
         path: 'cash-cheque',
         loadChildren: () =>
             import('./miscellaneous-page/miscellaneous-page.module').then(

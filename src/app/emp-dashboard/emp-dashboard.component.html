@@ -1,5 +1,5 @@
 <sb-layout-emp-dashboard>
-    <sb-dashboard-head title="{{'Common.Title'|translate}}">
+    <sb-dashboard-head title="{{user.name}}'s {{'Common.Title'|translate}}">
     </sb-dashboard-head>
     <hr class="rounded">
     <br>
@@ -21,7 +21,7 @@
             </sb-card-view-details>
         </div>
         <div class="col-xl-3 col-md-6">
-            <sb-card-view-details link="" text="{{loanAmount| indianCurrency}}" background="bg-success">
+            <sb-card-view-details link="" text="{{amount| indianCurrency}}" background="bg-success">
                 <div class="card-body">
                     <fa-icon class="mr-1 fa-pull-right" style="opacity: 0.5; font-size: 30px;" [icon]='["fas", "coins"]'></fa-icon>
                     <p style="margin-top: 10px;">{{'Employee.Cards.Debit'| translate}}</p>
@@ -52,24 +52,50 @@
             </div>
         </div>
         <ng-template #not>
-            <td>null</td>
+            <td>-</td>
         </ng-template>
         <div class="card-body table-responsive">
-            <table class="table table-striped">
+            <table class="table table-bordered">
                 <thead>
                 <tr>
                     <th style="width: 16.66%;" scope="col"><span>{{"Employee.Passbook.Date" | translate}}</span></th>
                     <th style="width: 60%;" scope="col"><span>{{"Employee.Passbook.Particulars" | translate}}</span></th>
+                    <th scope="col"><span>Mode</span></th>
                     <th scope="col"><span>{{"Employee.Passbook.Deposit" | translate}}</span></th>
                     <th scope="col"><span>{{"Employee.Passbook.Withdrawal" | translate}}</span></th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr *ngFor="let val of account | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
-                    <th scope="row" *ngIf="val.date; else not">{{ val.date| date:'dd-MM-yyyy' }}</th>
-                    <td *ngIf="val.particulars; else not">{{val.particulars}}</td>
-                    <td class="table-success" *ngIf="val.credit; else not">{{val.credit| indianCurrency}}</td>
-                    <td class="table-danger" *ngIf="val.debit; else not">{{val.debit| indianCurrency}}</td>
+                <tbody *ngFor="let val of account | filter: term | paginate: { itemsPerPage:5, currentPage: p} ">
+                <tr>
+                    <td scope="row" *ngIf="isDate(val.account.date); else notDate">{{ val.account.date| date:'dd-MM-yyyy' }}</td>
+                    <ng-template #notDate>
+                        <td>{{val.account.date}}</td>
+                    </ng-template>
+                    <td *ngIf="val.account.particulars; else not">{{val.account.particulars}}</td>
+                    <td *ngIf="val.account.mode; else not">{{val.account.mode}}</td>
+                    <td class="table-success" *ngIf="val.account.credit; else not">{{val.account.credit| indianCurrency}}</td>
+                    <td class="table-danger" *ngIf="val.account.debit; else not">{{val.account.debit| indianCurrency}}</td>
+                </tr>
+                <tr>
+                    <td *ngIf="val.cheque" align="center" colspan="5">
+                        <h6 style="font-weight: bold">Cheque Details</h6>
+                        <table style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <td style="width: 16.66%;">Cheque Date</td>
+                                <td style="width: 60%;">Bank Name</td>
+                                <td>Cheque Number</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td *ngIf="val.cheque[0].chequeDate; else not">{{val.cheque[0].chequeDate| date:'dd-MM-yyyy'}}</td>
+                                <td class="col-5" *ngIf="val.cheque[0].bankName; else not">{{val.cheque[0].bankName}}</td>
+                                <td *ngIf="val.cheque[0].chequeNo; else not">{{val.cheque[0].chequeNo}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -79,7 +105,7 @@
         </div>
     </sb-card>
     <!--Loan Table-->
-    <ng-container *ngFor="let data of loans| filter: loanTerm | paginate: { itemsPerPage:5, currentPage: p}; let i = index">
+    <ng-container *ngFor="let data of loans; let i = index">
         <sb-card>
             <div class="card-header bg-primary headers">
                 <div class="row">
@@ -98,9 +124,6 @@
                     <div class="col" style="margin-top: 10px;">
                         <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>&nbsp;{{"Employee.Loanbook.Title" | translate}}
                     </div>
-                    <div class="col">
-                        <input type="text" placeholder="Search.." [(ngModel)]="loanTerm"/>
-                    </div>
                 </div>
             </div>
             <div class="card-body table-responsive" *ngIf="show[i] && data.loanBook">
@@ -113,16 +136,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <th scope="row" *ngIf="data.loanBook.date; else not">{{data.loanBook.date| date:'dd-MM-yyyy'}}</th>
-                        <td *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
-                        <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI| indianCurrency}}</td>
+                    <tr *ngFor="let value of data.loanBook">
+                        <td scope="row" *ngIf="isDate(value.date); else notDate">{{value.date}}</td>
+                        <ng-template #notDate>
+                            <td>{{value.date}}</td>
+                        </ng-template>
+                        <td class="col-5" *ngIf="value.particulars; else not">{{value.particulars}}</td>
+                        <td *ngIf="value.credit; else not">{{value.credit| indianCurrency}}</td>
                     </tr>
                     </tbody>
                 </table>
-                <div class="pagination">
-                    <pagination-controls (pageChange)="p=$event"></pagination-controls>
-                </div>
             </div>
         </sb-card>
     </ng-container>

@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -15,7 +15,10 @@ export class LoanForeclosureService {
     }
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/closeLoan';
-        return this.http.post<any>(url, data);
+        const url = 'http://localhost:8080/sendLoanForeCloseData';
+        const closeData = {
+            closeData: data,
+        };
+        return this.http.post<any>(url, closeData);
     }
 }
