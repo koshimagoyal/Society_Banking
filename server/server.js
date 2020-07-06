@@ -203,7 +203,7 @@ app.post('/sendDepositData',(req,res)=>{
 app.post('/sendBankData',(req,res)=>{
     console.log(req.body);
     let query = 'insert into bankAccount (bankName,accountNo,accountType,address,nickname,IFSC) values (?,?,?,?,?,?);';
-    con.query(query, [req.body.bankName,req.body.accountNo,req.body.accountType,req.body.bankAddress,req.body.nickName,req.body.code], function(err, result) {
+    con.query(query, [req.body.bankName,req.body.accountNo,req.body.accountType,req.body.bankAddress,req.body.nickname,req.body.code], function(err, result) {
         if(err){
             console.log(err);
             res.status(401).json({
@@ -218,7 +218,7 @@ app.post('/sendBankData',(req,res)=>{
 //get bank Name list
 app.get('/getBankList',(req,res)=>{
     console.log(req.body);
-    let query = 'select bankName from bankList;';
+    let query = 'select nickname as bankName from bankAccount;';
     con.query(query, function(err, result) {
         if (err) {
             console.log(err);
@@ -273,6 +273,43 @@ app.get('/getLoanEmiData',(req,res)=>{
             });
         }else{
             res.send(result);
+        }
+    });
+});
+
+//get cash and bank balance
+app.get('/getCashBank',(req,res)=>{
+    console.log(req.body);
+    let query = `select sum(credit) as credit, sum(debit) as debit from account where 
+                (
+                    (type="Transfer Cash" and loanId is null)
+                                or
+                    (loanId is null and chequeId is null)
+                );`;
+    con.query(query, function(err, result) {
+        if (err) {
+            console.log(err);
+            res.status(401).json({
+                failed: 'Unauthorized Access'
+            });
+        }else{
+            console.log(req.body);
+            let query = `select sum(credit) as credit, sum(debit) as debit, bankName from account inner join 
+                         chequedetails on(account.chequeId=chequedetails.chequeId)
+                         where type != "Transfer Cash" and loanId is null group by bankName;`;
+            con.query(query, function(err, resultData) {
+                if (err) {
+                    console.log(err);
+                    res.status(401).json({
+                        failed: 'Unauthorized Access'
+                    });
+                }else{
+                    res.status(200).json({
+                        cash: result,
+                        bank: resultData,
+                    });
+                }
+            });
         }
     });
 });
@@ -1796,7 +1833,7 @@ app.post('/searchCheque',(req,res)=>{
 app.post('/transferCash',(req,res)=>{
     console.log(req.body);
     let query = 'insert into account (date,debit,mode,type,particulars,userId) values (?,?,?,?,?,?); ';
-    con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.type,req.body.cashPurpose,req.body.userId],function(err,result) {
+    con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.typeCash,req.body.cashPurpose,req.body.userId],function(err,result) {
         if(err){
             res.status(400).json({
                 failed: 'Unauthorized Access'
@@ -1832,7 +1869,7 @@ app.post('/transferCash',(req,res)=>{
                                         rData.forEach(rsData=>{
                                             console.log(rsData.chequeId);
                                             query = 'insert into account (date,credit,mode,type,particulars,chequeId,userId) values (?,?,?,?,?,?,?); ';
-                                            con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.type,req.body.bankPurpose,rsData.chequeId,req.body.userId],function(err,result) {
+                                            con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.typeBank,req.body.bankPurpose,rsData.chequeId,req.body.userId],function(err,result) {
                                                 if(err){
                                                     res.status(400).json({
                                                         failed: 'Unauthorized Access'
@@ -1850,7 +1887,7 @@ app.post('/transferCash',(req,res)=>{
                         resData.forEach(resultData => {
                             console.log(resultData.chequeId);
                             query = 'insert into account (date,credit,mode,type,particulars,chequeId,userId) values (?,?,?,?,?,?,?); ';
-                            con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.type,req.body.bankPurpose,resultData.chequeId,req.body.userId],function(err,reData) {
+                            con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.typeBank,req.body.bankPurpose,resultData.chequeId,req.body.userId],function(err,reData) {
                                 if(err){
                                     res.status(400).json({
                                         failed: 'Unauthorized Access'
@@ -1888,7 +1925,7 @@ app.post('/withdrawCash',(req,res)=>{
                     resData.forEach(resultData=>{
                         console.log(resultData.chequeId);
                         query = 'insert into account (date,debit,mode,type,particulars,chequeId,userId) values(?,?,?,?,?,?,?);';
-                        con.query(query, [req.body.date,req.body.amount,req.body.mode,req.body.type,req.body.bankPurpose,resultData.chequeId,req.body.userId], function(err, resData) {
+                        con.query(query, [req.body.date,req.body.amount,req.body.mode,req.body.typeBank,req.body.bankPurpose,resultData.chequeId,req.body.userId], function(err, resData) {
                             if (err) {
                                 console.log(err);
                                 res.status(401).json({
@@ -1896,7 +1933,7 @@ app.post('/withdrawCash',(req,res)=>{
                                 });
                             } else {
                                 query = 'insert into account (date,credit,mode,type,particulars,chequeId,userId) values (?,?,?,?,?,?,?); ';
-                                con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.type,req.body.cashPurpose,resultData.chequeId,req.body.userId],function(err,result) {
+                                con.query(query,[req.body.date,req.body.amount,req.body.mode,req.body.typeCash,req.body.cashPurpose,resultData.chequeId,req.body.userId],function(err,result) {
                                     if(err){
                                         res.status(400).json({
                                             failed: 'Unauthorized Access'

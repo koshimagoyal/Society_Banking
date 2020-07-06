@@ -125,7 +125,7 @@
                                 <td>{{'Accountant.Tables.Date'| translate}}</td>
                                 <td>
                                     <label>
-                                        <input type="date" formControlName="date"/>
+                                        <input type="date" formControlName="date" required/>
                                     </label>
                                     <div class="alert alert-danger error-box" *ngIf="chequeForm.get('date').hasError('required')">Required!</div>
                                 </td>
@@ -134,7 +134,7 @@
                                 <td>{{'Accountant.Tables.Amount'| translate}}</td>
                                 <td>
                                     <label>
-                                        <input type="number" formControlName="amount"/>
+                                        <input type="number" formControlName="amount" required/>
                                     </label>
                                     <div class="alert alert-danger error-box" *ngIf="chequeForm.get('amount').hasError('required')">Required!</div>
                                 </td>

@@ -17,6 +17,15 @@ export class DashboardService {
         const url = 'http://localhost:8080/getAllLoanData';
         return this.httpService.get(url, { headers });
     }
+    getBal(): Observable<any> {
+        const headers = new HttpHeaders();
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
+        headers.append('Accept', 'application/json');
+        headers.append('content-type', 'application/json');
+        const url = 'http://localhost:8080/getCashBank';
+        return this.httpService.get(url, { headers });
+    }
     getLoanData(): Observable<any> {
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');

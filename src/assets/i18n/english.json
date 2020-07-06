@@ -62,9 +62,13 @@
             "Upload": "One Time Activities"
         },
         "Title": "Accountant's Dashboard",
+        "Credit": "Credit",
         "Debit": "Debit",
         "GetInfo": "Get Information",
         "Tables": {
+            "Total": "Total Amount",
+            "CashBal": "Cash Balance",
+            "BankBal" : "Bank Balance",
             "AR": "Accept/Reject",
             "Approve": "Approve Loan",
             "Reject": "Reject Loan",

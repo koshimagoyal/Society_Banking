@@ -275,9 +275,7 @@
                             <td>{{'Accountant.Tables.BankName' | translate}}</td>
                             <td>
                                 <label>
-                                    <select class="custom-select form-control" required formControlName="bankName" >
-                                        <option *ngFor="let val of bankList">{{val.bankName}}</option>
-                                    </select>
+                                    <input type="text" formControlName="bankName" required />
                                 </label>
                                 <div class="alert alert-danger error-box" *ngIf="bankForm.get('bankName').hasError('required')">Required!</div>
                             </td>

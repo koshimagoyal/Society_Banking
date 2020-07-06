@@ -37,6 +37,70 @@
             </sb-card-view-details>
         </div>
     </div>
+    <!--Cash Balance Table-->
+    <sb-card>
+        <div class="card-header">
+            <div class="row">
+                <div class="col" style="margin-top: 10px;">
+                    <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Tables.CashBal" | translate}}
+                </div>
+            </div>
+        </div>
+        <ng-template #not>
+            <td>-</td>
+        </ng-template>
+        <div class="card-body table-responsive">
+            <table class="table table-striped" style="text-align: center;">
+                <thead>
+                <tr>
+                    <th>{{'Accountant.Credit'| translate}}</th>
+                    <th>{{'Accountant.Debit'| translate}}</th>
+                    <th>{{'Accountant.Tables.Total'| translate}}</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let val of balance.cash">
+                <tr>
+                    <td *ngIf="val.credit; else not">{{val.credit| indianCurrency}}</td>
+                    <td *ngIf="val.debit; else not">{{val.debit| indianCurrency}}</td>
+                    <td>{{(val.credit-val.debit)| indianCurrency}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </sb-card>
+    <!--Bank Balance Table-->
+    <sb-card>
+        <div class="card-header">
+            <div class="row">
+                <div class="col" style="margin-top: 10px;">
+                    <fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Tables.BankBal" | translate}}
+                </div>
+            </div>
+        </div>
+        <ng-template #not>
+            <td>-</td>
+        </ng-template>
+        <div class="card-body table-responsive">
+            <table class="table table-striped" style="text-align: center;">
+                <thead>
+                <tr>
+                    <th>{{'Accountant.Tables.BankName'| translate}}</th>
+                    <th>{{'Accountant.Credit'| translate}}</th>
+                    <th>{{'Accountant.Debit'| translate}}</th>
+                    <th>{{'Accountant.Tables.Total'| translate}}</th>
+                </tr>
+                </thead>
+                <tbody *ngFor="let val of balance.bank">
+                <tr>
+                    <td *ngIf="val.bankName; else not">{{val.bankName}}</td>
+                    <td *ngIf="val.credit; else not">{{val.credit| indianCurrency}}</td>
+                    <td *ngIf="val.debit; else not">{{val.debit| indianCurrency}}</td>
+                    <td>{{(val.credit-val.debit)| indianCurrency}}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </sb-card>
     <!--Loan Approval Table-->
     <sb-card *ngIf="loanApprove">
         <div class="card-header">

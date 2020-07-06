@@ -760,6 +760,10 @@ export class UploadAllComponent implements OnInit {
                                     ])
                                 ),
                             });
+                            this.service.getBankList().subscribe(ress => {
+                                this.bankList = ress;
+                                console.log(this.bankList);
+                            });
                         }
                     });
                 }

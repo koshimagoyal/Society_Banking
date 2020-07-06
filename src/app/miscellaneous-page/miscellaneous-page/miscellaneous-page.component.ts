@@ -47,7 +47,6 @@ export class MiscellaneousPageComponent implements OnInit {
             bankName: new FormControl('', Validators.compose([Validators.required])),
             chequeDate: new FormControl('', Validators.compose([Validators.required])),
             chequeNo: new FormControl('', Validators.compose([Validators.required])),
-            purpose: new FormControl('', Validators.compose([Validators.required])),
         });
     }
 
@@ -67,7 +66,8 @@ export class MiscellaneousPageComponent implements OnInit {
                 // @ts-ignore
                 date: this.cashForm.get('date').value,
                 mode: 'Cash',
-                type: 'Transfer',
+                typeCash: 'Transfer Cash',
+                typeBank: 'Transfer Bank',
                 // @ts-ignore
                 amount: this.cashForm.get('amount').value,
                 // @ts-ignore
@@ -121,7 +121,8 @@ export class MiscellaneousPageComponent implements OnInit {
                 // @ts-ignore
                 date: this.chequeForm.get('date').value,
                 mode: 'Cheque',
-                type: 'Withdraw',
+                typeCash: 'Transfer Cash',
+                typeBank: 'Transfer Bank',
                 // @ts-ignore
                 amount: this.chequeForm.get('amount').value,
                 // @ts-ignore

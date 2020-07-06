@@ -19,6 +19,7 @@ export class DashboardComponent implements OnInit {
     term: any;
     loanApprove = false;
     loanData = [];
+    balance: any;
     p: any;
     approveMode: any;
     constructor(private dashboardService: DashboardService) {}
@@ -68,6 +69,21 @@ export class DashboardComponent implements OnInit {
                         this.loanData = result.data;
                         this.loanApprove = true;
                     }
+                }
+            },
+            error1 => {
+                Swal.fire({
+                    title: 'Oops!',
+                    text: 'Try again!',
+                    icon: 'error',
+                });
+            }
+        );
+        this.dashboardService.getBal().subscribe(
+            result => {
+                if (result) {
+                    console.log(result);
+                    this.balance = result;
                 }
             },
             error1 => {
