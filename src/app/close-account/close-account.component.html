@@ -8,11 +8,11 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{"Accountant.Tables.CloseAcc"| translate}}</div>
                 <div class="card-body table-responsive">
-                    <form class="form-inline">
+                    <form class="form-inline" [formGroup]="searchForm" (ngSubmit)="showTable()">
                         <label>
-                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                            <input type="text" placeholder="Enter Employee No" formControlName="employeeNo"/>
                         </label>
-                        <button (click)="showTable()">{{"Accountant.GetInfo"| translate}}</button>
+                        <button type="submit" [disabled]="!searchForm.valid">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
                         <tbody>
@@ -33,7 +33,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td>Loan Closure Status</td>
+                            <td>{{"Accountant.Tables.LoanStatus" | translate}}</td>
                             <td *ngIf="loanClose; else not">{{"Accountant.Tables.Closed" | translate}}</td>
                             <ng-template #not>
                                 <td>{{"Accountant.Tables.Not" | translate}}</td>

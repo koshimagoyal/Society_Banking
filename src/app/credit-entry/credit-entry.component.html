@@ -8,11 +8,11 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Credit'| translate}}</div>
                 <div class="card-body table-responsive">
-                    <form class="form-inline">
+                    <form class="form-inline" [formGroup]="searchForm" (ngSubmit)="showTable()">
                         <label>
-                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                            <input type="text" placeholder="Enter Employee No" formControlName="employeeNo"/>
                         </label>
-                        <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
+                        <button type="submit" [disabled]="!searchForm.valid">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
                         <tbody>
@@ -23,6 +23,10 @@
                         <tr>
                             <td>{{'Accountant.Tables.EmployeeName'| translate}}</td>
                             <td>{{name}}</td>
+                        </tr>
+                        <tr>
+                            <td>{{'Accountant.Tables.Corpus'| translate}}</td>
+                            <td>{{corpusData| indianCurrency}}</td>
                         </tr>
                         <tr>
                             <td>{{'Accountant.Tables.Balance'| translate}}</td>

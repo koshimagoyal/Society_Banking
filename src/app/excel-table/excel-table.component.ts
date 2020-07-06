@@ -52,8 +52,8 @@ export class ExcelTableComponent implements OnInit {
     searchTerm: any;
     show = false;
     emiTable = false;
-    date = new FormControl(moment());
-    emiDate = new FormControl(moment());
+    date = new FormControl(moment(new Date('01-01-2000')));
+    emiDate = new FormControl(moment(new Date('01-01-2000')));
     disableData = [];
     disableLoanData = [];
     disableLoan: any;
@@ -171,7 +171,7 @@ export class ExcelTableComponent implements OnInit {
                                                     d.year() === moment(x).year()
                                             );
                                         };
-                                        this.date = new FormControl(moment());
+                                        this.date = new FormControl(moment(new Date('01-01-2000')));
                                         this.show = false;
                                         evt.target.value = null;
                                     }
@@ -266,19 +266,19 @@ export class ExcelTableComponent implements OnInit {
                                                 }).then((isConfirm: any) => {
                                                     if (isConfirm) {
                                                         // @ts-ignore
-                                                        this.disableData.push(
+                                                        this.disableLoanData.push(
                                                             // @ts-ignore
                                                             moment(send.date, 'MM-YYYY')
                                                         );
-                                                        this.disable = (d: Moment): boolean => {
-                                                            return !this.disableData.find(
+                                                        this.disableLoan = (d: Moment): boolean => {
+                                                            return !this.disableLoanData.find(
                                                                 x =>
                                                                     d.month() ===
                                                                         moment(x).month() &&
                                                                     d.year() === moment(x).year()
                                                             );
                                                         };
-                                                        this.emiDate = new FormControl(moment());
+                                                        this.emiDate = new FormControl(moment(new Date('01-01-2000')));
                                                         this.emiTable = false;
                                                         evt.target.value = null;
                                                     }

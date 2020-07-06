@@ -17,13 +17,11 @@ import { NavigationService } from '@app/navigation/services';
 export class LoginComponent implements OnInit {
     form: FormGroup;
     private userLogin = new Login();
-    private user: any;
     constructor(
         public router: Router,
         public authService: AuthService,
         public fb: FormBuilder,
-        public session: SessionStorageService,
-        public navService: NavigationService
+        public session: SessionStorageService
     ) {
         this.form = this.fb.group({
             userId: [],
@@ -61,7 +59,7 @@ export class LoginComponent implements OnInit {
                     };
                     this.session.store('user', user);
                     if (data[0].role === 'employee') {
-                        this.router.navigateByUrl('/emp-dashboard');
+                        this.router.navigateByUrl('/employee-dashboard');
                     } else if (data[0].role === 'admin') {
                         this.router.navigateByUrl('/dashboard');
                     } else {

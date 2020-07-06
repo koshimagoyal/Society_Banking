@@ -3,6 +3,7 @@ import { ExpenseCorpusService } from '@app/expense/services';
 import { LoanEntryService } from '@app/loan-entry/services';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'sb-loan-entry',
@@ -10,6 +11,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
     styleUrls: ['./loan-entry.component.scss'],
 })
 export class LoanEntryComponent implements OnInit {
+    searchForm: FormGroup;
     text: any;
     depositData = 23478;
     table = false;
@@ -25,8 +27,14 @@ export class LoanEntryComponent implements OnInit {
     loans: any;
     p: any;
     loanTerm: any;
-    constructor(private loanService: LoanEntryService) {}
+    constructor(private loanService: LoanEntryService, public fb: FormBuilder) {
+        this.searchForm = this.fb.group({
+            employeeNo: new FormControl('', Validators.compose([Validators.required])),
+        });
+    }
     showTable() {
+        // @ts-ignore
+        this.text = this.searchForm.get('employeeNo').value;
         console.log(this.text);
         this.loanService.getData(this.text).subscribe(
             result => {
@@ -84,42 +92,60 @@ export class LoanEntryComponent implements OnInit {
         }
     }
     send() {
-        this.data = {
-            userId: this.text,
-            loanAmount: this.loanAmount,
-            loanDuration: this.duration,
-            date: this.date,
-            loanType: this.type,
-            interest: this.interest,
-            closeLoan: false,
-        };
-        this.loanService.sendData(this.data).subscribe(
-            result => {
-                Swal.fire({
-                    text: 'Sent!',
-                    icon: 'success',
-                }).then((isConfirm: any) => {
-                    if (isConfirm) {
-                        // @ts-ignore
-                        this.table = false;
-                        this.text = null;
-                        this.date = null;
-                        this.loanAmount = null;
-                        this.type = null;
-                        this.duration = null;
-                        this.interest = null;
-                        this.show = false;
-                    }
-                });
-            },
-            error1 => {
-                Swal.fire({
-                    title: 'Oops!',
-                    text: 'Try again!',
-                    icon: 'error',
-                });
-            }
-        );
+        if (
+            !this.text ||
+            !this.loanAmount ||
+            !this.duration ||
+            !this.date ||
+            !this.type ||
+            !this.interest
+        ) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Fill all the details!',
+                icon: 'error',
+            });
+        } else {
+            this.data = {
+                userId: this.text,
+                loanAmount: this.loanAmount,
+                loanDuration: this.duration,
+                date: this.date,
+                loanType: this.type,
+                interest: this.interest,
+                closeLoan: false,
+            };
+            this.loanService.sendData(this.data).subscribe(
+                result => {
+                    Swal.fire({
+                        text: 'Sent!',
+                        icon: 'success',
+                    }).then((isConfirm: any) => {
+                        if (isConfirm) {
+                            // @ts-ignore
+                            this.table = false;
+                            this.text = null;
+                            this.date = null;
+                            this.loanAmount = null;
+                            this.type = null;
+                            this.duration = null;
+                            this.interest = null;
+                            this.show = false;
+                            this.searchForm = this.fb.group({
+                                employeeNo: new FormControl('', Validators.compose([Validators.required])),
+                            });
+                        }
+                    });
+                },
+                error1 => {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Try again!',
+                        icon: 'error',
+                    });
+                }
+            );
+        }
     }
     ngOnInit() {
         this.loanService.getCorpusData().subscribe(
@@ -141,5 +167,10 @@ export class LoanEntryComponent implements OnInit {
             }
         );
         return this.corpusData;
+    }
+    isDate(d: any) {
+        const result = Date.parse(d);
+        if (!result) return false;
+        else return true;
     }
 }

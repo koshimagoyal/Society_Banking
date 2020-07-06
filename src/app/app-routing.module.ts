@@ -8,6 +8,14 @@ const routes: Routes = [
         redirectTo: 'login',
     },
     {
+        path: 'calculator',
+        loadChildren: () => import('./calculator/calculator.module').then(m => m.CalculatorModule),
+    },
+    {
+        path: 'employee-dashboard',
+        loadChildren: () => import('./employee-dashboard/employee-dashboard.module').then(m => m.EmployeeDashboardModule),
+    },
+    {
         path: 'profile',
         loadChildren: () => import('./profile/profile.module').then(m => m.ProfileModule),
     },
@@ -24,11 +32,6 @@ const routes: Routes = [
             ),
     },
     {
-        path: 'bank-account',
-        loadChildren: () =>
-            import('./bank-account/bank-account.module').then(m => m.BankAccountModule),
-    },
-    {
         path: 'dashboard',
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     },
@@ -39,18 +42,6 @@ const routes: Routes = [
     {
         path: 'loan-entry',
         loadChildren: () => import('./loan-entry/loan-entry.module').then(m => m.LoanEntryModule),
-    },
-    {
-        path: 'emp-dashboard',
-        loadChildren: () =>
-            import('./emp-dashboard/emp-dashboard.module').then(m => m.EmpDashboardModule),
-    },
-    {
-        path: 'loan-emi-calculator',
-        loadChildren: () =>
-            import('./loan-emi-calculator/loan-emi-calculator.module').then(
-                m => m.LoanEmiCalculatorModule
-            ),
     },
     {
         path: 'loan-eligibility-table',

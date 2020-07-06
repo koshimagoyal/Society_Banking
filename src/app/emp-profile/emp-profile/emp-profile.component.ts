@@ -3,6 +3,7 @@ import { ProfileService } from '@app/emp-profile/services';
 import { SessionStorageService } from 'ngx-webstorage';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'sb-emp-profile',
@@ -23,7 +24,44 @@ export class EmpProfileComponent implements OnInit {
     pan: any;
     aadharNo: any;
     enrollDate: any;
-    constructor(public service: ProfileService, public session: SessionStorageService) {}
+    url: string | ArrayBuffer | null = '';
+    formData = new FormData();
+    employeeForm: FormGroup;
+    constructor(
+        public service: ProfileService,
+        public session: SessionStorageService,
+        public fb: FormBuilder
+    ) {
+        this.employeeForm = this.fb.group({
+            employeeId: new FormControl('', Validators.compose([Validators.required])),
+            employeeName: new FormControl('', Validators.compose([Validators.required])),
+            fatherName: new FormControl(''),
+            permAddress: new FormControl(''),
+            check: new FormControl(''),
+            currAddress: new FormControl(''),
+            email: new FormControl('', Validators.compose([Validators.email])),
+            mobileNo: new FormControl(
+                '',
+                Validators.compose([Validators.min(1000000000), Validators.max(9999999999)])
+            ),
+            altMobileNo: new FormControl(
+                '',
+                Validators.compose([Validators.min(1000000000), Validators.max(9999999999)])
+            ),
+            landlineNo: new FormControl(
+                '',
+                Validators.compose([Validators.pattern('^[0-9]d{2,4}-d{6,8}$')])
+            ),
+            pan: new FormControl(
+                '',
+                Validators.compose([Validators.pattern('[A-Z]{5}[0-9]{4}[A-Z]{1}')])
+            ),
+            aadharNo: new FormControl(
+                '',
+                Validators.compose([Validators.pattern('^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$')])
+            ),
+        });
+    }
 
     ngOnInit(): void {
         const user = this.session.retrieve('user');
@@ -83,7 +121,8 @@ export class EmpProfileComponent implements OnInit {
             adharNo: this.aadharNo,
             enroll: this.enrollDate,
         };
-        this.service.sendData(data).subscribe(
+        this.formData.append('data', JSON.stringify(data));
+        this.service.sendData(this.formData).subscribe(
             result => {
                 if (result.nameData.length === 0) {
                     Swal.fire({
@@ -106,5 +145,20 @@ export class EmpProfileComponent implements OnInit {
                 });
             }
         );
+    }
+    onSelectFile(event: any) {
+        if (event.target.files && event.target.files[0]) {
+            const reader = new FileReader();
+
+            reader.readAsDataURL(event.target.files[0]); // read file as data url
+
+            reader.onload = e => {
+                // called once readAsDataURL is completed
+                // @ts-ignore
+                this.url = e.target.result;
+            };
+            // @ts-ignore
+            this.formData.append('file', event.target.files[0], event.target.files[0].name);
+        }
     }
 }

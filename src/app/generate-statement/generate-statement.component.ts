@@ -5,6 +5,7 @@ import { DialogComponent } from '@app/generate-statement/dialog.component';
 import { GenerateStatementService } from '@app/generate-statement/services';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'sb-generate-statement',
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
     styleUrls: ['./generate-statement.component.scss'],
 })
 export class GenerateStatementComponent implements OnInit {
+    searchForm: FormGroup;
     text: any;
     table = false;
     name: any;
@@ -20,12 +22,24 @@ export class GenerateStatementComponent implements OnInit {
     balance = 0;
     loanData = [];
     accountData = [];
+    reportForm: FormGroup;
     constructor(
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
-        private generateService: GenerateStatementService
-    ) {}
+        private generateService: GenerateStatementService,
+        public fb: FormBuilder
+    ) {
+        this.searchForm = this.fb.group({
+            employeeNo: new FormControl('', Validators.compose([Validators.required])),
+        });
+        this.reportForm = this.fb.group({
+            start: new FormControl('', Validators.compose([Validators.required])),
+            end: new FormControl('', Validators.compose([Validators.required])),
+        });
+    }
     showTable() {
+        // @ts-ignore
+        this.text = this.searchForm.get('employeeNo').value;
         console.log(this.text);
         this.generateService.getData(this.text).subscribe(
             result => {
@@ -61,8 +75,10 @@ export class GenerateStatementComponent implements OnInit {
     openDialog() {
         const data = {
             userId: this.text,
-            start: this.start,
-            end: this.end,
+            // @ts-ignore
+            start: this.reportForm.get('start').value,
+            // @ts-ignore
+            end: this.reportForm.get('end').value,
         };
         this.generateService.getDialogData(data).subscribe(
             result => {
@@ -81,8 +97,10 @@ export class GenerateStatementComponent implements OnInit {
                         data: {
                             id: this.text,
                             name: this.name,
-                            start: this.start,
-                            end: this.end,
+                            // @ts-ignore
+                            start: this.reportForm.get('start').value,
+                            // @ts-ignore
+                            end: this.reportForm.get('end').value,
                             balance: this.balance,
                             accountData: this.accountData,
                             loanData: this.loanData,
@@ -93,6 +111,13 @@ export class GenerateStatementComponent implements OnInit {
                     dialogRef.afterClosed().subscribe(res => {
                         if (res) {
                             this.table = false;
+                            this.searchForm = this.fb.group({
+                                employeeNo: new FormControl('', Validators.compose([Validators.required])),
+                            });
+                            this.reportForm = this.fb.group({
+                                start: new FormControl('', Validators.compose([Validators.required])),
+                                end: new FormControl('', Validators.compose([Validators.required])),
+                            });
                         }
                     });
                 }

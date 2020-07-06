@@ -8,11 +8,11 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Entry'| translate}}</div>
                 <div class="card-body table-responsive">
-                    <form class="form-inline">
+                    <form class="form-inline" [formGroup]="searchForm" (ngSubmit)="showTable()">
                         <label>
-                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                            <input type="text" placeholder="Enter Employee No" formControlName="employeeNo"/>
                         </label>
-                        <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
+                        <button type="submit" [disabled]="!searchForm.valid">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
                         <tbody>
@@ -92,7 +92,7 @@
         <div class="col-xl-2 col-md-1"></div>
     </div>
     <div *ngIf="show">
-        <ng-container *ngFor="let data of loans | paginate: { itemsPerPage:5, currentPage: p}; let i = index">
+        <ng-container *ngFor="let data of loans; let i = index">
             <sb-card>
                 <div class="card-header bg-primary headers">
                     <div class="row">
@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <ng-template #not>
-                    <td>null</td>
+                    <td>-</td>
                 </ng-template>
                 <div class="card-header" *ngIf="data.loanBook">
                     <div class="row">
@@ -124,17 +124,73 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <th scope="row" *ngIf="data.loanBook.date; else not">{{data.loanBook.date| date:'dd-MM-yyyy'}}</th>
-                            <td *ngIf="data.loanBook.particulars; else not">{{data.loanBook.particulars}}</td>
-                            <td *ngIf="data.loanBook.EMI; else not">{{data.loanBook.EMI| indianCurrency}}</td>
+                        <tr *ngFor="let val of data.loanBook">
+                            <th scope="row" *ngIf="isDate(val.date); else notDate">{{val.date| date:'dd-MM-yyyy'}}</th>
+                            <ng-template #notDate>
+                                <th scope="row">{{val.date}}</th>
+                            </ng-template>
+                            <td *ngIf="val.particulars; else not">{{val.particulars}}</td>
+                            <td *ngIf="val.credit; else not">{{val.credit| indianCurrency}}</td>
                         </tr>
                         </tbody>
                     </table>
-                    <div class="pagination">
-                        <pagination-controls (pageChange)="p=$event"></pagination-controls>
-                    </div>
                 </div>
+                <div class="card-body table-responsive" *ngIf="data.closeData && data.closeData[0].mode==='Cash';else cheque">
+                    <h3 style="font-weight: bold; text-align: center;">Loan Closure Details</h3>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col"><span>{{"Accountant.Tables.ShowDate" | translate}}</span></th>
+                            <th scope="col"><span>{{"Accountant.Tables.LoanStatus"  | translate}}</span></th>
+                            <th scope="col"><span>{{"Accountant.Tables.Mode" | translate}}</span></th>
+                            <th scope="col"><span>{{"Accountant.Tables.Pay" | translate}}</span></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <th scope="row" *ngIf="isDate(data.closeData[0].date); else notDate">{{data.closeData[0].date| date:'dd-MM-yyyy'}}</th>
+                            <ng-template #notDate>
+                                <th scope="row">{{data.closeData[0].date}}</th>
+                            </ng-template>
+                            <td *ngIf="data.loanData.closeStatus; else not">{{data.loanData.closeStatus}}</td>
+                            <td *ngIf="data.closeData[0].mode; else not">{{data.closeData[0].mode}}</td>
+                            <td *ngIf="data.closeData[0].credit; else not">{{data.closeData[0].credit| indianCurrency}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <ng-template #cheque>
+                    <div class="card-body table-responsive" *ngIf="data.closeData && data.closeData[0].mode==='Cheque'">
+                        <h3 style="font-weight: bold; text-align: center;">{{"Accountant.Tables.LoanStatus" | translate}}</h3>
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th scope="col"><span>{{"Accountant.Tables.ShowDate" | translate}}</span></th>
+                                <th scope="col"><span>{{"Accountant.Tables.LoanStatus"  | translate}}</span></th>
+                                <th scope="col"><span>{{"Accountant.Tables.Mode" | translate}}</span></th>
+                                <th scope="col"><span>{{"Accountant.Tables.Pay" | translate}}</span></th>
+                                <th scope="col"><span>{{"Accountant.Tables.ChequeDate" | translate}}</span></th>
+                                <th scope="col"><span>{{"Accountant.Tables.BankName"  | translate}}</span></th>
+                                <th scope="col"><span>{{"Accountant.Tables.ChequeNo" | translate}}</span></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <th scope="row" *ngIf="isDate(data.closeData[0].date); else notDate">{{data.closeData[0].date| date:'dd-MM-yyyy'}}</th>
+                                <ng-template #notDate>
+                                    <th scope="row">{{data.closeData[0].date}}</th>
+                                </ng-template>
+                                <td *ngIf="data.loanData.closeStatus; else not">{{data.loanData.closeStatus}}</td>
+                                <td *ngIf="data.closeData[0].mode; else not">{{data.closeData[0].mode}}</td>
+                                <td *ngIf="data.closeData[0].credit; else not">{{data.closeData[0].credit| indianCurrency}}</td>
+                                <td *ngIf="data.chequeData[0].chequeDate; else not">{{data.chequeData[0].chequeDate| indianCurrency}}</td>
+                                <td *ngIf="data.chequeData[0].bankName; else not">{{data.chequeData[0].bankName| indianCurrency}}</td>
+                                <td *ngIf="data.chequeData[0].chequeNo; else not">{{data.chequeData[0].chequeNo| indianCurrency}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </ng-template>
             </sb-card>
         </ng-container>
     </div>

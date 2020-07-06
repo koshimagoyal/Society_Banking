@@ -8,45 +8,49 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.GenerateStatement' | translate}}</div>
                 <div class="card-body table-responsive">
-                    <form class="form-inline">
+                    <form class="form-inline" [formGroup]="searchForm" (ngSubmit)="showTable()">
                         <label>
-                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                            <input type="text" placeholder="Enter Employee No" formControlName="employeeNo"/>
                         </label>
-                        <button (click)="showTable()">{{'Accountant.GetInfo' | translate}}</button>
+                        <button type="submit" [disabled]="!searchForm.valid">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
-                    <table class="table table-striped" *ngIf="table" id="content">
-                        <tbody>
-                        <tr>
-                            <td>{{'Accountant.Tables.EmployeeNo' | translate}}</td>
-                            <td>{{text}}</td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.EmployeeName' | translate}}</td>
-                            <td>{{name}}</td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Balance' | translate}}</td>
-                            <td>{{balance| indianCurrency}}</td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Start' | translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="date" [(ngModel)]="start" name="start"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.End' | translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="date" [(ngModel)]="end" name="end"/>
-                                </label>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <button (click)="openDialog()">{{'Accountant.Pages.GenerateStatement' | translate}}</button>
-                    </table>
+                    <form class="form-inline" [formGroup]="reportForm" (ngSubmit)="openDialog()">
+                        <table class="table table-striped" *ngIf="table" id="content">
+                            <tbody>
+                            <tr>
+                                <td>{{'Accountant.Tables.EmployeeNo' | translate}}</td>
+                                <td><div style="margin-left: 16%;">{{text}}</div></td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.EmployeeName' | translate}}</td>
+                                <td><div style="margin-left: 16%;">{{name}}</div></td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.Balance' | translate}}</td>
+                                <td><div style="margin-left: 16%;">{{balance| indianCurrency}}</div></td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.Start' | translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="date" formControlName="start"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="reportForm.get('start').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.End' | translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="date" formControlName="end"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="reportForm.get('end').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                            <button type="submit" [disabled]="!reportForm.valid">{{'Accountant.Pages.GenerateStatement' | translate}}</button>
+                        </table>
+                    </form>
                 </div>
             </sb-card>
         </div>

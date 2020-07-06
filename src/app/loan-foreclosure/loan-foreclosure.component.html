@@ -8,14 +8,11 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Pages.Foreclosure'| translate}}</div>
                 <div class="card-body table-responsive">
-                    <form class="form-inline">
+                    <form class="form-inline" [formGroup]="searchForm" (ngSubmit)="showTable()">
                         <label>
-                            <input type="text" placeholder="Enter Employee No" name="employeeNo" [(ngModel)]="text"/>
+                            <input type="text" placeholder="Enter Employee No" formControlName="employeeNo"/>
                         </label>
-                        <!--label>
-                            <input type="date" placeholder="Enter Loan Date" [(ngModel)]="loanDate" name="loanDate"/>
-                        </label-->
-                        <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
+                        <button type="submit" [disabled]="!searchForm.valid">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="content">
                         <tbody>
@@ -60,17 +57,17 @@
     </div>
     <div *ngIf="table">
         <sb-card>
-            <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>Loan Details</div>
+            <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Tables.LoanDetails'| translate}}</div>
             <div class="card-body table-responsive">
                 <table class="table table-striped" *ngIf="table">
                     <thead>
                         <tr>
-                            <td>Loan Date</td>
-                            <td>Loan Amount</td>
-                            <td>Loan Duration</td>
-                            <td>Loan Type</td>
-                            <td>Principle Outstanding</td>
-                            <td>Close Loan</td>
+                            <td>{{'Accountant.Tables.LoanDate'| translate}}</td>
+                            <td>{{'Accountant.Tables.Loan'| translate}}</td>
+                            <td>{{'Accountant.Tables.Duration'| translate}}</td>
+                            <td>{{'Accountant.Tables.LoanType'| translate}}</td>
+                            <td>{{'Accountant.Tables.PrincipleOutstanding'| translate}}</td>
+                            <td>{{'Accountant.Tables.CloseLoan'| translate}}</td>
                         </tr>
                     </thead>
                     <tbody *ngFor="let loan of loanData; let i=index;">
@@ -105,9 +102,8 @@
                                         <td>{{'Accountant.Tables.BankName' | translate}}</td>
                                         <td>
                                             <label>
-                                                <select class="custom-select" [(ngModel)]="bankName[i]">
-                                                    <option>ABC</option>
-                                                    <option>ABC@3</option>
+                                                <select class="custom-select" name="bankName" [(ngModel)]="bankName[i]">
+                                                    <option *ngFor="let val of bankList">{{val.bankName}}</option>
                                                 </select>
                                             </label>
                                         </td>

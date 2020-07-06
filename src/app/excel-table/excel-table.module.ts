@@ -13,6 +13,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { ExcelTableRoutingModule } from './excel-table-routing.module';
 import { ExcelTableComponent } from './excel-table.component';
 import * as tablesServices from './services';
+import { LayoutDashboardModule } from '@app/layout-dashboard/layout-dashboard.module';
 
 @NgModule({
     declarations: [ExcelTableComponent],
@@ -29,6 +30,7 @@ import * as tablesServices from './services';
         MatInputModule,
         NgxPaginationModule,
         Ng2SearchPipeModule,
+        LayoutDashboardModule,
     ],
     providers: [DecimalPipe, ...tablesServices.services],
 })

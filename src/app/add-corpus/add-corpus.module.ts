@@ -8,6 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
 
 import { AddCorpusRoutingModule } from './add-corpus-routing.module';
 import { AddCorpusComponent } from './add-corpus/add-corpus.component';
+import { LayoutDashboardModule } from '@app/layout-dashboard/layout-dashboard.module';
 
 @NgModule({
     declarations: [AddCorpusComponent],
@@ -18,6 +19,7 @@ import { AddCorpusComponent } from './add-corpus/add-corpus.component';
         FormsModule,
         NavigationModule,
         AppCommonModule,
+        LayoutDashboardModule,
     ],
     providers: [...service.services],
 })

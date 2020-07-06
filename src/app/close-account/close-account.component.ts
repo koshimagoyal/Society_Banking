@@ -5,6 +5,7 @@ import { DialogComponent } from '@app/close-account/dialog/dialog.component';
 import { CloseAccountService } from '@app/close-account/services';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'sb-close-account',
@@ -12,6 +13,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
     styleUrls: ['./close-account.component.scss'],
 })
 export class CloseAccountComponent implements OnInit {
+    searchForm: FormGroup;
     text: any;
     table = false;
     loanClose = false;
@@ -22,9 +24,16 @@ export class CloseAccountComponent implements OnInit {
     constructor(
         private dialog: MatDialog,
         private snackBar: MatSnackBar,
-        private closeAccount: CloseAccountService
-    ) {}
+        private closeAccount: CloseAccountService,
+        public fb: FormBuilder
+    ) {
+        this.searchForm = this.fb.group({
+            employeeNo: new FormControl('', Validators.compose([Validators.required])),
+        });
+    }
     showTable() {
+        // @ts-ignore
+        this.text = this.searchForm.get('employeeNo').value;
         console.log(this.text);
         this.closeAccount.getData(this.text).subscribe(
             result => {

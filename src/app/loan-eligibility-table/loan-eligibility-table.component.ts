@@ -11,9 +11,13 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
 })
 export class LoanEligibilityTableComponent implements OnInit {
     text: any;
-    eligibleAmount=1123456;
-    eligibleLoan=46788;
-    eligibleLeftAmount=34667;
+    loanType: any;
+    eligibleNoLoan: any;
+    personal: any;
+    emergency: any;
+    eligibleAmount: any;
+    eligibleLoan = 0;
+    eligibleLeftAmount: any;
     eligible = true;
     loanData = [];
     constructor(public session: SessionStorageService, private loanService: LoanEligibleService) {}
@@ -31,11 +35,27 @@ export class LoanEligibilityTableComponent implements OnInit {
                         icon: 'error',
                     });
                 } else {
-                   /* console.log(result);
+                    console.log(result);
                     console.log(result.body);
                     console.log(result.loanData);
-                    this.eligibleAmount = result.eligibleData[0].eligibleAmount;
-                    this.eligibleLoan = result.eligibleData[0].eligibleLoans;
+                    this.eligibleNoLoan = result.eligibleData;
+                    // tslint:disable-next-line:prefer-for-of
+                    for (let i = 0; i < result.balance.length; i++) {
+                        this.eligibleLoan += result.balance[i].credit - result.balance[i].debit;
+                    }
+                    let amt = 0;
+                    // tslint:disable-next-line:prefer-for-of
+                    for (let i = 0; i < result.eligibleData.length; i++) {
+                        if (result.eligibleData[i].loanType === 'personal')
+                            this.personal = result.eligibleData[i].eligibleNoOfLoanType;
+                        else
+                            this.emergency = result.eligibleData[i].eligibleNoOfLoanType;
+                        if (this.emergency === null) {
+                            this.emergency = 'Multiple Number of Times';
+                        }
+                        amt = result.eligibleData[i].eligibleNoOfCorpusAmount;
+                    }
+                    this.eligibleAmount = amt * this.eligibleLoan;
                     const loan = result.loanData.length;
                     this.eligible = loan < this.eligibleLoan;
                     let amount = 0;
@@ -44,10 +64,10 @@ export class LoanEligibilityTableComponent implements OnInit {
                         amount += result.loanData[i].loanAmount;
                     }
                     this.eligibleLeftAmount = this.eligibleLoan - amount;
-                    if (this.eligibleLeftAmount < 0) this.eligibleLeftAmount = 0;*/
-                   console.log(result);
+                    if (this.eligibleLeftAmount < 0) this.eligibleLeftAmount = 0;
                     this.loanData = result.loanData;
                     console.log(this.loanData);
+                    console.log(this.eligibleLeftAmount+' '+this.eligibleAmount);
                 }
             },
             error1 => {

@@ -1,0 +1,36 @@
+<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+    <p class="navbar-brand">{{'Common.Title' | translate}}</p>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" data-cy="topNavToggleSideNav" (click)="toggleSideNav()">
+        <fa-icon [icon]='["fas", "bars"]'></fa-icon>
+    </button>
+    <ul class="navbar-nav ml-auto mr-0 mr-md-2 my-2 my-md-0" style="float:right">
+        <div>
+            <li class="nav-item dropdown dropdown-user no-caret" ngbDropdown placement="bottom-right" display="dynamic">
+                <a class="nav-link dropdown-toggle" id="userDropdown" ngbDropdownToggle data-cy="userMenu" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img [src]="this.navigationService.img!=null ? this.navigationService.img : 'assets/img/Image.jpg'" width="50px" height="50px" class="rounded-circle">
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" ngbDropdownMenu aria-labelledby="dropdownUser">
+                    <h6 class="dropdown-header">
+                        <div class="dropdown-user-details">
+                            <div class="dropdown-user-details-name" *ngIf="user.id">{{'Accountant.Tables.EmployeeNo'| translate}} - {{ user.id }}</div>
+                            <div class="dropdown-user-details-name" *ngIf="user.name">{{'Accountant.Tables.EmployeeName'| translate}} - {{ user.name }}</div>
+                            <div class="dropdown-user-details-name" *ngIf="user.email">{{'Accountant.Tables.Email'| translate}} - {{ user.email }}</div>
+                            <div class="dropdown-user-details-email" *ngIf="user.address">{{'Accountant.Tables.CurrAddress'| translate}} - {{ user.address }}</div>
+                        </div>
+                    </h6>
+                    <ng-container *ngIf="user.role === 1; else emp">
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" routerLink="/profile">{{'Accountant.Pages.Edit'| translate}}</a>
+                    </ng-container>
+                    <ng-template #emp>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" routerLink="/emp-profile">{{'Accountant.Pages.Edit'| translate}}</a>
+                    </ng-template>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" routerLink="/login">{{'Common.User.Logout'|translate}}</a>
+                </div>
+            </li>
+        </div>
+
+    </ul>
+</nav>

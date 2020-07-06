@@ -8,9 +8,10 @@ import * as navigationComponents from './components';
 import * as navigationContainers from './containers';
 import * as appCommonLayouts from './layouts';
 import * as navigationServices from './services';
+import { TopNavModule } from '@app/top-nav/top-nav.module';
 
 @NgModule({
-    imports: [CommonModule, RouterModule, AppCommonModule, TranslateModule],
+    imports: [CommonModule, RouterModule, AppCommonModule, TranslateModule, TopNavModule],
     providers: [...navigationServices.services],
     declarations: [
         ...navigationContainers.containers,

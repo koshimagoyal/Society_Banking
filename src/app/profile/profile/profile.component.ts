@@ -3,6 +3,7 @@ import { ProfileService } from '@app/profile/services';
 import { SessionStorageService } from 'ngx-webstorage';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
     selector: 'sb-profile',
@@ -25,7 +26,42 @@ export class ProfileComponent implements OnInit {
     enrollDate: any;
     url: string | ArrayBuffer | null = '';
     formData = new FormData();
-    constructor(public service: ProfileService, public session: SessionStorageService) {}
+    employeeForm: FormGroup;
+    constructor(
+        public service: ProfileService,
+        public session: SessionStorageService,
+        public fb: FormBuilder
+    ) {
+        this.employeeForm = this.fb.group({
+            employeeId: new FormControl('', Validators.compose([Validators.required])),
+            employeeName: new FormControl('', Validators.compose([Validators.required])),
+            fatherName: new FormControl(''),
+            permAddress: new FormControl(''),
+            check: new FormControl(''),
+            currAddress: new FormControl(''),
+            email: new FormControl('', Validators.compose([Validators.email])),
+            mobileNo: new FormControl(
+                '',
+                Validators.compose([Validators.min(1000000000), Validators.max(9999999999)])
+            ),
+            altMobileNo: new FormControl(
+                '',
+                Validators.compose([Validators.min(1000000000), Validators.max(9999999999)])
+            ),
+            landlineNo: new FormControl(
+                '',
+                Validators.compose([Validators.pattern('^[0-9]d{2,4}-d{6,8}$')])
+            ),
+            pan: new FormControl(
+                '',
+                Validators.compose([Validators.pattern('[A-Z]{5}[0-9]{4}[A-Z]{1}')])
+            ),
+            aadharNo: new FormControl(
+                '',
+                Validators.compose([Validators.pattern('^[2-9]{1}[0-9]{3}\\s[0-9]{4}\\s[0-9]{4}$')])
+            ),
+        });
+    }
 
     ngOnInit(): void {
         this.formData = new FormData();

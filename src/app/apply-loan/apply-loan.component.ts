@@ -17,6 +17,7 @@ export class ApplyLoanComponent implements OnInit {
     data: any;
     name: any;
     date: any;
+    interest = 0;
     constructor(private loanService: ApplyLoanService, public session: SessionStorageService) {}
     ngOnInit() {
         const user = this.session.retrieve('user');
@@ -24,43 +25,46 @@ export class ApplyLoanComponent implements OnInit {
         this.name = user.name;
     }
     send() {
-        let loanType;
-        if (this.type === 'Personal Loan') {
-            loanType = 1;
+        if (!this.text || !this.loanAmount || !this.duration || !this.date || !this.type) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Fill All the Details!',
+                icon: 'error',
+            });
         } else {
-            loanType = 2;
+            this.data = {
+                userId: this.text,
+                loanAmount: this.loanAmount,
+                loanDuration: this.duration,
+                date: this.date,
+                closeLoan: true,
+                loanType: this.type,
+                interest: this.interest,
+            };
+            this.loanService.sendData(this.data).subscribe(
+                result => {
+                    Swal.fire({
+                        text: 'Sent!',
+                        icon: 'success',
+                    }).then((isConfirm: any) => {
+                        if (isConfirm) {
+                            // @ts-ignore
+                            this.text = null;
+                            this.date = null;
+                            this.loanAmount = null;
+                            this.type = null;
+                            this.duration = null;
+                        }
+                    });
+                },
+                error1 => {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Try again!',
+                        icon: 'error',
+                    });
+                }
+            );
         }
-        this.data = {
-            userId: this.text,
-            loanAmount: this.loanAmount,
-            loanDuration: this.duration,
-            date: this.date,
-            closeLoan: false,
-            type: loanType,
-        };
-        this.loanService.sendData(this.data).subscribe(
-            result => {
-                Swal.fire({
-                    text: 'Sent!',
-                    icon: 'success',
-                }).then((isConfirm: any) => {
-                    if (isConfirm) {
-                        // @ts-ignore
-                        this.text = null;
-                        this.date = null;
-                        this.loanAmount = null;
-                        this.type = null;
-                        this.duration = null;
-                    }
-                });
-            },
-            error1 => {
-                Swal.fire({
-                    title: 'Oops!',
-                    text: 'Try again!',
-                    icon: 'error',
-                });
-            }
-        );
     }
 }

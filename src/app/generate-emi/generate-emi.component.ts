@@ -58,15 +58,15 @@ export class GenerateEmiComponent implements OnInit {
         console.log(send);
         this.generateService.getData(send).subscribe(
             result => {
-                if (result) {
-                    console.log(result);
+                console.log(result);
+                if (result.loanData.length !== 0) {
                     // tslint:disable-next-line:prefer-for-of
                     for (let i = 0; i < result.loanData.length; i++) {
                         const principle = result.loanData[i].loanAmount;
-                        const r = result.loanData[i].interest / 100;
+                        const r = result.loanData[i].interest / 1200;
                         const d = result.loanData[i].loanDuration;
                         // @ts-ignore
-                        const emi = [principle * r * Math.pow(1 + r, d)] / [Math.pow(1 + r, d - 1)];
+                        const emi = [principle * r * Math.pow(1 + r, d)] / [Math.pow(1 + r, d)-1];
                         this.data.push({
                             // @ts-ignore
                             userId: result.loanData[i].userId,
@@ -81,6 +81,13 @@ export class GenerateEmiComponent implements OnInit {
                         });
                     }
                     this.show = true;
+                } else {
+                    this.show = false;
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'No Data exists!',
+                        icon: 'error',
+                    });
                 }
             },
             error1 => {
@@ -149,6 +156,7 @@ export class GenerateEmiComponent implements OnInit {
         ctrlValue.month(normalizedMonth.month());
         this.emiDate.setValue(ctrlValue);
         datepicker.close();
+        this.show = false;
     }
     ngOnInit() {}
 }

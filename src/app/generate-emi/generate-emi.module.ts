@@ -12,6 +12,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { LayoutDashboardModule } from '@app/layout-dashboard/layout-dashboard.module';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
         MatFormFieldModule,
         MatInputModule,
         MatDatepickerModule,
+        LayoutDashboardModule,
     ],
     providers: [
         DecimalPipe,

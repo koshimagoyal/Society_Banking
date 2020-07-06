@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { CreditEntryService } from '@app/credit-entry/services';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { LoanEntryService } from '@app/loan-entry/services';
 
 @Component({
     selector: 'sb-credit-entry',
@@ -9,6 +11,7 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
     styleUrls: ['./credit-entry.component.scss'],
 })
 export class CreditEntryComponent implements OnInit {
+    searchForm: FormGroup;
     text: any;
     type: any;
     table = false;
@@ -21,8 +24,15 @@ export class CreditEntryComponent implements OnInit {
     name: any;
     date: any;
     balance = 0;
-    constructor(private creditService: CreditEntryService) {}
+    corpusData = 0;
+    constructor(private creditService: CreditEntryService, public fb: FormBuilder) {
+        this.searchForm = this.fb.group({
+            employeeNo: new FormControl('', Validators.compose([Validators.required])),
+        });
+    }
     showTable() {
+        // @ts-ignore
+        this.text = this.searchForm.get('employeeNo').value;
         console.log(this.text);
         this.creditService.getData(this.text).subscribe(
             result => {
@@ -56,37 +66,71 @@ export class CreditEntryComponent implements OnInit {
         return this.balance;
     }
     send() {
-        const accountData = {
-            userId: this.text,
-            credit: this.creditAmount,
-            particulars: this.purpose,
-            mode: this.type,
-            type: 'Operational',
-            date: this.date,
-            bankName: this.bankName,
-            chequeDate: this.chequeDate,
-            chequeNo: this.chequeNo,
-        };
-        this.creditService.sendData(accountData).subscribe(
+        if (!this.text || !this.creditAmount || !this.purpose || !this.type || !this.date) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Fill all the details!',
+                icon: 'error',
+            });
+        } else {
+            const accountData = {
+                userId: this.text,
+                credit: this.creditAmount,
+                particulars: this.purpose,
+                mode: this.type,
+                type: 'Operational',
+                date: this.date,
+                bankName: this.bankName,
+                chequeDate: this.chequeDate,
+                chequeNo: this.chequeNo,
+            };
+            this.creditService.sendData(accountData).subscribe(
+                result => {
+                    Swal.fire({
+                        text: 'Sent!',
+                        icon: 'success',
+                    }).then((isConfirm: any) => {
+                        if (isConfirm) {
+                            // @ts-ignore
+                            this.table = false;
+                            this.text = null;
+                            this.creditAmount = null;
+                            this.purpose = null;
+                            this.date = null;
+                            this.balance = 0;
+                            this.chequeNo = null;
+                            this.chequeDate = null;
+                            this.bankName = null;
+                            this.type = null;
+                            this.searchForm = this.fb.group({
+                                employeeNo: new FormControl(
+                                    '',
+                                    Validators.compose([Validators.required])
+                                ),
+                            });
+                        }
+                    });
+                },
+                error1 => {
+                    Swal.fire({
+                        title: 'Oops!',
+                        text: 'Try again!',
+                        icon: 'error',
+                    });
+                }
+            );
+        }
+    }
+    ngOnInit() {
+        this.creditService.getCorpusData().subscribe(
             result => {
-                Swal.fire({
-                    text: 'Sent!',
-                    icon: 'success',
-                }).then((isConfirm: any) => {
-                    if (isConfirm) {
-                        // @ts-ignore
-                        this.table = false;
-                        this.text = null;
-                        this.creditAmount = null;
-                        this.purpose = null;
-                        this.date = null;
-                        this.balance = 0;
-                        this.chequeNo = null;
-                        this.chequeDate = null;
-                        this.bankName = null;
-                        this.type = null;
-                    }
-                });
+                console.log(result);
+                // tslint:disable-next-line:prefer-for-of
+                for (let i = 0; i < result.balance.length; i++) {
+                    this.corpusData =
+                        this.corpusData + result.balance[i].credit - result.balance[i].debit;
+                }
+                console.log(this.corpusData);
             },
             error1 => {
                 Swal.fire({
@@ -96,6 +140,6 @@ export class CreditEntryComponent implements OnInit {
                 });
             }
         );
+        return this.corpusData;
     }
-    ngOnInit(): void {}
 }

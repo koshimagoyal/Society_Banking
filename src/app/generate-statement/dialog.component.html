@@ -1,8 +1,8 @@
 <div id="data">
-    <h1 mat-dialog-title align="center">Bank Statement</h1>
+    <h1 mat-dialog-title align="center" id="title">Bank Statement</h1>
     <mat-dialog-content class="mat-typography">
-        <h3>Employee Id: {{id}}</h3>
-        <h3>Employee Name: {{name}}</h3>
+        <h3 id="empId">Employee Id: {{id}}</h3>
+        <h3 id="empName">Employee Name: {{name}}</h3>
         <br>
         <table class="table table-borderless">
             <thead>
@@ -14,20 +14,20 @@
             <tbody>
             <tr>
                 <td>Start Date</td>
-                <td>{{start| date:'dd-MM-yyyy'}}</td>
+                <td id="start">{{start| date:'dd-MM-yyyy'}}</td>
             </tr>
             <tr>
                 <td>End Date</td>
-                <td>{{end| date:'dd-MM-yyyy'}}</td>
+                <td id="end">{{end| date:'dd-MM-yyyy'}}</td>
             </tr>
             <tr>
                 <td>Balance</td>
-                <td>{{balance| indianCurrency}}</td>
+                <td id="bal">{{balance| indianCurrency}}</td>
             </tr>
             </tbody>
         </table>
         <br>
-        <h1>Operating Account Details</h1>
+        <h1 id="subDetail1">Operating Account Details</h1>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -46,8 +46,8 @@
                 </ng-template>
                 <td *ngIf="val.account.particulars; else not">{{val.account.particulars}}</td>
                 <td *ngIf="val.account.mode; else not">{{val.account.mode}}</td>
-                <td class="table-success" *ngIf="val.account.credit; else not">{{val.account.credit| indianCurrency}}</td>
-                <td class="table-danger" *ngIf="val.account.debit; else not">{{val.account.debit| indianCurrency}}</td>
+                <td class="table-success" *ngIf="val.account.credit; else not" id="deposit">{{val.account.credit| indianCurrency}}</td>
+                <td class="table-danger" *ngIf="val.account.debit; else not" id="withDraw">{{val.account.debit| indianCurrency}}</td>
             </tr>
             <tr>
                 <td *ngIf="val.cheque" align="center" colspan="5">
@@ -73,7 +73,7 @@
             </tbody>
         </table>
         <br>
-        <h1>Loan Account Details</h1>
+        <h1 id="subDetail2">Loan Account Details</h1>
         <table class="table table-bordered">
             <thead>
                 <tr>
@@ -122,6 +122,64 @@
                         </tbody>
                     </table>
                 </td>
+            </tr>
+            <tr>
+                <td *ngIf="data.closeData && data.closeData[0].mode==='Cash';else cheque" align="center" colspan="7">
+                    <h3 style="font-weight: bold">Loan Closure Details</h3>
+                    <table style="width: 100%;">
+                        <thead>
+                        <tr>
+                            <th style="width: 16.66%;">Date</th>
+                            <th>Loan Status</th>
+                            <th>Mode of Payment</th>
+                            <th>Paid Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td *ngIf="isDate(data.closeData[0].date); else notDate">{{data.closeData[0].date| date:'dd-MM-yyyy'}}</td>
+                            <ng-template #notDate>
+                                <td>{{data.closeData[0].date}}</td>
+                            </ng-template>
+                            <td *ngIf="data.loanData.closeStatus; else not">{{data.loanData.closeStatus}}</td>
+                            <td *ngIf="data.closeData[0].mode; else not">{{data.closeData[0].mode}}</td>
+                            <td *ngIf="data.closeData[0].credit; else not">{{data.closeData[0].credit| indianCurrency}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </td>
+                <ng-template #cheque>
+                    <td *ngIf="data.closeData && data.closeData[0].mode==='Cheque';" align="center" colspan="7">
+                        <h3 style="font-weight: bold">Loan Closure Details</h3>
+                        <table style="width: 100%;">
+                            <thead>
+                            <tr>
+                                <th style="width: 16.66%;">Date</th>
+                                <th>Loan Status</th>
+                                <th>Mode of Payment</th>
+                                <th>Paid Amount</th>
+                                <th>Cheque Date</th>
+                                <th>Bank Name</th>
+                                <th>Cheque Number</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td *ngIf="isDate(data.closeData[0].date); else notDate">{{data.closeData[0].date| date:'dd-MM-yyyy'}}</td>
+                                <ng-template #notDate>
+                                    <td>{{data.closeData[0].date}}</td>
+                                </ng-template>
+                                <td *ngIf="data.loanData.closeStatus; else not">{{data.loanData.closeStatus}}</td>
+                                <td *ngIf="data.closeData[0].mode; else not">{{data.closeData[0].mode}}</td>
+                                <td *ngIf="data.closeData[0].credit; else not">{{data.closeData[0].credit| indianCurrency}}</td>
+                                <td *ngIf="data.chequeData[0].chequeDate; else not">{{data.chequeData[0].chequeDate| date:'dd-MM-yyyy'}}</td>
+                                <td *ngIf="data.chequeData[0].bankName; else not">{{data.chequeData[0].bankName}}</td>
+                                <td *ngIf="data.chequeData[0].chequeNo; else not">{{data.chequeData[0].chequeNo}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </ng-template>
             </tr>
             </tbody>
         </table>

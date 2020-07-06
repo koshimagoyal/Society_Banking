@@ -1,5 +1,5 @@
 <sb-layout-dashboard>
-    <sb-dashboard-head title="Cash-Cheque Transfer"></sb-dashboard-head>
+    <sb-dashboard-head title="{{'Accountant.Pages.Transfer'| translate}}"></sb-dashboard-head>
     <hr class="rounded">
     <br>
     <div class="row">
@@ -22,11 +22,11 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Tables.SearchCheque'| translate}}</div>
                 <div class="card-body table-responsive">
-                    <form class="form-inline">
+                    <form class="form-inline" [formGroup]="searchForm" (ngSubmit)="showTable()">
                         <label>
-                            <input type="text" placeholder="Enter Cheque Number" [(ngModel)]="chequeNo" name="chequeNo"/>
+                            <input type="text" placeholder="Enter Cheque Number" formControlName="chequeNo"/>
                         </label>
-                        <button (click)="showTable()">{{'Accountant.GetInfo'| translate}}</button>
+                        <button type="submit" [disabled]="!searchForm.valid">{{'Accountant.GetInfo'| translate}}</button>
                     </form>
                     <table class="table table-striped" *ngIf="table" id="contennnt">
                         <tbody>
@@ -71,38 +71,42 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Tables.TransferCash'| translate}}</div>
                 <div class="card-body table-responsive">
-                    <table class="table table-striped" id="contennt">
-                        <tbody>
-                        <tr>
-                            <td>{{'Accountant.Tables.Date'| translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="date" [(ngModel)]="date" name="date"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Amount'| translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="number" [(ngModel)]="amount" name="amount"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.BankName' | translate}}</td>
-                            <td>
-                                <label>
-                                    <select class="custom-select" [(ngModel)]="bankName">
-                                        <option>ABC</option>
-                                        <option>ABC@3</option>
-                                    </select>
-                                </label>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <button (click)="send()">{{'Accountant.Tables.Submit'| translate}}</button>
+                    <form [formGroup]="cashForm" (ngSubmit)="send()">
+                        <table class="table table-striped" id="contennt">
+                            <tbody>
+                            <tr>
+                                <td>{{'Accountant.Tables.Date'| translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="date" formControlName="date"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="cashForm.get('date').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.Amount'| translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="number" formControlName="amount"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="cashForm.get('amount').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.BankName' | translate}}</td>
+                                <td>
+                                    <label>
+                                        <select class="custom-select" formControlName="bankName">
+                                            <option *ngFor="let val of bankList">{{val.bankName}}</option>
+                                        </select>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="cashForm.get('bankName').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" [disabled]="!cashForm.valid">{{'Accountant.Tables.Submit'| translate}}</button>
+                    </form>
                 </div>
             </sb-card>
         </div>
@@ -114,54 +118,60 @@
             <sb-card>
                 <div class="card-header"><fa-icon class="mr-1" [icon]='["fas", "table"]'></fa-icon>{{'Accountant.Tables.TransferBank'| translate}}</div>
                 <div class="card-body table-responsive">
-                    <table class="table table-striped" id="contentt">
-                        <tbody>
-                        <tr>
-                            <td>{{'Accountant.Tables.Date'| translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="date" [(ngModel)]="date" name="date"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.Amount'| translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="number" [(ngModel)]="amount" name="amount"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.BankName' | translate}}</td>
-                            <td>
-                                <label>
-                                    <select class="custom-select" [(ngModel)]="bankName">
-                                        <option>ABC</option>
-                                        <option>ABC@3</option>
-                                    </select>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="date" [(ngModel)]="chequeDate" name="chequeDate"/>
-                                </label>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
-                            <td>
-                                <label>
-                                    <input type="text" [(ngModel)]="chequeNo" name="chequeNo"/>
-                                </label>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <button (click)="send()">{{'Accountant.Tables.Submit'| translate}}</button>
+                    <form [formGroup]="chequeForm" (ngSubmit)="send()">
+                        <table class="table table-striped" id="contentt">
+                            <tbody>
+                            <tr>
+                                <td>{{'Accountant.Tables.Date'| translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="date" formControlName="date"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="chequeForm.get('date').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.Amount'| translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="number" formControlName="amount"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="chequeForm.get('amount').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.BankName' | translate}}</td>
+                                <td>
+                                    <label>
+                                        <select class="custom-select" formControlName="bankName">
+                                            <option *ngFor="let val of bankList">{{val.bankName}}</option>
+                                        </select>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="chequeForm.get('bankName').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.ChequeDate' | translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="date" formControlName="chequeDate"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="chequeForm.get('chequeDate').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>{{'Accountant.Tables.ChequeNo' | translate}}</td>
+                                <td>
+                                    <label>
+                                        <input type="text" formControlName="chequeNo"/>
+                                    </label>
+                                    <div class="alert alert-danger error-box" *ngIf="chequeForm.get('chequeNo').hasError('required')">Required!</div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button type="submit" [disabled]="!chequeForm.valid">{{'Accountant.Tables.Submit'| translate}}</button>
+                    </form>
                 </div>
             </sb-card>
         </div>

@@ -4,6 +4,8 @@ import { DialogComponent } from '@app/loan-foreclosure/dialog/dialog.component';
 import { LoanForeclosureService } from '@app/loan-foreclosure/services';
 // @ts-ignore
 import Swal from 'sweetalert2/dist/sweetalert2.js';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { CreditEntryService } from '@app/credit-entry/services';
 
 @Component({
     selector: 'sb-loan-foreclosure',
@@ -11,6 +13,8 @@ import Swal from 'sweetalert2/dist/sweetalert2.js';
     styleUrls: ['./loan-foreclosure.component.scss'],
 })
 export class LoanForeclosureComponent implements OnInit {
+    searchForm: FormGroup;
+    bankList: any;
     text: any;
     name: any;
     table = false;
@@ -27,22 +31,35 @@ export class LoanForeclosureComponent implements OnInit {
     purpose: any;
     loanDate: any;
     payMode: any;
-    constructor(private loanService: LoanForeclosureService, private dialog: MatDialog) {}
+    constructor(
+        private loanService: LoanForeclosureService,
+        private dialog: MatDialog,
+        public fb: FormBuilder
+    ) {
+        this.searchForm = this.fb.group({
+            employeeNo: new FormControl('', Validators.compose([Validators.required])),
+        });
+    }
     showTable() {
+        // @ts-ignore
+        this.text = this.searchForm.get('employeeNo').value;
         const data = {
             userId: this.text,
         };
         console.log(data);
         this.loanService.getData(data).subscribe(
             result => {
+                this.loanData = [];
                 console.log(result);
                 if (result.nameData.length === 0) {
+                    this.table = false;
                     Swal.fire({
                         title: 'Oops!',
                         text: 'This user does not exists!',
                         icon: 'error',
                     });
                 } else if (!result.loanData || result.loanData.length === 0) {
+                    this.table = false;
                     Swal.fire({
                         title: 'Oops!',
                         text: 'No loan exists!',
@@ -64,11 +81,14 @@ export class LoanForeclosureComponent implements OnInit {
                         if (result.loanData[j].loanBook) {
                             // tslint:disable-next-line:prefer-for-of
                             for (let k = 0; k < result.loanData[j].loanBook.length; k++) {
-                                const amount =
-                                    result.loanData[j].loanBook[k].credit *
-                                    (result.loanData[j].loanData.interest / 100);
+                                const interest =
+                                    this.payAmount * (result.loanData[j].loanData.interest / 1200);
+                                const amount = result.loanData[j].loanBook[k].credit - interest;
                                 this.payAmount -= amount;
                             }
+                        }
+                        if (this.payAmount < 0) {
+                            this.payAmount = 0;
                         }
                         this.loanType = result.loanData[0].loanData.loanType;
                         this.loanData.push({
@@ -110,71 +130,84 @@ export class LoanForeclosureComponent implements OnInit {
         purpose: string,
         payamount: any
     ) {
-        const dialogRef = this.dialog.open(DialogComponent, {
-            data: {
-                id: this.text,
-                name: this.name,
-                date: this.date,
-                amount: loanAmount,
-                loandate: loanDate,
-            },
-            height: '600px',
-            width: '700px',
-        });
-
-        dialogRef.afterClosed().subscribe(result => {
-            const closeData = [];
-            if (result) {
-                closeData.push({
-                    userId: this.text,
-                    loanId: loanid,
+        if (!payamount || !type || !purpose || !this.date) {
+            Swal.fire({
+                title: 'Oops!',
+                text: 'Fill all the details!',
+                icon: 'error',
+            });
+        } else {
+            console.log(bankname);
+            const dialogRef = this.dialog.open(DialogComponent, {
+                data: {
+                    id: this.text,
+                    name: this.name,
                     date: this.date,
-                    mode: type,
-                    bankName: bankname,
-                    chequeDate: chequedate,
-                    chequeNo: chequeno,
-                    particulars: purpose,
-                    amount: payamount,
-                    type: 'Close Loan',
-                    status: 'Fore Closure',
-                    close: true,
-                });
-                this.loanService.sendData(closeData).subscribe(
-                    resultData => {
-                        Swal.fire({
-                            text: 'Loan Closed!',
-                            icon: 'success',
-                        }).then((isConfirm: any) => {
-                            if (isConfirm) {
-                                this.loanData = this.loanData.filter(value => value === loanid);
-                                console.log(this.loanData);
-                                if (this.loanData.length === 0) {
-                                    // @ts-ignore
-                                    this.table = false;
-                                    this.text = null;
-                                    this.date = null;
-                                    this.loanAmount = null;
-                                    this.payAmount = 0;
-                                    this.loanDate = null;
+                    amount: loanAmount,
+                    loandate: loanDate,
+                },
+                height: '600px',
+                width: '700px',
+            });
+
+            dialogRef.afterClosed().subscribe(result => {
+                const closeData = [];
+                if (result) {
+                    closeData.push({
+                        userId: this.text,
+                        loanId: loanid,
+                        date: this.date,
+                        mode: type,
+                        bankName: bankname,
+                        chequeDate: chequedate,
+                        chequeNo: chequeno,
+                        particulars: purpose,
+                        amount: payamount,
+                        type: 'Close Loan',
+                        status: 'Fore Closure',
+                        close: true,
+                    });
+                    this.loanService.sendData(closeData).subscribe(
+                        resultData => {
+                            Swal.fire({
+                                text: 'Loan Closed!',
+                                icon: 'success',
+                            }).then((isConfirm: any) => {
+                                if (isConfirm) {
+                                    this.loanData = this.loanData.filter(value => value === loanid);
+                                    console.log(this.loanData);
+                                    if (this.loanData.length === 0) {
+                                        // @ts-ignore
+                                        this.table = false;
+                                        this.text = null;
+                                        this.date = null;
+                                        this.loanAmount = null;
+                                        this.payAmount = 0;
+                                        this.loanDate = null;
+                                    }
                                 }
-                            }
-                        });
-                    },
-                    error1 => {
-                        Swal.fire({
-                            title: 'Oops!',
-                            text: 'Try again!',
-                            icon: 'error',
-                        });
-                    }
-                );
-            }
-        });
+                            });
+                        },
+                        error1 => {
+                            Swal.fire({
+                                title: 'Oops!',
+                                text: 'Try again!',
+                                icon: 'error',
+                            });
+                        }
+                    );
+                }
+            });
+        }
     }
     pay(index: any) {
         this.payMode[index] = !this.payMode[index];
     }
-    ngOnInit(): void {
+    ngOnInit() {
+        this.loanService.getBankList().subscribe(result => {
+            this.bankList = result;
+            console.log(this.bankList);
+        });
         this.loanData = [];
     }
 }

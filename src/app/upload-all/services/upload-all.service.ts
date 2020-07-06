@@ -7,6 +7,15 @@ import { Observable } from 'rxjs';
 })
 export class UploadAllService {
     constructor(private httpService: HttpClient) {}
+    getBankList(): Observable<any> {
+        const url = 'http://localhost:8080/getBankList';
+        const headers = new HttpHeaders();
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
+        headers.append('Accept', 'application/json');
+        headers.append('content-type', 'application/json');
+        return this.httpService.get<any>(url, { headers });
+    }
     sendData(data: any): Observable<any> {
         console.log(data);
         const url = 'http://localhost:8080/createUserAccount';
@@ -17,9 +26,19 @@ export class UploadAllService {
         headers.append('content-type', 'application/json');
         return this.httpService.post<any>(url, data, { headers });
     }
+    sendBankData(data: any): Observable<any> {
+        console.log(data);
+        const url = 'http://localhost:8080/sendBankData';
+        const headers = new HttpHeaders();
+        headers.append('Access-Control-Allow-Origin', '*');
+        headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
+        headers.append('Accept', 'application/json');
+        headers.append('content-type', 'application/json');
+        return this.httpService.post<any>(url, data, { headers });
+    }
     getLoanData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/createUserAccount';
+        const url = 'http://localhost:8080/getData/loanData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -29,7 +48,7 @@ export class UploadAllService {
     }
     getCreditData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/createUserAccount';
+        const url = 'http://localhost:8080/getData/creditData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -39,7 +58,7 @@ export class UploadAllService {
     }
     getDebitData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/createUserAccount';
+        const url = 'http://localhost:8080/getData/debitData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -49,7 +68,7 @@ export class UploadAllService {
     }
     getExpenseData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/createUserAccount';
+        const url = 'http://localhost:8080/getData/expenseData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -59,7 +78,7 @@ export class UploadAllService {
     }
     getCreditDebitExpenseData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/createUserAccount';
+        const url = 'http://localhost:8080/getData/creditDebitExpenseData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -69,7 +88,7 @@ export class UploadAllService {
     }
     getCashData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/createUserAccount';
+        const url = 'http://localhost:8080/getData/cashData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -79,7 +98,7 @@ export class UploadAllService {
     }
     getChequeData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/createUserAccount';
+        const url = 'http://localhost:8080/getData/chequeData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
