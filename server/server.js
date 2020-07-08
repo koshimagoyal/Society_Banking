@@ -84,7 +84,7 @@ handleDisconnect();
 app.post('/login', (req, res) => {
 
     console.log(req.body);
-    const loginQuery = 'select userId, name, currentAddress, email, role, user.roleId from user inner join rolemaster on(user.roleId = rolemaster.roleId) where userId=? and password=? and closeAccount=false;';
+    const loginQuery = 'select userId, name, currentAddress, email, role, user.roleId from user inner join roleMaster on(user.roleId = roleMaster.roleId) where userId=? and password=? and closeAccount=false;';
     con.query(loginQuery, [req.body.userId, req.body.password], function (err, result) {
         if (err) {
             res.status(401).json({
@@ -168,7 +168,7 @@ app.post('/sendExcel',(req,res)=>{
         console.log(req.body.date);
         //console.log(err);
         let file = fs.readFileSync(req.file.path);
-        const query = 'insert into monthlysheet (dateOfSheet,sheetName,sheetUrl) values (?,?,?);';
+        const query = 'insert into monthlySheet (dateOfSheet,sheetName,sheetUrl) values (?,?,?);';
         con.query(query, [req.body.date,req.file.originalname,req.file.path], function(err, result) {
             if (err) {
                 console.log(err);
@@ -295,7 +295,7 @@ app.get('/getCashBank',(req,res)=>{
         }else{
             console.log(req.body);
             let query = `select sum(credit) as credit, sum(debit) as debit, bankName from account inner join 
-                         chequedetails on(account.chequeId=chequedetails.chequeId)
+                         chequeDetails on(account.chequeId=chequeDetails.chequeId)
                          where type != "Transfer Cash" and loanId is null group by bankName;`;
             con.query(query, function(err, resultData) {
                 if (err) {
@@ -406,9 +406,9 @@ app.post('/sendLoanForeCloseData',(req,res)=>{
     }
 });
 
-//fetch all dates from the monthlysheet
+//fetch all dates from the monthlySheet
 app.get('/monthYear',(req,res)=>{
-    const query = 'select dateOfSheet, sheetName from monthlysheet;';
+    const query = 'select dateOfSheet, sheetName from monthlySheet;';
     con.query(query, function(err, result) {
         if (err) {
             console.log(err);
