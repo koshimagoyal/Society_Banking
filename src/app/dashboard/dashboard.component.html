@@ -38,7 +38,7 @@
         </div>
     </div>
     <!--Cash Balance Table-->
-    <sb-card>
+    <sb-card *ngIf="balanceCash">
         <div class="card-header">
             <div class="row">
                 <div class="col" style="margin-top: 10px;">
@@ -69,7 +69,7 @@
         </div>
     </sb-card>
     <!--Bank Balance Table-->
-    <sb-card>
+    <sb-card *ngIf="balanceBank">
         <div class="card-header">
             <div class="row">
                 <div class="col" style="margin-top: 10px;">
