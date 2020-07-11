@@ -19,7 +19,8 @@ export class DashboardComponent implements OnInit {
     term: any;
     loanApprove = false;
     loanData = [];
-    balance: any;
+    balanceCash: any;
+    balanceBank: any;
     p: any;
     approveMode: any;
     constructor(private dashboardService: DashboardService) {}
@@ -83,7 +84,8 @@ export class DashboardComponent implements OnInit {
             result => {
                 if (result) {
                     console.log(result);
-                    this.balance = result;
+                    this.balanceCash = result.cash;
+                    this.balanceBank = result.bank;
                 }
             },
             error1 => {
