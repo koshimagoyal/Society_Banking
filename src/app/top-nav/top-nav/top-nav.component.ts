@@ -11,7 +11,7 @@ export class TopNavComponent implements OnInit {
     user: any;
     constructor(
         private session: SessionStorageService,
-        private navigationService: NavigationService
+        public navigationService: NavigationService
     ) {}
     ngOnInit() {
         this.user = this.session.retrieve('user');

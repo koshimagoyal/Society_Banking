@@ -36,10 +36,6 @@ const routes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     },
     {
-        path: 'add-corpus',
-        loadChildren: () => import('./add-corpus/add-corpus.module').then(m => m.AddCorpusModule),
-    },
-    {
         path: 'loan-entry',
         loadChildren: () => import('./loan-entry/loan-entry.module').then(m => m.LoanEntryModule),
     },
@@ -82,13 +78,6 @@ const routes: Routes = [
     {
         path: 'expense',
         loadChildren: () => import('./expense/expense.module').then(m => m.ExpenseModule),
-    },
-    {
-        path: 'fy-dividend-calculate',
-        loadChildren: () =>
-            import('./fy-dividend-calculate/fy-dividend-calculate.module').then(
-                m => m.FyDividendCalculateModule
-            ),
     },
     {
         path: 'generate-emi',
