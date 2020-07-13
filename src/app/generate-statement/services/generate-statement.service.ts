@@ -10,7 +10,7 @@ export class GenerateStatementService {
 
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://localhost:8080/getOperationalAccountData';
+        const url = 'http://206.189.129.219:8080/getOperationalAccountData';
         const data = {
             userId: text,
         };
@@ -18,7 +18,7 @@ export class GenerateStatementService {
     }
 
     getDialogData(data: any): Observable<any> {
-        const url = 'http://localhost:8080/getAllUserData';
+        const url = 'http://206.189.129.219:8080/getAllUserData';
         return this.http.post<any>(url, data);
     }
 }

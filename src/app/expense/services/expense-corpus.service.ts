@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ExpenseCorpusService {
     constructor(private http: HttpClient) {}
     getBankList(): Observable<any> {
-        const url = 'http://localhost:8080/getBankList';
+        const url = 'http://206.189.129.219:8080/getBankList';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -18,7 +18,7 @@ export class ExpenseCorpusService {
     }
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://localhost:8080/sendDebitEntry';
+        const url = 'http://206.189.129.219:8080/sendDebitEntry';
         return this.http.post<any>(url, data);
     }
 }

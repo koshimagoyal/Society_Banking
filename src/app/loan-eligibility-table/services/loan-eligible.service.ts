@@ -10,7 +10,7 @@ export class LoanEligibleService {
 
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://localhost:8080/getEligibleData';
+        const url = 'http://206.189.129.219:8080/getEligibleData';
         const data = {
             userId: text,
         };

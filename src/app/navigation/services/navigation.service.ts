@@ -27,7 +27,7 @@ export class NavigationService {
         };
         console.log(body);
         this.http
-            .post('http://localhost:8080/data/user/profileimage', body, {
+            .post('http://206.189.129.219:8080/data/user/profileimage', body, {
                 observe: 'response',
                 responseType: 'blob',
             })
