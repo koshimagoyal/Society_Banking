@@ -115,6 +115,8 @@
             "Cash": "Cash",
             "Cheque": "Cheque",
             "ChequeDate": "Cheque Date",
+            "ChequeDetails": "Cheque Details",
+            "LoanClose": "Loan Closure Details",
             "ChequeNo": "Cheque Number",
             "Yes": "Yes",
             "No": "No",

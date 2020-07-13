@@ -17,5 +17,4 @@ export class AuthService {
         const url = 'http://206.189.129.219:8080/login';
         return this.httpService.post<any>(url, data, { headers });
     }
-
 }

@@ -66,6 +66,9 @@
         "Debit": "नामे",
         "GetInfo": "जानकारी प्राप्त करें",
         "Tables": {
+            "LoanClose": "ऋण बंद करने का विवरण",
+            "ChequeDetails": "चेक विवरण",
+            "LoanApprove": "ऋण स्वीकृति तालिका",
             "Total": "कुल रकम",
             "CashBal": "नकदी शेष",
             "BankBal" : "बैंक राशि",

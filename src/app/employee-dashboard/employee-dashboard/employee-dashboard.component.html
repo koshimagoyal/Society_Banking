@@ -57,7 +57,7 @@
                 <tr>
                     <th style="width: 16.66%;" scope="col"><span>{{"Employee.Passbook.Date" | translate}}</span></th>
                     <th style="width: 60%;" scope="col"><span>{{"Employee.Passbook.Particulars" | translate}}</span></th>
-                    <th scope="col"><span>Mode</span></th>
+                    <th scope="col"><span>{{"Accountant.Tables.Mode" | translate}}</span></th>
                     <th scope="col"><span>{{"Employee.Passbook.Deposit" | translate}}</span></th>
                     <th scope="col"><span>{{"Employee.Passbook.Withdrawal" | translate}}</span></th>
                 </tr>
@@ -75,13 +75,13 @@
                 </tr>
                 <tr>
                     <td *ngIf="val.cheque" align="center" colspan="5">
-                        <h6 style="font-weight: bold">Cheque Details</h6>
+                        <h6 style="font-weight: bold">{{"Accountant.Tables.ChequeDetails"| translate}}</h6>
                         <table style="width: 100%;">
                             <thead>
                             <tr>
-                                <td style="width: 16.66%;">Cheque Date</td>
-                                <td style="width: 60%;">Bank Name</td>
-                                <td>Cheque Number</td>
+                                <td style="width: 16.66%;">{{"Accountant.Tables.ChequeDate"| translate}}</td>
+                                <td style="width: 60%;">{{"Accountant.Tables.BankName"| translate}}</td>
+                                <td>{{"Accountant.Tables.ChequeNo"| translate}}</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -145,7 +145,7 @@
                 </table>
             </div>
             <div class="card-body table-responsive" *ngIf="show[i] && data.closeData && data.closeData[0].mode==='Cash';else cheque">
-                <h3 style="font-weight: bold; text-align: center;">Loan Closure Details</h3>
+                <h3 style="font-weight: bold; text-align: center;">{{"Accountant.Tables.LoanClose" | translate}}</h3>
                 <table class="table table-striped">
                     <thead>
                     <tr>
@@ -170,7 +170,7 @@
             </div>
             <ng-template #cheque>
                 <div class="card-body table-responsive" *ngIf="show[i] && data.closeData && data.closeData[0].mode==='Cheque'">
-                    <h3 style="font-weight: bold; text-align: center;">Loan Closure Details</h3>
+                    <h3 style="font-weight: bold; text-align: center;">{{"Accountant.Tables.LoanClose" | translate}}</h3>
                     <table class="table table-striped">
                         <thead>
                         <tr>
