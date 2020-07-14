@@ -64,6 +64,7 @@ export class EmpProfileComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        this.formData = new FormData();
         const user = this.session.retrieve('user');
         this.employeeId = user.id;
         this.service.getData(this.employeeId).subscribe(
@@ -134,6 +135,11 @@ export class EmpProfileComponent implements OnInit {
                     Swal.fire({
                         text: 'Sent!',
                         icon: 'success',
+                    }).then((isConfirm: any) => {
+                        if (isConfirm) {
+                            this.formData = new FormData();
+                            window.location.reload();
+                        }
                     });
                 }
             },

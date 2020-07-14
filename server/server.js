@@ -30,7 +30,7 @@ app.use(function(req, res, next) {
 // SET STORAGE
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-        cb(null, 'C:\\uploads')
+        cb(null, "C:\\uploads") //process.cwd()
     },
     filename: function (req, file, cb) {
         cb(null, file.originalname);
@@ -50,7 +50,7 @@ app.get('/', (req, res) => {
     console.log("connected");
 
 });
-
+//app.use("/", express.static(path.join("C:/Users/Lenovo/Downloads/Society_Banking/", "dist/sb-admin-angular")));
 //mysql connection check
 function handleDisconnect(){
     //mysql configuration
@@ -1442,22 +1442,41 @@ app.post('/updateUserData',(req,res)=>{
         console.log(req.body.data);
         let data = JSON.parse(req.body.data);
         console.log(data);
-        let query = `update user set adharNo=?,
+        if (!req.file) {
+            let query = `update user set adharNo=?,
+                 currentAddress=?,email=?,fatherName=?,landline=?,
+                 mobileNo1=?,mobileNo2=?,name=?,pan=?,permanentAddress=?
+                 where userId = ?;`;
+            con.query(query,[data.adharNo,data.currentAddress,data.email,data.father,data.landline,data.mobile1,
+                data.mobile2,data.name,data.pan,data.permanentAddress,data.userId],function(err,result) {
+                if(err){
+                    res.status(400).json({
+                        failed: 'Unauthorized Access'
+                    });
+                }else{
+                    res.status(200).json({
+                        nameData: result,
+                    });
+                }
+            });
+        } else {
+            let query = `update user set adharNo=?,
                  currentAddress=?,email=?,fatherName=?,landline=?,
                  mobileNo1=?,mobileNo2=?,name=?,pan=?,permanentAddress=?,profileImage=?
                  where userId = ?;`;
-        con.query(query,[data.adharNo,data.currentAddress,data.email,data.father,data.landline,data.mobile1,
-            data.mobile2,data.name,data.pan,data.permanentAddress,req.file.path,data.userId],function(err,result) {
-            if(err){
-                res.status(400).json({
-                    failed: 'Unauthorized Access'
-                });
-            }else{
-                res.status(200).json({
-                    nameData: result,
-                });
-            }
-        });
+            con.query(query,[data.adharNo,data.currentAddress,data.email,data.father,data.landline,data.mobile1,
+                data.mobile2,data.name,data.pan,data.permanentAddress,req.file.path,data.userId],function(err,result) {
+                if(err){
+                    res.status(400).json({
+                        failed: 'Unauthorized Access'
+                    });
+                }else{
+                    res.status(200).json({
+                        nameData: result,
+                    });
+                }
+            });
+        }
     });
 });
 
