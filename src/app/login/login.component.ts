@@ -7,7 +7,6 @@ import { SessionStorageService } from 'ngx-webstorage';
 import Swal from 'sweetalert2/dist/sweetalert2.js';
 
 import { AuthService } from './services';
-import { NavigationService } from '@app/navigation/services';
 
 @Component({
     selector: 'sb-login',

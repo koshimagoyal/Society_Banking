@@ -7,12 +7,11 @@ import { TranslateModule } from '@ngx-translate/core';
 import * as navigationComponents from './components';
 import * as navigationContainers from './containers';
 import * as appCommonLayouts from './layouts';
-import * as navigationServices from './services';
 import { TopNavModule } from '@app/top-nav/top-nav.module';
 
 @NgModule({
     imports: [CommonModule, RouterModule, AppCommonModule, TranslateModule, TopNavModule],
-    providers: [...navigationServices.services],
+    providers: [],
     declarations: [
         ...navigationContainers.containers,
         ...navigationComponents.components,
