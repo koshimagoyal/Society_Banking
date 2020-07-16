@@ -14,7 +14,7 @@ export class AuthService {
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
         console.log(data);
-        const url = 'http://206.189.129.219:8080/login';
+        const url = 'http://drsunitanayak.com:8080/login';
         return this.httpService.post<any>(url, data, { headers });
     }
 }

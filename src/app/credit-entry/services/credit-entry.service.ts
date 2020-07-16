@@ -10,19 +10,19 @@ export class CreditEntryService {
 
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://206.189.129.219:8080/getOperationalAccountData';
+        const url = 'http://drsunitanayak.com:8080/getOperationalAccountData';
         const data = {
             userId: text,
         };
         return this.http.post<any>(url, data);
     }
     getCorpusData(): Observable<any> {
-        const url = 'http://206.189.129.219:8080/getCorpusData';
+        const url = 'http://drsunitanayak.com:8080/getCorpusData';
         return this.http.get<any>(url);
     }
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://206.189.129.219:8080/sendCreditEntry';
+        const url = 'http://drsunitanayak.com:8080/sendCreditEntry';
         return this.http.post<any>(url, data);
     }
 }
