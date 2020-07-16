@@ -10,7 +10,7 @@ export class CloseAccountService {
 
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://drsunitanayak.com:8080/getCloseData';
+        const url = 'http://localhost:8080/getCloseData';
         const data = {
             userId: text,
         };
@@ -18,7 +18,7 @@ export class CloseAccountService {
     }
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://drsunitanayak.com:8080/closeAccount';
+        const url = 'http://localhost:8080/closeAccount';
         return this.http.post<any>(url, data);
     }
 }

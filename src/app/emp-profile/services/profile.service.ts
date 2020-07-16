@@ -9,7 +9,7 @@ export class ProfileService {
     constructor(private httpService: HttpClient) {}
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://drsunitanayak.com:8080/getUserData';
+        const url = 'http://localhost:8080/getUserData';
         const data = {
             userId: text,
         };
@@ -17,7 +17,7 @@ export class ProfileService {
     }
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://drsunitanayak.com:8080/updateUserData';
+        const url = 'http://localhost:8080/updateUserData';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');

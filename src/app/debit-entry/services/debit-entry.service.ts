@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class DebitEntryService {
     constructor(private http: HttpClient) {}
     getBankList(): Observable<any> {
-        const url = 'http://drsunitanayak.com:8080/getBankList';
+        const url = 'http://localhost:8080/getBankList';
         const headers = new HttpHeaders();
         headers.append('Access-Control-Allow-Origin', '*');
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
@@ -18,19 +18,19 @@ export class DebitEntryService {
     }
     getData(text: any): Observable<any> {
         console.log(text);
-        const url = 'http://drsunitanayak.com:8080/getOperationalAccountData';
+        const url = 'http://localhost:8080/getOperationalAccountData';
         const data = {
             userId: text,
         };
         return this.http.post<any>(url, data);
     }
     getCorpusData(): Observable<any> {
-        const url = 'http://drsunitanayak.com:8080/getCorpusData';
+        const url = 'http://localhost:8080/getCorpusData';
         return this.http.get<any>(url);
     }
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://drsunitanayak.com:8080/sendDebitEntry';
+        const url = 'http://localhost:8080/sendDebitEntry';
         return this.http.post<any>(url, data);
     }
 }

@@ -27,7 +27,7 @@ export class NavigationService {
         };
         console.log(body);
         this.http
-            .post('http://drsunitanayak.com:8080/data/user/profileimage', body, {
+            .post('http://localhost:8080/data/user/profileimage', body, {
                 observe: 'response',
                 responseType: 'blob',
             })

@@ -14,7 +14,7 @@ export class DashboardService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/getAllLoanData';
+        const url = 'http://localhost:8080/getAllLoanData';
         return this.httpService.get(url, { headers });
     }
     getBal(): Observable<any> {
@@ -23,7 +23,7 @@ export class DashboardService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/getCashBank';
+        const url = 'http://localhost:8080/getCashBank';
         return this.httpService.get(url, { headers });
     }
     getLoanData(): Observable<any> {
@@ -32,7 +32,7 @@ export class DashboardService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/getApprovalLoans';
+        const url = 'http://localhost:8080/getApprovalLoans';
         return this.httpService.get(url, { headers });
     }
     approveLoan(data: any): Observable<any> {
@@ -41,7 +41,7 @@ export class DashboardService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/approveLoan';
+        const url = 'http://localhost:8080/approveLoan';
         return this.httpService.post(url, data, { headers });
     }
     rejectLoan(data: any): Observable<any> {
@@ -50,7 +50,7 @@ export class DashboardService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/rejectLoan';
+        const url = 'http://localhost:8080/rejectLoan';
         return this.httpService.post(url, data, { headers });
     }
 }

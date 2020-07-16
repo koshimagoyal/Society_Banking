@@ -9,7 +9,7 @@ export class ApplyLoanService {
     constructor(private http: HttpClient) {}
     sendData(data: any): Observable<any> {
         console.log(data);
-        const url = 'http://drsunitanayak.com:8080/sendLoanEntry';
+        const url = 'http://localhost:8080/sendLoanEntry';
         return this.http.post<any>(url, data);
     }
 }

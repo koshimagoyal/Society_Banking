@@ -283,7 +283,11 @@ app.get('/getCashBank',(req,res)=>{
     let query = `select sum(credit) as credit, sum(debit) as debit from account where 
                 (
                     (type="Transfer Cash" and loanId is null)
-                                or
+                    or
+                    (type="Operational" and mode="Cheque" and debit is null and loanId is null and
+                    chequeId not in (select chequeId from chequeDetails 
+                    where bankName in (select nickname from bankAccount)))
+                    or
                     (loanId is null and chequeId is null)
                 );`;
     con.query(query, function(err, result) {
@@ -296,7 +300,8 @@ app.get('/getCashBank',(req,res)=>{
             console.log(req.body);
             let query = `select sum(credit) as credit, sum(debit) as debit, bankName from account inner join 
                          chequeDetails on(account.chequeId=chequeDetails.chequeId)
-                         where type != "Transfer Cash" and loanId is null group by bankName;`;
+                         where type != "Transfer Cash" and loanId is null and 
+                         bankName in (select nickname from bankAccount) group by bankName;`;
             con.query(query, function(err, resultData) {
                 if (err) {
                     console.log(err);
@@ -1376,7 +1381,7 @@ app.post('/getData/chequeData',(req,res)=>{
 //fetch loan details
 app.post('/generateEMI',(req,res)=>{
     console.log(req.body);
-    let query = 'select loanId, loanAmount, loanDuration, loanType, interest, userId from loan where MONTH(date)=? and YEAR(date)=? and closeLoan = false and closeLoan=false and interest!=0;';
+    let query = 'select loanId, loanAmount, loanDuration, loanType, interest, userId from loan where MONTH(date)<=? and YEAR(date)<=? and closeLoan = false and closeLoan=false and interest!=0;';
     con.query(query,[req.body.month,req.body.year],function(err,resdata) {
         if(err){
             res.status(400).json({

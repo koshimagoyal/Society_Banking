@@ -10,7 +10,7 @@ export class TablesService {
         console.log(getData);
         const data = getData.data;
         const ddate = getData.date;
-        const url = 'http://drsunitanayak.com:8080/sendDepositData';
+        const url = 'http://localhost:8080/sendDepositData';
         const account = [];
         for (let j = 1; j < data.length; j++) {
             account.push([
@@ -37,7 +37,7 @@ export class TablesService {
     sendLoanData(getData: any): Observable<any> {
         const data = getData.data;
         const ddate = getData.date;
-        const url = 'http://drsunitanayak.com:8080/sendLoanData';
+        const url = 'http://localhost:8080/sendLoanData';
         const loan = [];
         const loanBook = [];
         for (let j = 1; j < data.length; j++) {
@@ -70,7 +70,7 @@ export class TablesService {
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'multipart/form-data');
         console.log(data);
-        const url = 'http://drsunitanayak.com:8080/sendExcel';
+        const url = 'http://localhost:8080/sendExcel';
         return this.httpService.post<any>(url, data, { headers });
     }
 
@@ -80,7 +80,7 @@ export class TablesService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/monthYear';
+        const url = 'http://localhost:8080/monthYear';
         return this.httpService.get(url, { headers });
     }
 
@@ -90,7 +90,7 @@ export class TablesService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/getLoanEmiData';
+        const url = 'http://localhost:8080/getLoanEmiData';
         return this.httpService.get(url, { headers });
     }
 
@@ -100,7 +100,7 @@ export class TablesService {
         headers.append('Access-Control-Allow-Methods', 'POST,GET,OPTIONS,PUT');
         headers.append('Accept', 'application/json');
         headers.append('content-type', 'application/json');
-        const url = 'http://drsunitanayak.com:8080/sendLoanAutoCloseData';
+        const url = 'http://localhost:8080/sendLoanAutoCloseData';
         const closeData = {
             closeData: data,
         };
